@@ -1,0 +1,41 @@
+.horizontal_menu {
+    display: flex;
+}
+
+.horizontal_menu :not(:first-child) {
+    margin-left: 10px
+}
+
+.button.button {
+    display: flex;
+    width: 150px;
+    height: 80px;
+    border-radius: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: bold;
+    border: 1px solid #C6CBD9;
+}
+
+.button svg {
+    background-color: #F2F3F7;
+    border-radius: 25px;
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+}
+
+.button.selected {
+    background-color: #0062FF;
+    color: white;
+    border: 1px solid #0062FF;
+}
+
+.button.button:hover {
+    background-color: #4b9cf0;
+    border: 1px solid #4b9cf0;
+}
+
+.button.selected:hover {
+    color: white;
+}

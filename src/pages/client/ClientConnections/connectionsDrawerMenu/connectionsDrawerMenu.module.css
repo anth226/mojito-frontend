@@ -1,0 +1,10 @@
+.activeItem {
+    border: none;
+    color: #0062FF;
+    background-color: #0062FF1A;
+}
+
+.inactiveItem {
+    color: #7E7E8F;
+    border: none;
+}

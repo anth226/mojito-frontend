@@ -1,0 +1,24 @@
+.alert_overview {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    align-items: flex-start;
+}
+
+.bold_text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.light_text {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.alert_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,13 @@
+.additional_info {
+    border: none;
+    background: none;
+    text-align: left;
+    color: #8A8A98;
+}
+
+.additional_info svg {
+    color: white;
+    background: #0062FF;
+    border: 1px solid #0062FF;
+    border-radius: 25px;
+}

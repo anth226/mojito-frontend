@@ -1,0 +1,46 @@
+.alert_entry_container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid;
+    padding: 10px;
+    border-color: #EBEBEB;
+}
+
+.alert_entry_container:first-child {
+    border-top: 1px solid;
+    border-color: #EBEBEB;
+}
+
+.alert_entry_vertical_center {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.alert_entry_left_side,
+.alert_entry_right_side {
+    display: flex;
+    flex-direction: column;
+}
+
+.alert_entry_right_side {
+    align-items: flex-end;
+}
+
+.alert_entry_name {
+    margin: 0;
+    font-size: 16px
+}
+
+.alert_entry_value {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600
+}
+
+.alert_panel_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 16px;
+}

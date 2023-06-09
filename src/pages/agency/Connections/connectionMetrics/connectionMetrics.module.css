@@ -1,0 +1,9 @@
+.metric {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #f2f3f7;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}

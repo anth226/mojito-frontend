@@ -1,0 +1,14 @@
+.radioGroup {
+    padding: 5px 10px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.radioGroup > label{
+    border: none;
+    border-inline: none !important;
+}
+
+.radioGroup span {
+    font-size: 12px;
+}

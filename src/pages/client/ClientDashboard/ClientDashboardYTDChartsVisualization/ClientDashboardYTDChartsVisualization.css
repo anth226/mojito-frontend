@@ -1,0 +1,4 @@
+.custom_tooltip_chart .g2-tooltip.g2-tooltip {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}

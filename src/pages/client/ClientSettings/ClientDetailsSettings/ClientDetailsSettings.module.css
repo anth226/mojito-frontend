@@ -1,0 +1,13 @@
+.bold_text {
+    font-weight: bold;
+}
+
+.light_text {
+    font-weight: 300;
+    color: #7E7E8F;
+}
+
+.bold_text, .light_text {
+    margin: 0;
+    margin-top: 5px;
+}

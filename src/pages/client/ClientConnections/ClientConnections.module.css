@@ -1,0 +1,15 @@
+.search_box {
+    border-radius: 24px;
+    background-color: #E2E2EA;
+}
+
+.search_box > input {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #E2E2EA;
+    border-color: #E2E2EA;
+}
+
+.search_box > input:hover {
+    border-color: #E2E2EA;
+}

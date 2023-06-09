@@ -1,0 +1,236 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import { ConnectionStatus } from "../../enums/connections";
+import { Client } from "../../interfaces/Client";
+import { Connection } from "../../interfaces/Connection";
+import cover1 from "../../assets/covers/card1.png";
+import cover2 from "../../assets/covers/card2.png";
+import cover3 from "../../assets/covers/card3.png";
+import {
+  AgencyOnBoardingPaths,
+  BusinessOnBoardingPaths,
+} from "../../pages/paths";
+
+const allConnectionList: Connection[] = [
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Asana",
+    avatar: "base64 Image",
+    cover: cover1,
+    key: 0,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Grammarly",
+    avatar: "base64 Image",
+    cover: cover2,
+    key: 1,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Random",
+    avatar: "base64 Image",
+    cover: cover3,
+    key: 2,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Grammarly",
+    avatar: "base64 Image",
+    cover: cover2,
+    key: 3,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Random",
+    avatar: "base64 Image",
+    cover: cover3,
+    key: 4,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Random",
+    avatar: "base64 Image",
+    cover: cover3,
+    key: 5,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Random",
+    avatar: "base64 Image",
+    cover: cover3,
+    key: 6,
+  },
+  {
+    status: ConnectionStatus.NOT_CONNECTED,
+    name: "Random",
+    avatar: "base64 Image",
+    cover: cover3,
+    key: 7,
+  },
+];
+
+enum defaultValues {
+  BILLING_PLAN = -1,
+}
+
+interface onboardingStateInterface {
+  step: number;
+  prevStep: number;
+  nested: boolean;
+  nestedSteps: number;
+  nestedLimit: number;
+  nestedPath: `${AgencyOnBoardingPaths}` | `${BusinessOnBoardingPaths}` | "";
+  clients: Client[];
+  allConnectionList: Connection[];
+  billing: {
+    plan: number;
+    billingDetails: {};
+  };
+}
+
+const initialState: onboardingStateInterface = {
+  step: 1,
+  prevStep: 0,
+  nested: false,
+  nestedSteps: 0,
+  nestedLimit: 0,
+  nestedPath: "",
+  clients: [] as Client[],
+  allConnectionList,
+  billing: {
+    plan: defaultValues.BILLING_PLAN,
+    billingDetails: {},
+  },
+};
+
+export const onboardingSlice = createSlice({
+  name: "onboarding",
+  initialState,
+  // The `reducers` field lets us define reducers and generate associated actions
+  reducers: {
+    next: (state) => {
+      if (state.nested) {
+        if (state.nestedSteps < state.nestedLimit) {
+          state.nestedSteps += 1;
+        } else {
+          state.step += 1;
+        }
+      } else {
+        state.prevStep = state.step;
+        state.step += 1;
+      }
+    },
+    back: (state) => {
+      if (state.nested) {
+        if (state.nestedSteps > 0) {
+          state.nestedSteps -= 1;
+        } else {
+          state.step -= 1;
+        }
+      } else {
+        if (state.step > 0) {
+          state.prevStep = state.step;
+          state.step -= 1;
+        }
+      }
+    },
+    nested: (state, payloadWithType) => {
+      if (payloadWithType.payload === "") {
+        state.nested = false;
+        state.nestedSteps = 0;
+      } else {
+        state.nested = true;
+      }
+      state.nestedPath = payloadWithType.payload;
+    },
+    setNestedStepsLimit: (state, payloadWithType) => {
+      state.nestedLimit = payloadWithType.payload.index;
+    },
+    setClientsInStore: (state, payloadWithType) => {
+      state.clients = payloadWithType.payload.index;
+    },
+    updateConnections: (state, payloadWithType) => {
+      if (
+        state.allConnectionList[payloadWithType.payload.index].status ===
+        ConnectionStatus.NOT_CONNECTED
+      ) {
+        state.allConnectionList[payloadWithType.payload.index].status =
+          ConnectionStatus.CONNECTED;
+      } else {
+        state.allConnectionList[payloadWithType.payload.index].status =
+          ConnectionStatus.NOT_CONNECTED;
+      }
+      if (payloadWithType.payload.notNested) {
+        return;
+      }
+    },
+    countNestedConnections: (state, payloadWithType) => {
+      const connections = state.allConnectionList.reduce(
+        (accumulator, currentObject) => {
+          if (currentObject.status === ConnectionStatus.CONNECTED) {
+            accumulator += 1;
+          }
+          return accumulator;
+        },
+        0
+      );
+      state.nestedLimit = connections;
+      if (payloadWithType.payload.set) {
+        state.nestedSteps = connections;
+      }
+    },
+    updateConnectionsOfClient: (state, payloadWithType) => {
+      if (payloadWithType.payload.action === "add") {
+        state.clients[payloadWithType.payload.index].connections?.push(
+          payloadWithType.payload.connectionName
+        );
+      }
+      if (payloadWithType.payload.action === "remove") {
+        state.clients[payloadWithType.payload.index].connections =
+          state.clients[payloadWithType.payload.index].connections?.filter(
+            (connection) =>
+              connection !== payloadWithType.payload.connectionName
+          );
+      }
+    },
+    setBilling: (state, payloadWithType) => {
+      if (payloadWithType.payload.set) {
+        if (state.billing.plan !== defaultValues.BILLING_PLAN) {
+          state.nestedSteps = 1;
+        }
+      }
+      state.nested = true;
+      state.nestedLimit = 1;
+    },
+    setBillingPlan: (state, payloadWithType) => {
+      state.billing.plan = payloadWithType.payload;
+    },
+    setBillingDetails: (state, payloadWithType) => {
+      state.billing.billingDetails = payloadWithType.payload;
+    },
+  },
+  // The `extraReducers` field lets the slice handle actions defined elsewhere,
+  // including actions generated by createAsyncThunk or in other slices.
+});
+
+export const {
+  next,
+  back,
+  nested,
+  setNestedStepsLimit,
+  setClientsInStore,
+  updateConnections,
+  countNestedConnections,
+  updateConnectionsOfClient,
+  setBilling,
+  setBillingPlan,
+  setBillingDetails,
+} = onboardingSlice.actions;
+
+// The function below is called a selector and allows us to select a value from
+// the state. Selectors can also be defined inline where they're used instead of
+// in the slice file. For example: `useSelector((state: RootState) => state.onboarding.value)`
+export const getOnboardingFromStore = (state: RootState) => state.onboarding;
+
+export default onboardingSlice.reducer;

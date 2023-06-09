@@ -1,0 +1,17 @@
+.ant-tabs .ant-tabs-tab {
+    width: 170px;
+    display: grid;
+    place-items: center;
+    color: #9A9AAF;
+}
+
+.ant-tabs .ant-tabs-tab-active > .ant-tabs-tab-btn {
+    color: #0062FF !important;
+    font-weight: 500;
+}
+
+.ant-tabs .ant-tabs-ink-bar {
+    height: 6px !important;
+    border-radius: 100px 100px 0px 0px;
+    background-color: #0062FF;
+}

@@ -1,0 +1,50 @@
+.slider div.slick-slide {
+    margin-right: 10px;
+ }
+
+.prev_button,
+.next_button {
+    border: none;
+    border-radius: 25px;
+    padding-top: 0px;
+    margin-inline: 10px;
+}
+
+.prev_button > svg {
+    padding-top: 0px;
+    transform: rotate(90deg);
+}
+
+.next_button > svg {
+    padding-top: 0px;
+    transform: rotate(270deg);
+}
+
+.slider_entry_card {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    width: 98%;
+}
+.slider_entry_card:hover {
+    border-radius: 16px;
+    border: 1px solid #0062FF;
+}
+.current_slide_card {
+    border-color: #0062FF;
+    background-color: #E5EFFF;
+}
+
+.slider_entry_card p{
+    padding: 0;
+    margin: 0;
+}
+
+.slider_entry_card_title {
+    font-weight: 500;
+    font-size: x-large;
+}
+
+.slider_entry_card_amount {
+    color: #0062FF;
+}

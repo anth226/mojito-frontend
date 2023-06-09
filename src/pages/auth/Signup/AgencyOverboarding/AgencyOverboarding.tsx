@@ -1,0 +1,114 @@
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Button, Card, Col, Row, Space } from "antd";
+import {
+  back,
+  getOnboardingFromStore,
+  next,
+} from "../../../../reduxSlices/onboarding/onboarding";
+import { AgencyOnBoardingPaths, AuthenticationPaths } from "../../../paths";
+import { useMemo } from "react";
+import { useBillingFormInstance } from "../../../../components/BillingForm/BillingForm";
+import { clearSignup } from "../../../../reduxSlices/auth/auth";
+
+const AgencyOverboarding = () => {
+  const { step, nested, nestedSteps, nestedPath } = useAppSelector(
+    getOnboardingFromStore
+  );
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const { FormInstance } = useBillingFormInstance();
+
+  const onContinue = () => {
+    if (nested) {
+      if (nestedPath === AgencyOnBoardingPaths.BILLING && nestedSteps === 1) {
+        FormInstance?.submit();
+      } else {
+        dispatch(next());
+      }
+    } else {
+      if (step < 5) {
+        dispatch(next());
+      } else {
+        dispatch(clearSignup());
+        navigate(AuthenticationPaths.LOGINPATH);
+      }
+    }
+  };
+
+  const onBack = () => {
+    if (nested) {
+      dispatch(back());
+    } else {
+      if (step > 1) {
+        dispatch(back());
+      } else {
+        dispatch(clearSignup());
+        navigate(AuthenticationPaths.LOGINPATH);
+      }
+    }
+  };
+
+  const errorPage = () => {
+    if (
+      !Object.values(AgencyOnBoardingPaths).includes(
+        pathname as AgencyOnBoardingPaths
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const widthOfCard = useMemo(() => {
+    if (
+      (nestedSteps === 0 && pathname === AgencyOnBoardingPaths.CONNECTIONS) ||
+      pathname === AgencyOnBoardingPaths.ALERTS
+    ) {
+      return "1300px";
+    }
+    if (pathname === AgencyOnBoardingPaths.USERS) {
+      return "1150px";
+    }
+    return "590px";
+  }, [nestedSteps, pathname]);
+
+  if (errorPage()) {
+    return <Outlet />;
+  }
+
+  return (
+    <Card
+      style={{
+        maxWidth: widthOfCard,
+        height: "fit-content",
+        marginTop: "80px",
+      }}
+    >
+      <Space direction="vertical" size="middle" style={{ textAlign: "center" }}>
+        <Outlet />
+        <Row gutter={[16, 16]}>
+          <Col span={12}>
+            <Button style={{ width: "100%" }} onClick={onBack}>
+              <b>Back</b>
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button
+              type="primary"
+              style={{ width: "100%" }}
+              onClick={onContinue}
+            >
+              <b>Continue</b>
+            </Button>
+          </Col>
+        </Row>
+      </Space>
+    </Card>
+  );
+};
+
+export default AgencyOverboarding;

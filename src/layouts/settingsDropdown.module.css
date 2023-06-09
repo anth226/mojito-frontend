@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    column-gap: 10px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    width: 250px;
+    padding: 2px;
+    box-shadow: 0px 0px 10px 2px #C1C1C1;
+}
+
+.container>div {
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.container>div:first-child {
+    /* padding: 10px 20px; */
+    border-radius: 12px 12px 0px 0px;
+}
+
+.profile_overview {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    background-color: #F2F3F7;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings>p:first-child {
+    color: #9A9AAF;
+}
+
+.setting_routes {
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+    line-height: 2;
+    margin-bottom: 2px;
+    transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.setting_routes:hover {
+    padding-left: 5px;
+    color: #000000;
+    background-color: #F2F3F7;
+    border-radius: 4px;
+}
+
+.setting_routes_divider {
+    margin: 0;
+}
+
+.dropdown_divider.dropdown_divider {
+    margin: 6px;
+    padding: 0;
+}
+
+.logout {
+    font-weight: 600;
+    padding: 10px 40px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background-color: #F2F3F7;
+    border-radius: 12px;
+    color: #000000;
+}
