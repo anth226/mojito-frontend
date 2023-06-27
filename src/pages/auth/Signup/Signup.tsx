@@ -1,25 +1,25 @@
-import { Card, Space } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Card, Space } from 'antd';
+import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../app/hooks';
+import { ReactComponent as AgencyIcon } from '../../../assets/Icons/Agency.svg';
+import { ReactComponent as BusinessIcon } from '../../../assets/Icons/Business.svg';
 import CustomMenu, {
   MenuItem,
-} from "../../../components/CustomMenu/CustomMenu";
-import { AgencyOnBoardingPaths, AuthenticationPaths } from "../../paths";
-import AgencySignUp from "./AgencySignUp/AgencySignUp";
-import BusinessSignUp from "./BusinessSignUp/BusinessSignUp";
-import { ReactComponent as AgencyIcon } from "../../../assets/Icons/Agency.svg";
-import { ReactComponent as BusinessIcon } from "../../../assets/Icons/Business.svg";
-import { useEffect, useState } from "react";
-import { AccountType, getAuthFromStore } from "../../../reduxSlices/auth/auth";
-import { useAppSelector } from "../../../app/hooks";
+} from '../../../components/CustomMenu/CustomMenu';
+import { AccountType, getAuthFromStore } from '../../../reduxSlices/auth/auth';
+import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../paths';
+import AgencySignUp from './AgencySignUp/AgencySignUp';
+import BusinessSignUp from './BusinessSignUp/BusinessSignUp';
 
 const items: MenuItem[] = [
   {
-    label: "Agency",
+    label: 'Agency',
     value: AccountType.AGENCY,
     icon: <AgencyIcon />,
   },
   {
-    label: "Business",
+    label: 'Business',
     value: AccountType.BUSINESS,
     icon: <BusinessIcon />,
   },
@@ -30,7 +30,6 @@ const SignUp = () => {
   const [accountType, setAccountType] = useState<AccountType>(0);
 
   const navigate = useNavigate();
-
 
   const onUserTypeChange = (item: any) => {
     setAccountType(item.value);
@@ -49,23 +48,23 @@ const SignUp = () => {
 
   return (
     <Card
-      style={{ maxWidth: "590px", height: "fit-content", marginTop: "80px" }}
+      style={{ maxWidth: '590px', height: 'fit-content', marginTop: '80px' }}
     >
       <Space
-        direction="vertical"
-        size="middle"
-        style={{ textAlign: "center", width: "500px" }}
+        direction='vertical'
+        size='middle'
+        style={{ textAlign: 'center', width: '500px' }}
       >
         <div>
-          <h1 style={{ margin: "0px" }}>Sign up</h1>
+          <h1 style={{ margin: '0px' }}>Sign up</h1>
           <span>
-            Already have an account?{" "}
+            Already have an account?{' '}
             <NavLink to={AuthenticationPaths.LOGINPATH}>Log In</NavLink>
           </span>
         </div>
-        <span style={{ display: "flex", marginLeft: "2px" }}>User Type</span>
+        <span style={{ display: 'flex', marginLeft: '2px' }}>User Type</span>
         <CustomMenu
-          direction="horizontal"
+          direction='horizontal'
           items={items}
           onItemClick={onUserTypeChange}
         />

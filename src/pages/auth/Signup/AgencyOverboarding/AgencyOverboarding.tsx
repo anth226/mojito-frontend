@@ -1,15 +1,15 @@
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Button, Card, Col, Row, Space } from "antd";
+import { Button, Card, Col, Row, Space } from 'antd';
+import { useMemo } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { useBillingFormInstance } from '../../../../components/BillingForm/BillingForm';
+import { clearSignup } from '../../../../reduxSlices/auth/auth';
 import {
   back,
   getOnboardingFromStore,
   next,
-} from "../../../../reduxSlices/onboarding/onboarding";
-import { AgencyOnBoardingPaths, AuthenticationPaths } from "../../../paths";
-import { useMemo } from "react";
-import { useBillingFormInstance } from "../../../../components/BillingForm/BillingForm";
-import { clearSignup } from "../../../../reduxSlices/auth/auth";
+} from '../../../../reduxSlices/onboarding/onboarding';
+import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../../paths';
 
 const AgencyOverboarding = () => {
   const { step, nested, nestedSteps, nestedPath } = useAppSelector(
@@ -68,12 +68,12 @@ const AgencyOverboarding = () => {
       (nestedSteps === 0 && pathname === AgencyOnBoardingPaths.CONNECTIONS) ||
       pathname === AgencyOnBoardingPaths.ALERTS
     ) {
-      return "1300px";
+      return '1300px';
     }
     if (pathname === AgencyOnBoardingPaths.USERS) {
-      return "1150px";
+      return '1150px';
     }
-    return "590px";
+    return '590px';
   }, [nestedSteps, pathname]);
 
   if (errorPage()) {
@@ -84,22 +84,22 @@ const AgencyOverboarding = () => {
     <Card
       style={{
         maxWidth: widthOfCard,
-        height: "fit-content",
-        marginTop: "80px",
+        height: 'fit-content',
+        marginTop: '80px',
       }}
     >
-      <Space direction="vertical" size="middle" style={{ textAlign: "center" }}>
+      <Space direction='vertical' size='middle' style={{ textAlign: 'center' }}>
         <Outlet />
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <Button style={{ width: "100%" }} onClick={onBack}>
+            <Button style={{ width: '100%' }} onClick={onBack}>
               <b>Back</b>
             </Button>
           </Col>
           <Col span={12}>
             <Button
-              type="primary"
-              style={{ width: "100%" }}
+              type='primary'
+              style={{ width: '100%' }}
               onClick={onContinue}
             >
               <b>Continue</b>
