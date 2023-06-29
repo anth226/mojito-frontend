@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const LOGIN = `
   mutation Login($input: LoginInput!) {
     login(input: $input) {
@@ -6,6 +8,7 @@ export const LOGIN = `
       success
       user {
         email
+        name
         accountType
       }
     }
@@ -33,6 +36,18 @@ export const REGISTER_AGENCY = `
         accountType
         
       }
+    }
+  }
+`;
+
+export const INVITE_CLIENTS = gql`
+  mutation InviteClients($input: InviteClientsInput!) {
+    inviteClients(input: $input) {
+      clients {
+        name
+        email
+      }
+      clientMutationId
     }
   }
 `;

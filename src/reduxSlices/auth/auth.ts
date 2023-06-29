@@ -90,7 +90,13 @@ export const signupAgencyAsync = createAsyncThunk(
 
     // API Call to signup account agency
     const response = await signupByAgency(rest);
-    return response.data;
+    const data = response.data;
+    if (data) {
+      const { email, password } = agencySignupData;
+      await login({ email, password });
+    }
+
+    return data;
   }
 );
 
@@ -117,6 +123,8 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.authenticated = false;
+      state.role = AccountRole.NOROLE;
+      state.userEmail = '';
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
