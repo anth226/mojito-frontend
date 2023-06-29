@@ -34,7 +34,11 @@ import HQIcon from '../assets/navbarIcons/HQIcon';
 import MetricsIcon from '../assets/navbarIcons/MetricsIcon';
 import AlertIcon from '../assets/navbarIcons/AlertIcon';
 import ConnectionsIcon from '../assets/navbarIcons/ConnectionsIcon';
-import { removeAccessToken } from 'utils/helpers';
+import {
+  getAccountInfo,
+  removeAccessToken,
+  removeAccountInfo,
+} from 'utils/helpers';
 
 const { Header, Sider, Content } = Layout;
 
@@ -105,12 +109,13 @@ const categories: React.ReactNode[] = [
 ];
 
 const CustomDropdownRender = (signOut: Function) => {
+  const accountInfo = getAccountInfo();
   return (
     <div className={classes.container}>
       <div className={classes.profile_overview}>
         <Avatar>User</Avatar>
         <p>
-          <b>Kristin Watson</b>
+          <b>{accountInfo?.name}</b>
         </p>
       </div>
       <div className={classes.settings}>
@@ -159,6 +164,7 @@ const AgencyLayout: React.FunctionComponent = () => {
   const signout = () => {
     dispatch(logout());
     removeAccessToken();
+    removeAccountInfo();
     navigate(AuthenticationPaths.LOGINPATH);
   };
 

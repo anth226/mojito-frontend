@@ -1,70 +1,70 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
-import { ConnectionStatus } from "../../enums/connections";
-import { Client } from "../../interfaces/Client";
-import { Connection } from "../../interfaces/Connection";
-import cover1 from "../../assets/covers/card1.png";
-import cover2 from "../../assets/covers/card2.png";
-import cover3 from "../../assets/covers/card3.png";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
+import { ConnectionStatus } from '../../enums/connections';
+import { Client } from '../../interfaces/Client';
+import { Connection } from '../../interfaces/Connection';
+import cover1 from '../../assets/covers/card1.png';
+import cover2 from '../../assets/covers/card2.png';
+import cover3 from '../../assets/covers/card3.png';
 import {
   AgencyOnBoardingPaths,
   BusinessOnBoardingPaths,
-} from "../../pages/paths";
+} from '../../pages/paths';
 
 const allConnectionList: Connection[] = [
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Asana",
-    avatar: "base64 Image",
+    name: 'Asana',
+    avatar: 'base64 Image',
     cover: cover1,
     key: 0,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Grammarly",
-    avatar: "base64 Image",
+    name: 'Grammarly',
+    avatar: 'base64 Image',
     cover: cover2,
     key: 1,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Random",
-    avatar: "base64 Image",
+    name: 'Random',
+    avatar: 'base64 Image',
     cover: cover3,
     key: 2,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Grammarly",
-    avatar: "base64 Image",
+    name: 'Grammarly',
+    avatar: 'base64 Image',
     cover: cover2,
     key: 3,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Random",
-    avatar: "base64 Image",
+    name: 'Random',
+    avatar: 'base64 Image',
     cover: cover3,
     key: 4,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Random",
-    avatar: "base64 Image",
+    name: 'Random',
+    avatar: 'base64 Image',
     cover: cover3,
     key: 5,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Random",
-    avatar: "base64 Image",
+    name: 'Random',
+    avatar: 'base64 Image',
     cover: cover3,
     key: 6,
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
-    name: "Random",
-    avatar: "base64 Image",
+    name: 'Random',
+    avatar: 'base64 Image',
     cover: cover3,
     key: 7,
   },
@@ -80,7 +80,7 @@ interface onboardingStateInterface {
   nested: boolean;
   nestedSteps: number;
   nestedLimit: number;
-  nestedPath: `${AgencyOnBoardingPaths}` | `${BusinessOnBoardingPaths}` | "";
+  nestedPath: `${AgencyOnBoardingPaths}` | `${BusinessOnBoardingPaths}` | '';
   clients: Client[];
   allConnectionList: Connection[];
   billing: {
@@ -95,7 +95,7 @@ const initialState: onboardingStateInterface = {
   nested: false,
   nestedSteps: 0,
   nestedLimit: 0,
-  nestedPath: "",
+  nestedPath: '',
   clients: [] as Client[],
   allConnectionList,
   billing: {
@@ -105,7 +105,7 @@ const initialState: onboardingStateInterface = {
 };
 
 export const onboardingSlice = createSlice({
-  name: "onboarding",
+  name: 'onboarding',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
@@ -136,7 +136,7 @@ export const onboardingSlice = createSlice({
       }
     },
     nested: (state, payloadWithType) => {
-      if (payloadWithType.payload === "") {
+      if (payloadWithType.payload === '') {
         state.nested = false;
         state.nestedSteps = 0;
       } else {
@@ -148,7 +148,7 @@ export const onboardingSlice = createSlice({
       state.nestedLimit = payloadWithType.payload.index;
     },
     setClientsInStore: (state, payloadWithType) => {
-      state.clients = payloadWithType.payload.index;
+      state.clients = payloadWithType.payload;
     },
     updateConnections: (state, payloadWithType) => {
       if (
@@ -181,12 +181,12 @@ export const onboardingSlice = createSlice({
       }
     },
     updateConnectionsOfClient: (state, payloadWithType) => {
-      if (payloadWithType.payload.action === "add") {
+      if (payloadWithType.payload.action === 'add') {
         state.clients[payloadWithType.payload.index].connections?.push(
           payloadWithType.payload.connectionName
         );
       }
-      if (payloadWithType.payload.action === "remove") {
+      if (payloadWithType.payload.action === 'remove') {
         state.clients[payloadWithType.payload.index].connections =
           state.clients[payloadWithType.payload.index].connections?.filter(
             (connection) =>
