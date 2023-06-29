@@ -1,11 +1,14 @@
 import { Button, Col, Input, Row } from 'antd';
 import React, { useState } from 'react';
 import { read, utils } from 'xlsx';
-import { useAppDispatch } from '../../../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
 import { ReactComponent as PlusIcon } from '../../../../../assets/Icons/Plus.svg';
 import Uploader from '../../../../../components/Uploader/Uploader';
 import { Client } from '../../../../../interfaces/Client';
-import { setClientsInStore } from '../../../../../reduxSlices/onboarding/onboarding';
+import {
+  getOnboardingFromStore,
+  setClientsInStore,
+} from '../../../../../reduxSlices/onboarding/onboarding';
 import { emailValidator } from '../../../../../utils/validators';
 
 const newClient: Client = {
@@ -15,9 +18,11 @@ const newClient: Client = {
   value: 0,
   percentage: 0,
 };
-
 const Clients = () => {
-  const [clients, setCLients] = useState<Client[]>([newClient]);
+  const clientsInStore = useAppSelector(getOnboardingFromStore).clients;
+  const [clients, setCLients] = useState<Client[]>(
+    clientsInStore.length > 0 ? clientsInStore : [newClient]
+  );
   const dispatch = useAppDispatch();
 
   const addClient = () => {
@@ -30,6 +35,7 @@ const Clients = () => {
     const temporaryList = JSON.parse(JSON.stringify(clients));
     temporaryList[index][propertyName] = propertyValue;
     setCLients(temporaryList);
+    dispatch(setClientsInStore(temporaryList));
   };
 
   const onFileGet = async (info: any) => {
@@ -40,10 +46,8 @@ const Clients = () => {
   };
 
   const addClientsFromFile = (data: any) => {
-    console.log(data);
     const temporaryList = [];
     for (const row of data) {
-      console.log(row);
       temporaryList.push({
         name: row.Name,
         email: row.Email,

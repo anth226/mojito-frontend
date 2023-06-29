@@ -10,11 +10,16 @@ import {
   next,
 } from '../../../../reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../../paths';
+import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
+import { INVITE_CLIENTS } from 'api/graphql/mutations';
+import { toast } from 'react-toastify';
+import { Client } from 'interfaces/Client';
 
 const AgencyOverboarding = () => {
-  const { step, nested, nestedSteps, nestedPath } = useAppSelector(
+  const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
     getOnboardingFromStore
   );
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -22,20 +27,55 @@ const AgencyOverboarding = () => {
 
   const { FormInstance } = useBillingFormInstance();
 
-  const onContinue = () => {
+  const [inviteClients] = useGraphQlMutation(INVITE_CLIENTS, {
+    onError(error) {
+      toast.error(error.message);
+      throw error;
+    },
+    onCompleted: () => {
+      dispatch(next());
+    },
+  });
+
+  const onContinue = async () => {
+    if (step === 1) {
+      const newClients = clients.reduce((pre: Client[], cur: Client) => {
+        if (cur.name || cur.email) {
+          return [...pre, cur];
+        }
+        return [...pre];
+      }, []);
+
+      if (newClients.length > 0) {
+        const data = newClients?.map((client: Client) => {
+          return { name: client.name, email: client.email };
+        });
+
+        await inviteClients({
+          variables: { input: { clients: data } },
+        });
+      } else {
+        dispatch(next());
+      }
+    }
     if (nested) {
       if (nestedPath === AgencyOnBoardingPaths.BILLING && nestedSteps === 1) {
         FormInstance?.submit();
       } else {
         dispatch(next());
       }
-    } else {
-      if (step < 5) {
-        dispatch(next());
-      } else {
-        dispatch(clearSignup());
-        navigate(AuthenticationPaths.LOGINPATH);
-      }
+    }
+    // else {
+    //   if (step < 5) {
+    //     dispatch(next());
+    //   } else {
+    //     dispatch(clearSignup());
+    //     navigate(AuthenticationPaths.LOGINPATH);
+    //   }
+    // }
+    if (step >= 5) {
+      dispatch(clearSignup());
+      navigate(AuthenticationPaths.LOGINPATH);
     }
   };
 
