@@ -31,7 +31,10 @@ const Login = () => {
 
   useEffect(() => {
     if (authObject.authenticated) {
-      if (authObject.role === AccountRole.AGENCY) {
+      if (
+        authObject.role === AccountRole.AGENCY ||
+        authObject.role === AccountRole.BUSINESS
+      ) {
         navigate(AgencyNavBarPaths.HQ);
       }
       if (authObject.role === AccountRole.CLIENT) {

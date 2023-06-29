@@ -7,7 +7,7 @@ import {
   REGISTER_BUSINESS,
 } from 'api/graphql/mutations';
 import { toast } from 'react-toastify';
-import { setAccessToken } from 'utils/helpers';
+import { setAccessToken, setAccountInfo } from 'utils/helpers';
 
 // A mock function to mimic making an async request for data
 
@@ -23,7 +23,9 @@ export const login = async (credentials: LoginCredentials): Promise<any> => {
         toast.error(data?.reason);
       }
       setAccessToken(data?.accessToken);
-
+      const user = data?.user;
+      const { accountType, ...rest } = user;
+      setAccountInfo({ ...rest });
       return data;
     })
     .catch((err) => {
