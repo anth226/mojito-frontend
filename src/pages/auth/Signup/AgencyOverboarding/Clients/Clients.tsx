@@ -17,6 +17,7 @@ const newClient: Client = {
   avatar: '',
   value: 0,
   percentage: 0,
+  connections: [],
 };
 const Clients = () => {
   const clientsInStore = useAppSelector(getOnboardingFromStore).clients;

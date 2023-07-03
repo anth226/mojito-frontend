@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { ConnectionStatus } from '../../enums/connections';
+import { ConnectionStatus, ConnectionType } from '../../enums/connections';
 import { Client } from '../../interfaces/Client';
 import { Connection } from '../../interfaces/Connection';
 import cover1 from '../../assets/covers/card1.png';
@@ -14,6 +14,7 @@ import {
 const allConnectionList: Connection[] = [
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.TIKTOK,
     name: 'Asana',
     avatar: 'base64 Image',
     cover: cover1,
@@ -21,6 +22,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.GOOGLE,
     name: 'Grammarly',
     avatar: 'base64 Image',
     cover: cover2,
@@ -28,6 +30,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.META,
     name: 'Random',
     avatar: 'base64 Image',
     cover: cover3,
@@ -35,6 +38,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.TIKTOK,
     name: 'Grammarly',
     avatar: 'base64 Image',
     cover: cover2,
@@ -42,6 +46,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.TIKTOK,
     name: 'Random',
     avatar: 'base64 Image',
     cover: cover3,
@@ -49,6 +54,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.GOOGLE,
     name: 'Random',
     avatar: 'base64 Image',
     cover: cover3,
@@ -56,6 +62,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.META,
     name: 'Random',
     avatar: 'base64 Image',
     cover: cover3,
@@ -63,6 +70,7 @@ const allConnectionList: Connection[] = [
   },
   {
     status: ConnectionStatus.NOT_CONNECTED,
+    type: ConnectionType.TIKTOK,
     name: 'Random',
     avatar: 'base64 Image',
     cover: cover3,
@@ -182,15 +190,18 @@ export const onboardingSlice = createSlice({
     },
     updateConnectionsOfClient: (state, payloadWithType) => {
       if (payloadWithType.payload.action === 'add') {
-        state.clients[payloadWithType.payload.index].connections?.push(
-          payloadWithType.payload.connectionName
-        );
+        state.clients[payloadWithType.payload.index].connections?.push({
+          connectionKey: payloadWithType.payload.connectionKey.toString(),
+          connectionId: payloadWithType.payload.connectionId,
+          clientMutationId: payloadWithType.payload.clientMutationId,
+        });
       }
+
       if (payloadWithType.payload.action === 'remove') {
         state.clients[payloadWithType.payload.index].connections =
           state.clients[payloadWithType.payload.index].connections?.filter(
             (connection) =>
-              connection !== payloadWithType.payload.connectionName
+              connection.connectionKey !== payloadWithType.payload.connectionKey
           );
       }
     },
