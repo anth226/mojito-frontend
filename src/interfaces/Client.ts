@@ -1,6 +1,12 @@
-import { ClientRoles, ClientStatus } from "../enums/clients";
+import { ClientRoles, ClientStatus } from '../enums/clients';
 
+interface Connection {
+  connectionKey: string;
+  connectionId: string;
+  clientMutationId: string;
+}
 export interface Client {
+  _id?: string;
   email: string;
   name: string;
   role?: ClientRoles;
@@ -8,7 +14,7 @@ export interface Client {
   surname?: string;
   value?: number;
   percentage?: number;
-  connections?: string[];
+  connections?: Connection[];
   status?: ClientStatus;
 }
 export interface NewClient {

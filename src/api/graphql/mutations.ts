@@ -43,11 +43,49 @@ export const REGISTER_AGENCY = `
 export const INVITE_CLIENTS = gql`
   mutation InviteClients($input: InviteClientsInput!) {
     inviteClients(input: $input) {
+      clientMutationId
       clients {
+        _id
         name
         email
       }
+    }
+  }
+`;
+
+export const CREATE_CONNECTION = gql`
+  mutation CreateConnection($input: CreateConnectionInput!) {
+    createConnection(input: $input) {
       clientMutationId
+      connection {
+        _id
+      }
+    }
+  }
+`;
+
+export const DELETE_CONNECTION = gql`
+  mutation DeleteConnection($input: DeleteConnectionInput!) {
+    deleteConnection(input: $input) {
+      clientMutationId
+    }
+  }
+`;
+
+export const CREATE_ALERT = gql`
+  mutation CreateAlert($input: CreateAlertInput!) {
+    createAlert(input: $input) {
+      clientMutationId
+      alert {
+        value
+        name
+        connection {
+          client {
+            name
+            email
+          }
+        }
+      }
     }
   }
 `;
