@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
-import PlanCard from "../../../../../components/PlanCard/PlanCard";
-import classes from "./Billing.module.css";
-import { useBillingFormInstance } from "../../../../../components/BillingForm/BillingForm";
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
+import { useEffect, useState } from 'react';
+import PlanCard from '../../../../../components/PlanCard/PlanCard';
+import classes from './Billing.module.css';
+import { useBillingFormInstance } from '../../../../../components/BillingForm/BillingForm';
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
 import {
   getOnboardingFromStore,
   nested,
   next,
   setBilling,
+  setBillingDetails,
   setBillingPlan,
-} from "../../../../../reduxSlices/onboarding/onboarding";
-import { AgencyOnBoardingPaths } from "../../../../paths";
-import { plans } from "../../../../../constants/BillingPlans";
+} from '../../../../../reduxSlices/onboarding/onboarding';
+import { AgencyOnBoardingPaths } from '../../../../paths';
+import { plans } from '../../../../../constants/BillingPlans';
 
 const AgencyOnBoardingBilling = () => {
-  const { billing, nestedSteps, nestedPath, prevStep } = useAppSelector(getOnboardingFromStore);
+  const { billing, nestedSteps, nestedPath, prevStep } = useAppSelector(
+    getOnboardingFromStore
+  );
   const dispatch = useAppDispatch();
 
   const [menuItem, setMenuItem] = useState(1);
@@ -25,13 +28,13 @@ const AgencyOnBoardingBilling = () => {
     dispatch(setBillingPlan(index));
   };
 
-  const onFinished = (values:any) => {
+  const onFinished = (values: any) => {
+    dispatch(setBillingDetails(values));
     dispatch(next());
-
-  }
+  };
 
   useEffect(() => {
-    dispatch(setBilling({set: prevStep === 3 ? false : true}));
+    dispatch(setBilling({ set: prevStep === 3 ? false : true }));
     dispatch(nested(AgencyOnBoardingPaths.BILLING));
     return () => {
       dispatch(nested(''));
@@ -41,19 +44,19 @@ const AgencyOnBoardingBilling = () => {
   return (
     <>
       <div>
-        <h1 style={{ margin: "0px" }}>Billing</h1>
+        <h1 style={{ margin: '0px' }}>Billing</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </div>
       <div className={classes.center}>
-        { nestedSteps === 0 && (
+        {nestedSteps === 0 && (
           <div className={classes.billing_menu}>
             <span
               style={{
-                color: menuItem === 0 ? "#FFFFFF" : "#0062FF",
-                backgroundColor: menuItem === 0 ? "#0062FF" : "#FFFFFF",
+                color: menuItem === 0 ? '#FFFFFF' : '#0062FF',
+                backgroundColor: menuItem === 0 ? '#0062FF' : '#FFFFFF',
               }}
               className={classes.billing_menu_button}
               onClick={() => setMenuItem(0)}
@@ -62,8 +65,8 @@ const AgencyOnBoardingBilling = () => {
             </span>
             <span
               style={{
-                color: menuItem === 1 ? "#FFFFFF" : "#0062FF",
-                backgroundColor: menuItem === 1 ? "#0062FF" : "#FFFFFF",
+                color: menuItem === 1 ? '#FFFFFF' : '#0062FF',
+                backgroundColor: menuItem === 1 ? '#0062FF' : '#FFFFFF',
               }}
               className={classes.billing_menu_button}
               onClick={() => setMenuItem(1)}
@@ -73,7 +76,7 @@ const AgencyOnBoardingBilling = () => {
           </div>
         )}
       </div>
-      <div style={{ display: "grid", gap: "10px" }}>
+      <div style={{ display: 'grid', gap: '10px' }}>
         {plans.map((plan, index) => {
           if (
             billing.plan !== -1 &&
@@ -96,7 +99,7 @@ const AgencyOnBoardingBilling = () => {
           );
         })}
       </div>
-      {nestedPath === AgencyOnBoardingPaths.BILLING &&nestedSteps === 1 && (
+      {nestedPath === AgencyOnBoardingPaths.BILLING && nestedSteps === 1 && (
         <BillingForm onFinished={onFinished} />
       )}
     </>

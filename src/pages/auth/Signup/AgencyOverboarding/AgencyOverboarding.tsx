@@ -1,6 +1,10 @@
 import { Button, Card, Col, Row, Space } from 'antd';
+import { INVITE_CLIENTS } from 'api/graphql/mutations';
+import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
+import { Client } from 'interfaces/Client';
 import { useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { useBillingFormInstance } from '../../../../components/BillingForm/BillingForm';
 import { clearSignup } from '../../../../reduxSlices/auth/auth';
@@ -8,12 +12,9 @@ import {
   back,
   getOnboardingFromStore,
   next,
+  setClientsInStore,
 } from '../../../../reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../../paths';
-import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
-import { INVITE_CLIENTS } from 'api/graphql/mutations';
-import { toast } from 'react-toastify';
-import { Client } from 'interfaces/Client';
 
 const AgencyOverboarding = () => {
   const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
@@ -38,9 +39,22 @@ const AgencyOverboarding = () => {
   });
 
   const onContinue = async () => {
+    if (nested) {
+      if (nestedPath === AgencyOnBoardingPaths.BILLING && nestedSteps === 1) {
+        FormInstance?.submit();
+      } else {
+        dispatch(next());
+      }
+    }
     if (step === 1) {
+      const clientInvited = clients.reduce((pre: Client[], cur: Client) => {
+        if (cur?._id) {
+          return [...pre, cur];
+        }
+        return [...pre];
+      }, []);
       const newClients = clients.reduce((pre: Client[], cur: Client) => {
-        if (cur.name || cur.email) {
+        if ((cur.name || cur.email) && !cur?._id) {
           return [...pre, cur];
         }
         return [...pre];
@@ -51,20 +65,38 @@ const AgencyOverboarding = () => {
           return { name: client.name, email: client.email };
         });
 
-        await inviteClients({
+        const dataClients = await inviteClients({
           variables: { input: { clients: data } },
         });
+        const listClient = dataClients?.data?.inviteClients?.clients;
+        const clientMutationId =
+          dataClients?.data?.inviteClients?.clientMutationId;
+        const newListClient = newClients?.map((client: Client) => {
+          const index = listClient?.findIndex(
+            (i: Client) => i.email === client.email
+          );
+          if (index !== undefined && index !== -1) {
+            return {
+              ...client,
+              _id: listClient[index]._id,
+              clientMutationId: clientMutationId,
+            };
+          }
+          return client;
+        });
+
+        if (listClient.length > 0) {
+          dispatch(setClientsInStore([...clientInvited, ...newListClient]));
+        }
       } else {
         dispatch(next());
       }
     }
-    if (nested) {
-      if (nestedPath === AgencyOnBoardingPaths.BILLING && nestedSteps === 1) {
-        FormInstance?.submit();
-      } else {
-        dispatch(next());
-      }
+
+    if (step === 3) {
+      dispatch(next());
     }
+
     // else {
     //   if (step < 5) {
     //     dispatch(next());

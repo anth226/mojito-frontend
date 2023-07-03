@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import authReducer from '../reduxSlices/auth/auth'
+import authReducer from '../reduxSlices/auth/auth';
 import onboardingReducer from '../reduxSlices/onboarding/onboarding';
 
 import {
@@ -12,21 +12,30 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const authPersistConfig = {
   key: 'auth',
   storage: storage,
-}
+};
 
-const persistedReducer = persistReducer(authPersistConfig, authReducer)
+const onBoardingPersistConfig = {
+  key: 'onBoarding',
+  storage: storage,
+};
+
+const persistedReducer = persistReducer(authPersistConfig, authReducer);
+const persistedOnBoardingReducer = persistReducer(
+  onBoardingPersistConfig,
+  onboardingReducer
+);
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     auth: persistedReducer,
-    onboarding: onboardingReducer,
+    onboarding: persistedOnBoardingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -36,7 +45,7 @@ export const store = configureStore({
     }),
 });
 
-export let persistorStore = persistStore(store)
+export let persistorStore = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
