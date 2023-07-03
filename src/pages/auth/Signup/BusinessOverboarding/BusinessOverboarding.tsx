@@ -1,15 +1,17 @@
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Button, Card, Col, Row, Space } from "antd";
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Button, Card, Col, Row, Space } from 'antd';
 import {
   back,
+  clearOnBoardingStore,
   getOnboardingFromStore,
   next,
-} from "../../../../reduxSlices/onboarding/onboarding";
-import { useMemo } from "react";
-import { AuthenticationPaths, BusinessOnBoardingPaths } from "../../../paths";
-import { useBillingFormInstance } from "../../../../components/BillingForm/BillingForm";
-import { clearSignup } from "../../../../reduxSlices/auth/auth";
+} from '../../../../reduxSlices/onboarding/onboarding';
+import { useMemo } from 'react';
+import { AuthenticationPaths, BusinessOnBoardingPaths } from '../../../paths';
+import { useBillingFormInstance } from '../../../../components/BillingForm/BillingForm';
+import { clearSignup } from '../../../../reduxSlices/auth/auth';
+import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 
 const BusinessOverboarding = () => {
   const { step, nested, nestedPath, nestedSteps } = useAppSelector(
@@ -34,6 +36,9 @@ const BusinessOverboarding = () => {
         dispatch(next());
       } else {
         dispatch(clearSignup());
+        dispatch(clearOnBoardingStore());
+        removeAccessToken();
+        removeAccountInfo();
         navigate(AuthenticationPaths.LOGINPATH);
       }
     }
@@ -65,12 +70,12 @@ const BusinessOverboarding = () => {
 
   const widthOfCard = useMemo(() => {
     if (pathname === BusinessOnBoardingPaths.CONNECTIONS) {
-      return "1300px";
+      return '1300px';
     }
     if (pathname === BusinessOnBoardingPaths.USERS) {
-      return "1150px";
+      return '1150px';
     }
-    return "590px";
+    return '590px';
   }, [pathname]);
 
   if (errorPage()) {
@@ -81,22 +86,22 @@ const BusinessOverboarding = () => {
     <Card
       style={{
         maxWidth: widthOfCard,
-        height: "fit-content",
-        marginTop: "80px",
+        height: 'fit-content',
+        marginTop: '80px',
       }}
     >
-      <Space direction="vertical" size="middle" style={{ textAlign: "center" }}>
+      <Space direction='vertical' size='middle' style={{ textAlign: 'center' }}>
         <Outlet />
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <Button style={{ width: "100%" }} onClick={onBack}>
+            <Button style={{ width: '100%' }} onClick={onBack}>
               <b>Back</b>
             </Button>
           </Col>
           <Col span={12}>
             <Button
-              type="primary"
-              style={{ width: "100%" }}
+              type='primary'
+              style={{ width: '100%' }}
               onClick={onContinue}
             >
               <b>Continue</b>

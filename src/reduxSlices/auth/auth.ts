@@ -79,7 +79,12 @@ export const signupBusinessAsync = createAsyncThunk(
 
     // API Call to signup account business
     const response = await signupByBusiness(rest);
-    return response.data;
+    const data = response.data;
+    if (data) {
+      const { email, password } = businessSignupData;
+      await login({ email, password });
+    }
+    return data;
   }
 );
 

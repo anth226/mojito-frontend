@@ -22,7 +22,17 @@ export const VIEWER = gql`
   }
 `;
 
-export const ALERT = gql`
+export const ALERT_INFO = gql`
+  query Alert($alertId: String!) {
+    alert(id: $alertId) {
+      _id
+      name
+      value
+    }
+  }
+`;
+
+export const GET_ALERTS = gql`
   query Alert($alertId: String!) {
     alert(id: $alertId) {
       _id

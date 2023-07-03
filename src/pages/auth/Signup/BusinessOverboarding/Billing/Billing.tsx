@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
-import PlanCard from "../../../../../components/PlanCard/PlanCard";
-import classes from "./Billing.module.css";
-import { useBillingFormInstance } from "../../../../../components/BillingForm/BillingForm";
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
+import { useEffect, useState } from 'react';
+import PlanCard from '../../../../../components/PlanCard/PlanCard';
+import classes from './Billing.module.css';
+import { useBillingFormInstance } from '../../../../../components/BillingForm/BillingForm';
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
 import {
   getOnboardingFromStore,
   nested,
   next,
   setBilling,
+  setBillingDetails,
   setBillingPlan,
-} from "../../../../../reduxSlices/onboarding/onboarding";
-import { BusinessOnBoardingPaths } from "../../../../paths";
-import { plans } from "../../../../../constants/BillingPlans";
+} from '../../../../../reduxSlices/onboarding/onboarding';
+import { BusinessOnBoardingPaths } from '../../../../paths';
+import { plans } from '../../../../../constants/BillingPlans';
 
 const BusinessOnBoardingBilling = () => {
   const { billing, nestedSteps, nestedPath, prevStep } = useAppSelector(
@@ -28,6 +29,7 @@ const BusinessOnBoardingBilling = () => {
   };
 
   const onFinished = (values: any) => {
+    dispatch(setBillingDetails(values));
     dispatch(next());
   };
 
@@ -35,14 +37,14 @@ const BusinessOnBoardingBilling = () => {
     dispatch(setBilling({ set: prevStep === 1 ? false : true }));
     dispatch(nested(BusinessOnBoardingPaths.BILLING));
     return () => {
-      dispatch(nested(""));
+      dispatch(nested(''));
     };
   }, [dispatch, prevStep]);
 
   return (
     <>
       <div>
-        <h1 style={{ margin: "0px" }}>Billing</h1>
+        <h1 style={{ margin: '0px' }}>Billing</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -53,8 +55,8 @@ const BusinessOnBoardingBilling = () => {
           <div className={classes.billing_menu}>
             <span
               style={{
-                color: menuItem === 0 ? "#FFFFFF" : "#0062FF",
-                backgroundColor: menuItem === 0 ? "#0062FF" : "#FFFFFF",
+                color: menuItem === 0 ? '#FFFFFF' : '#0062FF',
+                backgroundColor: menuItem === 0 ? '#0062FF' : '#FFFFFF',
               }}
               className={classes.billing_menu_button}
               onClick={() => setMenuItem(0)}
@@ -63,8 +65,8 @@ const BusinessOnBoardingBilling = () => {
             </span>
             <span
               style={{
-                color: menuItem === 1 ? "#FFFFFF" : "#0062FF",
-                backgroundColor: menuItem === 1 ? "#0062FF" : "#FFFFFF",
+                color: menuItem === 1 ? '#FFFFFF' : '#0062FF',
+                backgroundColor: menuItem === 1 ? '#0062FF' : '#FFFFFF',
               }}
               className={classes.billing_menu_button}
               onClick={() => setMenuItem(1)}
@@ -74,7 +76,7 @@ const BusinessOnBoardingBilling = () => {
           </div>
         )}
       </div>
-      <div style={{ display: "grid", gap: "10px" }}>
+      <div style={{ display: 'grid', gap: '10px' }}>
         {plans.map((plan, index) => {
           if (
             billing.plan !== -1 &&
