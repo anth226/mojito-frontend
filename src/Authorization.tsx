@@ -1,22 +1,23 @@
-import React, { useCallback, useEffect } from "react";
-import { Outlet, matchPath, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "./app/hooks";
+import React, { useCallback, useEffect } from 'react';
+import { Outlet, matchPath, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from './app/hooks';
 import {
   AgencyNavBarPaths,
   AuthenticationPaths,
   ClientNavBarPaths,
-} from "./pages/paths";
-import { AccountRole, getAuthFromStore } from "./reduxSlices/auth/auth";
+} from './pages/paths';
+import { AccountRole, getAuthFromStore } from './reduxSlices/auth/auth';
 
 interface isMatchArguments {
   pathPatternEnum: typeof ClientNavBarPaths | typeof AgencyNavBarPaths;
   location: string;
 }
 function isMatch(
-  pathPatternEnum: isMatchArguments["pathPatternEnum"],
-  location: isMatchArguments["location"]
+  pathPatternEnum: isMatchArguments['pathPatternEnum'],
+  location: isMatchArguments['location']
 ): boolean {
   const paths = Object.values(pathPatternEnum);
+
   for (let i = 0; i < paths.length; i++) {
     if (matchPath(paths[i], location)) {
       return true;
@@ -36,7 +37,7 @@ const Authorization: React.FunctionComponent = () => {
   const authorizedAgency = useCallback((role: any, path: any) => {
     const authorizedPath = isMatch(AgencyNavBarPaths, path);
     if (role === AccountRole.AGENCY && authorizedPath) {
-      console.log("ROLE: AGENCY");
+      console.log('ROLE: AGENCY');
     } else {
       navigate(AuthenticationPaths.LOGINPATH);
     }
@@ -45,7 +46,7 @@ const Authorization: React.FunctionComponent = () => {
   const authorizedClient = useCallback((role: any, path: any) => {
     const authorizedPath = isMatch(ClientNavBarPaths, path);
     if (role === AccountRole.CLIENT && authorizedPath) {
-      console.log("ROLE: CLIENT");
+      console.log('ROLE: CLIENT');
     } else {
       navigate(AuthenticationPaths.LOGINPATH);
     }
