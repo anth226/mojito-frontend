@@ -10,11 +10,13 @@ import { useBillingFormInstance } from '../../../../components/BillingForm/Billi
 import { clearSignup } from '../../../../reduxSlices/auth/auth';
 import {
   back,
+  clearOnBoardingStore,
   getOnboardingFromStore,
   next,
   setClientsInStore,
 } from '../../../../reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../../paths';
+import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 
 const AgencyOverboarding = () => {
   const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
@@ -107,6 +109,9 @@ const AgencyOverboarding = () => {
     // }
     if (step >= 5) {
       dispatch(clearSignup());
+      dispatch(clearOnBoardingStore());
+      removeAccessToken();
+      removeAccountInfo();
       navigate(AuthenticationPaths.LOGINPATH);
     }
   };
