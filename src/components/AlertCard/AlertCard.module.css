@@ -16,6 +16,12 @@
     font-weight: 300;
 }
 
+.text_content {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
 .alert_box {
     display: flex;
     flex-direction: row;

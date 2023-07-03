@@ -1,9 +1,9 @@
-import { Card, Space, Avatar, Select, Divider, Progress } from "antd";
-import { Avatars } from "../../assets/base64Icons";
-import "./AlertCard.css";
-import classes from "./AlertCard.module.css";
-import { Alert } from "../../interfaces/Alert";
-import { operators, parameters } from "../../mockdata/Alerts";
+import { Card, Space, Avatar, Select, Divider, Progress } from 'antd';
+import { Avatars } from '../../assets/base64Icons';
+import './AlertCard.css';
+import classes from './AlertCard.module.css';
+import { Alert } from '../../interfaces/Alert';
+import { operators, parameters } from '../../mockdata/Alerts';
 
 interface AlertCardProps {
   alert: Alert;
@@ -12,23 +12,27 @@ interface AlertCardProps {
 
 const ParameterSelectors = ({ alert }: { alert: Alert }) => {
   return (
-    <div style={{ display: "flex", columnGap: "12px" }}>
+    <div style={{ display: 'flex', columnGap: '12px' }}>
       <Select
         showArrow={false}
         options={parameters}
         bordered={false}
-        style={{ width: "50px" }}
+        style={{ width: '50px' }}
         defaultValue={alert.parameter}
       />
-      <span className={classes.bold_text}>Parameter</span>
+      <span className={[classes.bold_text, classes.text_content].join(' ')}>
+        Parameter
+      </span>
       <Select
         showArrow={false}
         options={operators}
         bordered={false}
-        style={{ width: "150px" }}
+        style={{ width: '150px' }}
         defaultValue={alert.operator}
       />
-      <span className={classes.bold_text}>Value</span>
+      <span className={[classes.bold_text, classes.text_content].join(' ')}>
+        Value
+      </span>
     </div>
   );
 };
@@ -47,7 +51,7 @@ const AlertCard = ({ alert, onClick }: AlertCardProps) => {
     >
       <div className={classes.alert_box}>
         <Space>
-          <Avatar size={"large"} src={Avatars.AVATAR1} />
+          <Avatar size={'large'} src={Avatars.AVATAR1} />
           <div className={classes.alert_overview}>
             <span className={classes.bold_text}>{alert.name}</span>
             <span className={classes.light_text}>{alert.source}</span>
@@ -73,26 +77,26 @@ export const AlertCardAgency = ({ alert, onClick }: AlertCardProps) => {
     >
       <div className={classes.alert_box}>
         <Space>
-          <Avatar size={"large"} src={Avatars.AVATAR1} />
+          <Avatar size={'large'} src={Avatars.AVATAR1} />
           <div className={classes.alert_overview}>
             <span className={classes.bold_text}>{alert.name}</span>
             <span className={classes.light_text}>{alert.source}</span>
           </div>
         </Space>
         <div
-          style={{ display: "flex", columnGap: "12px", alignItems: "center" }}
+          style={{ display: 'flex', columnGap: '12px', alignItems: 'center' }}
         >
           <Progress
-            strokeColor={"#027A48"}
+            strokeColor={'#027A48'}
             percent={50}
             showInfo={false}
-            style={{ width: "300px" }}
+            style={{ width: '300px' }}
           />
           <div
             style={{
-              backgroundColor: "#F2F3F7",
-              padding: "12px",
-              borderRadius: "12px",
+              backgroundColor: '#F2F3F7',
+              padding: '12px',
+              borderRadius: '12px',
             }}
           >
             <span>Fired: </span>
