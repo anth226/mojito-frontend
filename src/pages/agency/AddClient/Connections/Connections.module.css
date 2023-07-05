@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 32px;
 }
 
 .title {
@@ -43,4 +44,16 @@
     letter-spacing: 0em;
     text-align: left;
     color: #262631;
+}
+
+.switch_background_active {
+    padding: 10px;
+    border-radius: 8px;
+    background: #0062ff1a;
+}
+
+.switch_background {
+    padding: 10px;
+    border-radius: 8px;
+    background: transparent;
 }

@@ -1,0 +1,25 @@
+.search_box {
+    border-radius: 24px;
+    background-color: #e2e2ea;
+}
+
+.search_box > input {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #e2e2ea;
+    border-color: #e2e2ea;
+}
+
+.search_box > input:hover {
+    border-color: #e2e2ea;
+}
+
+.title {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #262631;
+}
