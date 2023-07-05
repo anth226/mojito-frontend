@@ -1,42 +1,43 @@
-import { createBrowserRouter } from "react-router-dom";
-import Authorization from "../Authorization";
-import AgencyLayout from "../layouts/AgencyLayout";
-import AuthLayout from "../layouts/AuthLayout";
-import ClientLayout from "../layouts/ClientLayout";
-import Connections from "./agency/Connections/Connections";
-import HQ from "./agency/HQ/HQ";
-import Login from "./auth/Login";
-import ClientConnections from "./client/ClientConnections/ClientConnections";
-import Performance from "./client/Performance/Performance";
-import AgencyOverboarding from "./auth/Signup/AgencyOverboarding/AgencyOverboarding";
-import AgencyOnBoardingAlerts from "./auth/Signup/AgencyOverboarding/Alerts/Alerts";
-import AgencyOnBoardingBilling from "./auth/Signup/AgencyOverboarding/Billing/Billing";
-import Clients from "./auth/Signup/AgencyOverboarding/Clients/Clients";
-import AgencyOnBoardingConnections from "./auth/Signup/AgencyOverboarding/Connections/Connections";
-import AgencyOnBoardingUsers from "./auth/Signup/AgencyOverboarding/Users/Users";
-import BusinessOverboarding from "./auth/Signup/BusinessOverboarding/BusinessOverboarding";
-import SignUp from "./auth/Signup/Signup";
-import ErrorPage from "./error";
+import { createBrowserRouter } from 'react-router-dom';
+import Authorization from '../Authorization';
+import AgencyLayout from '../layouts/AgencyLayout';
+import AuthLayout from '../layouts/AuthLayout';
+import ClientLayout from '../layouts/ClientLayout';
+import Connections from './agency/Connections/Connections';
+import HQ from './agency/HQ/HQ';
+import Login from './auth/Login';
+import ClientConnections from './client/ClientConnections/ClientConnections';
+import Performance from './client/Performance/Performance';
+import AgencyOverboarding from './auth/Signup/AgencyOverboarding/AgencyOverboarding';
+import AgencyOnBoardingAlerts from './auth/Signup/AgencyOverboarding/Alerts/Alerts';
+import AgencyOnBoardingBilling from './auth/Signup/AgencyOverboarding/Billing/Billing';
+import Clients from './auth/Signup/AgencyOverboarding/Clients/Clients';
+import AgencyOnBoardingConnections from './auth/Signup/AgencyOverboarding/Connections/Connections';
+import AgencyOnBoardingUsers from './auth/Signup/AgencyOverboarding/Users/Users';
+import BusinessOverboarding from './auth/Signup/BusinessOverboarding/BusinessOverboarding';
+import SignUp from './auth/Signup/Signup';
+import ErrorPage from './error';
 import {
   AgencyNavBarPaths,
   AgencyOnBoardingPaths,
   AuthenticationPaths,
   BusinessOnBoardingPaths,
   ClientNavBarPaths,
-} from "./paths";
-import BusinessOnBoardingConnections from "./auth/Signup/BusinessOverboarding/Connections/Connections";
-import BusinessOnBoardingUsers from "./auth/Signup/BusinessOverboarding/Users/Users";
-import BusinessOnBoardingBilling from "./auth/Signup/BusinessOverboarding/Billing/Billing";
-import ClientSettings from "./client/ClientSettings/ClientSettings";
-import AgencySettings from "./agency/AgencySettings/AgencySettings";
-import Metrics from "./agency/Metrics/Metrics";
-import ClientDashboard from "./client/ClientDashboard/ClientDashboard";
-import ClientAlerts from "./client/ClientAlerts/ClientAlerts";
-import AgencyAlerts from "./agency/AgencyAlerts/AgencyAlerts";
+} from './paths';
+import BusinessOnBoardingConnections from './auth/Signup/BusinessOverboarding/Connections/Connections';
+import BusinessOnBoardingUsers from './auth/Signup/BusinessOverboarding/Users/Users';
+import BusinessOnBoardingBilling from './auth/Signup/BusinessOverboarding/Billing/Billing';
+import ClientSettings from './client/ClientSettings/ClientSettings';
+import AgencySettings from './agency/AgencySettings/AgencySettings';
+import Metrics from './agency/Metrics/Metrics';
+import ClientDashboard from './client/ClientDashboard/ClientDashboard';
+import ClientAlerts from './client/ClientAlerts/ClientAlerts';
+import AgencyAlerts from './agency/AgencyAlerts/AgencyAlerts';
+import { AddClient } from './agency/AddClient/AddClient';
 
 export const routes = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <AuthLayout />,
     children: [
       {
@@ -52,7 +53,7 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/auth",
+    path: '/auth',
     element: <AuthLayout />,
     children: [
       {
@@ -118,11 +119,11 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/agency",
+    path: '/agency',
     element: <Authorization />,
     children: [
       {
-        path: "/agency",
+        path: '/agency',
         element: <AgencyLayout />,
         children: [
           {
@@ -145,16 +146,20 @@ export const routes = createBrowserRouter([
             path: `${AgencyNavBarPaths.Settings}`,
             element: <AgencySettings />,
           },
+          {
+            path: AgencyNavBarPaths.AddClient,
+            element: <AddClient />,
+          },
         ],
       },
     ],
   },
   {
-    path: "/client",
+    path: '/client',
     element: <Authorization />,
     children: [
       {
-        path: "/client",
+        path: '/client',
         element: <ClientLayout />,
         children: [
           {

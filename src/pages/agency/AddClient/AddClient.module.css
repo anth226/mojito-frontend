@@ -1,0 +1,52 @@
+.content_box {
+    padding: 32px 40px 0px 32px;
+}
+
+.action_box {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 32px;
+    padding: 0px 40px;
+}
+
+.button_action {
+    height: 48px;
+    padding: 16px 18px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.009em;
+    text-align: left;
+    box-shadow: none;
+}
+
+.button_cancel {
+    background: transparent;
+    border: 1px solid #e2e2ea;
+    color: #2e2e3a;
+}
+
+.button_next {
+    background: #384cff;
+    border: 1px solid #384cff;
+    color: #f5f5ff;
+}
+
+.button_back {
+    height: 38px;
+    padding: 10px 16px;
+    margin-bottom: 32px;
+    border-radius: 100px;
+    gap: 10px;
+    background: #e2e2ea;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #262631;
+    display: flex;
+    align-items: center;
+}
