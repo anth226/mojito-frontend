@@ -1,29 +1,30 @@
 import * as React from 'react';
 
-function ArrowLeft(
+function ArrowRight(
   props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
 ) {
   return (
     <svg
-      width={20}
-      height={20}
+      width='18'
+      height='18'
       viewBox='0 0 18 18'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...props}
     >
-      <g clipPath='url(#clip0_319_41332)'>
+      <g clip-path='url(#clip0_319_41684)'>
         <path
-          d='M8.11953 9.00005L11.832 12.7126L10.7715 13.7731L5.99853 9.00005L10.7715 4.22705L11.832 5.28755L8.11953 9.00005Z'
+          d='M9.88047 8.99995L6.16797 5.28745L7.22847 4.22695L12.0015 8.99995L7.22847 13.7729L6.16797 12.7124L9.88047 8.99995Z'
           fill={props.fill ?? '#262631'}
         />
       </g>
       <defs>
-        <clipPath id='clip0_319_41332'>
-          <path
+        <clipPath id='clip0_319_41684'>
+          <rect
+            width='18'
+            height='18'
             fill='#fff'
-            transform='translate(18) rotate(90)'
-            d='M0 0H20V20H0z'
+            transform='translate(0 18) rotate(-90)'
           />
         </clipPath>
       </defs>
@@ -31,4 +32,4 @@ function ArrowLeft(
   );
 }
 
-export default ArrowLeft;
+export default ArrowRight;

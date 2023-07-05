@@ -1,31 +1,12 @@
 import { Button, message, Steps } from 'antd';
-import { Client } from 'interfaces/Client';
-import { useState } from 'react';
-import { GeneralInfo } from './GeneralInfo/GeneralInfo';
-import { Connections } from './Connections/Connections';
-import classes from './AddClient.module.css';
 import ArrowLeft from 'assets/Icons/ArrowLeft';
-
-const newClient: Client = {
-  name: '',
-  email: '',
-};
+import { useState } from 'react';
+import classes from './AddClient.module.css';
+import { Connections } from './Connections/Connections';
+import { GeneralInfo } from './GeneralInfo/GeneralInfo';
 
 export const AddClient = () => {
   const [current, setCurrent] = useState(0);
-  const [clients, setCLients] = useState<Client[]>([newClient]);
-
-  const addClient = () => {
-    setCLients((prevState) => [...prevState, newClient]);
-  };
-
-  const onChange = (e: any, index: number) => {
-    const propertyName = e.target.name;
-    const propertyValue = e.target.value;
-    const temporaryList = JSON.parse(JSON.stringify(clients));
-    temporaryList[index][propertyName] = propertyValue;
-    setCLients(temporaryList);
-  };
 
   const steps = [
     {
@@ -55,7 +36,12 @@ export const AddClient = () => {
           <Button icon={<ArrowLeft />} className={classes.button_back}>
             Back
           </Button>
-          <Steps current={current} items={items} direction='vertical' />
+          <Steps
+            size='small'
+            current={current}
+            items={items}
+            direction='vertical'
+          />
         </div>
         <div style={{ width: '100%' }}>
           <div>
