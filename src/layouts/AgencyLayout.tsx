@@ -263,6 +263,7 @@ const AgencyLayout: React.FunctionComponent = () => {
                 color: '#1677ff',
                 border: 'none',
               }}
+              onClick={() => navigate(AgencyNavBarPaths.AddClient)}
             >
               <b>Add clients</b>
             </Button>
