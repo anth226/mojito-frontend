@@ -1,5 +1,5 @@
 import { Button, Card, Col, Row, Space } from 'antd';
-import { INVITE_CLIENTS } from 'api/graphql/mutations';
+import { CREATE_ALERTS, INVITE_CLIENTS } from 'api/graphql/mutations';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { Client } from 'interfaces/Client';
 import { useMemo } from 'react';
@@ -31,6 +31,16 @@ const AgencyOverboarding = () => {
   const { FormInstance } = useBillingFormInstance();
 
   const [inviteClients] = useGraphQlMutation(INVITE_CLIENTS, {
+    onError(error) {
+      toast.error(error.message);
+      throw error;
+    },
+    onCompleted: () => {
+      dispatch(next());
+    },
+  });
+
+  const [createAlerts] = useGraphQlMutation(CREATE_ALERTS, {
     onError(error) {
       toast.error(error.message);
       throw error;
@@ -96,7 +106,21 @@ const AgencyOverboarding = () => {
     }
 
     if (step === 3) {
-      dispatch(next());
+      const input = {
+        clientMutationId: null,
+        alerts: [
+          {
+            value: '0',
+            parameter: 'If',
+            operation: 'GREATER_THAN',
+            name: 'test',
+            connectionId: '7ac69c93-3492-4ce7-9440-129eb0294613',
+          },
+        ],
+      };
+      await createAlerts({
+        variables: { input: input },
+      });
     }
 
     // else {
