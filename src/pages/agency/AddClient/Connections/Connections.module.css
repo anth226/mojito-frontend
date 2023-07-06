@@ -1,0 +1,59 @@
+.flex_box {
+    display: flex;
+    align-items: center;
+}
+
+.connections_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.title {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #262631;
+}
+
+.connection_box_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 16px;
+}
+
+.connection_name {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #262631;
+    margin-left: 16px;
+}
+
+.clent_name {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #262631;
+}
+
+.switch_background_active {
+    padding: 10px;
+    border-radius: 8px;
+    background: #0062ff1a;
+}
+
+.switch_background {
+    padding: 10px;
+    border-radius: 8px;
+    background: transparent;
+}

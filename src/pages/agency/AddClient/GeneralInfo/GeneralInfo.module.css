@@ -1,0 +1,42 @@
+.title {
+    margin-bottom: 32px;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #262631;
+}
+
+.input_label {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #9a9aaf;
+}
+
+.input {
+    height: 48px;
+    width: 100%;
+    padding: 16px 14px;
+    border-radius: 5px;
+    background: #e2e2ea;
+    color: #656575;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.009em;
+    text-align: left;
+    margin-top: 8px;
+}
+
+.button_text {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.009em;
+    text-align: left;
+    color: #262631;
+}
