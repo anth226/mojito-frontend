@@ -1,10 +1,11 @@
 import { Button, Card, Col, Row, Space } from 'antd';
-import { CREATE_ALERTS, INVITE_CLIENTS } from 'api/graphql/mutations';
+import { INVITE_CLIENTS } from 'api/graphql/mutations';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { Client } from 'interfaces/Client';
 import { useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { useBillingFormInstance } from '../../../../components/BillingForm/BillingForm';
 import { clearSignup } from '../../../../reduxSlices/auth/auth';
@@ -16,7 +17,6 @@ import {
   setClientsInStore,
 } from '../../../../reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../../paths';
-import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 
 const AgencyOverboarding = () => {
   const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
@@ -31,16 +31,6 @@ const AgencyOverboarding = () => {
   const { FormInstance } = useBillingFormInstance();
 
   const [inviteClients] = useGraphQlMutation(INVITE_CLIENTS, {
-    onError(error) {
-      toast.error(error.message);
-      throw error;
-    },
-    onCompleted: () => {
-      dispatch(next());
-    },
-  });
-
-  const [createAlerts] = useGraphQlMutation(CREATE_ALERTS, {
     onError(error) {
       toast.error(error.message);
       throw error;
@@ -106,21 +96,7 @@ const AgencyOverboarding = () => {
     }
 
     if (step === 3) {
-      const input = {
-        clientMutationId: null,
-        alerts: [
-          {
-            value: '0',
-            parameter: 'If',
-            operation: 'GREATER_THAN',
-            name: 'test',
-            connectionId: '7ac69c93-3492-4ce7-9440-129eb0294613',
-          },
-        ],
-      };
-      await createAlerts({
-        variables: { input: input },
-      });
+      dispatch(next());
     }
 
     // else {
