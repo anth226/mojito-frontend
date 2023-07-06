@@ -7,6 +7,17 @@ export const GET_USER_INFO = gql`
       accountType
       agency {
         _id
+        alerts {
+          totalCount
+          hasMore
+          nodes {
+            value
+            parameter
+            operation
+            name
+            createdAt
+          }
+        }
       }
     }
   }

@@ -3,7 +3,7 @@ import { Avatars } from '../../assets/base64Icons';
 import './AlertCard.css';
 import classes from './AlertCard.module.css';
 import { Alert } from '../../interfaces/Alert';
-import { operators, parameters } from '../../mockdata/Alerts';
+import { mathValues, parameters } from '../../mockdata/Alerts';
 
 interface AlertCardProps {
   alert: Alert;
@@ -19,16 +19,18 @@ const ParameterSelectors = ({ alert }: { alert: Alert }) => {
         bordered={false}
         style={{ width: '50px' }}
         defaultValue={alert.parameter}
+        disabled
       />
       <span className={[classes.bold_text, classes.text_content].join(' ')}>
         Parameter
       </span>
       <Select
         showArrow={false}
-        options={operators}
+        options={mathValues}
         bordered={false}
         style={{ width: '150px' }}
-        defaultValue={alert.operator}
+        defaultValue={alert.operation}
+        disabled
       />
       <span className={[classes.bold_text, classes.text_content].join(' ')}>
         Value
