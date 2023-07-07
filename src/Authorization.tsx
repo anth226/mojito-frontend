@@ -41,6 +41,7 @@ const Authorization: React.FunctionComponent = () => {
     } else {
       navigate(AuthenticationPaths.LOGINPATH);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const authorizedClient = useCallback((role: any, path: any) => {
@@ -50,6 +51,7 @@ const Authorization: React.FunctionComponent = () => {
     } else {
       navigate(AuthenticationPaths.LOGINPATH);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -62,6 +64,7 @@ const Authorization: React.FunctionComponent = () => {
     if (authObject.role === AccountRole.CLIENT) {
       authorizedClient(authObject.role, pathname);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authObject.role, authorizedAgency, authorizedClient, pathname]);
 
   return <Outlet />;

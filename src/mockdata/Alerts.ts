@@ -1,13 +1,13 @@
-import { AlertStatus } from "../enums/alerts";
-import { Alert } from "../interfaces/Alert";
+import { AlertStatus } from '../enums/alerts';
+import { Alert } from '../interfaces/Alert';
 
 export const mockAlerts: Alert[] = [
   {
     id: 1,
-    name: "No Ad Spend",
-    source: "Source name",
-    parameter: "If",
-    operator: "Is greater than",
+    name: 'No Ad Spend',
+    source: 'Source name',
+    parameter: 'If',
+    operation: 'Is greater than',
     clients: 12,
     date: new Date(),
     fired: 0,
@@ -16,10 +16,10 @@ export const mockAlerts: Alert[] = [
   },
   {
     id: 2,
-    name: "No Ad Spend",
-    source: "Source name",
-    parameter: "If",
-    operator: "Is greater than",
+    name: 'No Ad Spend',
+    source: 'Source name',
+    parameter: 'If',
+    operation: 'Is greater than',
     clients: 12,
     date: new Date(),
     fired: 0,
@@ -28,10 +28,10 @@ export const mockAlerts: Alert[] = [
   },
   {
     id: 3,
-    name: "No Ad Spend",
-    source: "Source name",
-    parameter: "If",
-    operator: "Is greater than",
+    name: 'No Ad Spend',
+    source: 'Source name',
+    parameter: 'If',
+    operation: 'Is greater than',
     clients: 12,
     date: new Date(),
     fired: 0,
@@ -42,29 +42,43 @@ export const mockAlerts: Alert[] = [
 
 export const parameters = [
   {
-    value: "If",
-    label: "If",
+    value: 'If',
+    label: 'If',
   },
 ];
 
 export const operators = [
   {
-    value: "Is less than",
-    label: "Is less than",
+    value: 'Is less than',
+    label: 'Is less than',
   },
   {
-    value: "Is greater than",
-    label: "Is greater than",
+    value: 'Is greater than',
+    label: 'Is greater than',
   },
 ];
 
-export const actions = [
+export const mathValues = [
   {
-    value: "Then",
-    label: "Then",
+    value: 'LESS_THAN',
+    label: 'Less Than',
   },
   {
-    value: "Before",
-    label: "Before",
+    value: 'GREATER_THAN',
+    label: 'Greater Than',
+  },
+  {
+    value: 'EQUAL',
+    label: 'Equal',
+  },
+];
+export const actions = [
+  {
+    value: 'Then',
+    label: 'Then',
+  },
+  {
+    value: 'Before',
+    label: 'Before',
   },
 ];
