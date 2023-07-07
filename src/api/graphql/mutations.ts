@@ -7,6 +7,7 @@ export const LOGIN = `
       reason
       success
       user {
+        _id
         email
         name
         accountType
@@ -72,19 +73,13 @@ export const DELETE_CONNECTION = gql`
   }
 `;
 
-export const CREATE_ALERT = gql`
-  mutation CreateAlert($input: CreateAlertInput!) {
-    createAlert(input: $input) {
+export const CREATE_ALERTS = gql`
+  mutation CreateAlerts($input: CreateAlertsInput!) {
+    createAlerts(input: $input) {
       clientMutationId
-      alert {
-        value
+      alerts {
         name
-        connection {
-          client {
-            name
-            email
-          }
-        }
+        value
       }
     }
   }
