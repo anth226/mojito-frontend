@@ -67,6 +67,7 @@ const AlertModal = ({
                 bordered={false}
                 style={{ width: '100%' }}
                 defaultValue={parameters[0]}
+                disabled
               />
             </Form.Item>
           </Col>
@@ -75,6 +76,8 @@ const AlertModal = ({
               <Select
                 style={{ width: '100%' }}
                 placeholder={'Input Placeholder'}
+                options={parameters}
+                defaultValue={parameters[0]}
               />
             </Form.Item>
           </Col>

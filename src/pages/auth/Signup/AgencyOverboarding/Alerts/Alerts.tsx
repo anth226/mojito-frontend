@@ -55,7 +55,7 @@ const AgencyOnBoardingAlerts = () => {
       connections?.forEach((i: any) => {
         alerts.push({
           value: alert.value,
-          parameter: 'If',
+          parameter: alert.parameter,
           operation: alert.mathValue,
           name: alert.alertName,
           connectionId: i.connectionId,
@@ -71,6 +71,7 @@ const AgencyOnBoardingAlerts = () => {
         variables: { input: input },
       });
     }
+    setOpenModal(false);
   };
 
   useEffect(() => {
