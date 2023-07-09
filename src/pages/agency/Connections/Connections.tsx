@@ -1,12 +1,12 @@
-import { Col, Input, Row } from "antd";
-import { useCallback, useRef, useState } from "react";
-import ConnectionCard from "../../../components/ConnectionCard/ConnectionCard";
-import ConnectionsDrawer from "./connectionsDrawer/connectionsDrawer";
-import { ReactComponent as MagnifyingGlass } from "../../../assets/Icons/MagnifyingGlass.svg";
-import classes from "./Connections.module.css";
-import useElementSize from "../../../hooks/useElementSize";
-import { Connection } from "../../../interfaces/Connection";
-import { otherConnectionList } from "../../../mockdata/Connections";
+import { Col, Input, Row } from 'antd';
+import { useCallback, useRef, useState } from 'react';
+import ConnectionCard from '../../../components/ConnectionCard/ConnectionCard';
+import ConnectionsDrawer from './connectionsDrawer/connectionsDrawer';
+import { ReactComponent as MagnifyingGlass } from '../../../assets/Icons/MagnifyingGlass.svg';
+import classes from './Connections.module.css';
+import useElementSize from '../../../hooks/useElementSize';
+import { Connection } from '../../../interfaces/Connection';
+import { otherConnectionList } from '../../../mockdata/Connections';
 
 const Connections = () => {
   const [showDetails, setShowDetails] = useState<Connection | null>();
@@ -23,13 +23,13 @@ const Connections = () => {
     }, [])
   );
 
-  const [otherConnections, setOtherConnections] = useState<
-    Connection[] | []
-  >(otherConnectionList);
+  const [otherConnections, setOtherConnections] = useState<Connection[] | []>(
+    otherConnectionList
+  );
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value;
-    if (searchString === "" || searchString === undefined) {
+    if (searchString === '' || searchString === undefined) {
       setOtherConnections(otherConnectionList);
     } else {
       const filteredList = [];
@@ -43,31 +43,31 @@ const Connections = () => {
   };
 
   return (
-    <Row gutter={[16, 16]} justify={"space-evenly"} ref={containerRef}>
+    <Row gutter={[16, 16]} justify={'space-evenly'} ref={containerRef}>
       <ConnectionsDrawer
         connection={showDetails}
         open={!!showDetails?.name}
         onClose={() => setShowDetails(null)}
         closable={false}
       />
-      <Col style={{ width: searchBarContainerSize.width }}>
+      <Col style={{ width: '100%' }}>
         <Row
           style={{
-            marginTop: "12px",
+            marginTop: '12px',
           }}
-          align={"middle"}
-          justify={"space-between"}
+          align={'middle'}
+          justify={'space-between'}
         >
-          <Col>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <h1 style={{ margin: "0 10px" }}>Connections</h1>
+          <Col span={16}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <h1 style={{ margin: '0 10px' }}>Connections</h1>
             </div>
           </Col>
           <Col span={8}>
             <Input
               className={classes.search_box}
-              size="large"
-              placeholder="Search"
+              size='large'
+              placeholder='Search'
               prefix={<MagnifyingGlass />}
               onChange={onSearchChange}
             />
@@ -76,15 +76,15 @@ const Connections = () => {
       </Col>
       {otherConnections.map((connection, index) => {
         return (
-          <Col key={index}>
+          <Col key={index} span={8}>
             <ConnectionCard
               connection={connection}
               onDetailClick={setShowDetails}
               cover
               description
-              direction="vertical"
+              direction='vertical'
               detailClickIcon
-              onConnectButtonClick={()=>{}}
+              onConnectButtonClick={() => {}}
             />
           </Col>
         );
