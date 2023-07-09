@@ -77,7 +77,6 @@ const AlertModal = ({
                 style={{ width: '100%' }}
                 placeholder={'Input Placeholder'}
                 options={parameters}
-                defaultValue={parameters[0]}
               />
             </Form.Item>
           </Col>
