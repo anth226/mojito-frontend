@@ -1,27 +1,45 @@
-import { Button, Col, Row } from "antd";
-import React, { useState } from "react";
-import PlusIcon from "../../../../../assets/Icons/Plus";
-import InvitedUser from "./InvitedUser/InvitedUser";
-import NewUser from "./NewUser/NewUser";
-
-interface NewClient {
-  name: string;
-  surname: string;
-  email: string;
-  avatar: string;
-  invited: boolean;
-}
+import { Button, Col, Row } from 'antd';
+import React, { useEffect, useState } from 'react';
+import PlusIcon from '../../../../../assets/Icons/Plus';
+import InvitedUser from './InvitedUser/InvitedUser';
+import NewUser from './NewUser/NewUser';
+import { NewClient } from '../../../../../interfaces/Client';
+import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
+import { INVITE_MEMBERS } from 'api/graphql/mutations';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import {
+  getOnboardingFromStore,
+  setUsersInStore,
+  updateUsersInStore,
+} from 'reduxSlices/onboarding/onboarding';
 
 const newClient: NewClient = {
-  name: "",
-  surname: "",
-  email: "",
-  avatar: "",
+  name: '',
+  surname: '',
+  email: '',
+  avatar: '',
   invited: false,
 };
 
 const BusinessOnBoardingUsers = () => {
-  const [clients, setClients] = useState<NewClient[]>([newClient]);
+  const clientsInStore = useAppSelector(getOnboardingFromStore).users;
+
+  const [clients, setClients] = useState<NewClient[]>(
+    clientsInStore.length > 0 ? clientsInStore : [newClient]
+  );
+
+  const dispatch = useAppDispatch();
+
+  const [inviteMember] = useGraphQlMutation(INVITE_MEMBERS, {
+    onError(error) {
+      toast.error(error.message);
+      throw error;
+    },
+    onCompleted: (data: any) => {
+      dispatch(updateUsersInStore(data?.inviteMembers?.members?.[0]?.email));
+    },
+  });
 
   const onChange = (e: any, index: number) => {
     const propertyName = e.target.name;
@@ -29,24 +47,38 @@ const BusinessOnBoardingUsers = () => {
     const temporaryList = JSON.parse(JSON.stringify(clients));
     temporaryList[index][propertyName] = propertyValue;
     setClients(temporaryList);
+    dispatch(setUsersInStore(temporaryList));
   };
 
   const addClient = () => {
-    const temp = [...clients];
-    temp.push(newClient);
-    setClients(temp);
+    setClients((prevState) => [...prevState, newClient]);
   };
 
-  const sendInvite = (index: number) => {
-    const temp = [...clients];
-    temp[index].invited = true
-    setClients(temp)
-  }
+  const sendInvite = async (client: NewClient) => {
+    const input = {
+      members: [
+        {
+          email: client.email,
+          name: `${client.surname} ${client.name}`,
+          clientMutationId: null,
+        },
+      ],
+      clientMutationId: null,
+    };
+    await inviteMember({
+      variables: { input: input },
+    });
+  };
+
+  useEffect(() => {
+    const clients = clientsInStore.length > 0 ? clientsInStore : [newClient];
+    setClients(clients);
+  }, [clientsInStore]);
 
   return (
     <>
       <div>
-        <h1 style={{ margin: "0px" }}>Users</h1>
+        <h1 style={{ margin: '0px' }}>Users</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -54,16 +86,21 @@ const BusinessOnBoardingUsers = () => {
       </div>
       <Row
         gutter={[16, 16]}
-        justify={"start"}
-        style={{ textAlign: "start", color: "#9A9AAF" }}
+        justify={'start'}
+        style={{ textAlign: 'start', color: '#9A9AAF', width: '1100px' }}
       >
         {clients.map((client, index) => {
           return (
             <React.Fragment key={index}>
               {client.invited ? (
-                <InvitedUser client={client}/>
+                <InvitedUser client={client} />
               ) : (
-                <NewUser client={client} onChange={onChange} index={index} sendInvite={sendInvite} />
+                <NewUser
+                  client={client}
+                  onChange={onChange}
+                  index={index}
+                  sendInvite={() => sendInvite(client)}
+                />
               )}
             </React.Fragment>
           );
@@ -72,19 +109,19 @@ const BusinessOnBoardingUsers = () => {
           <Button
             icon={
               <PlusIcon
-                fill="#FFFFFF"
-                stroke="#FFFFFF"
-                style={{ marginTop: "2px" }}
+                fill='#FFFFFF'
+                stroke='#FFFFFF'
+                style={{ marginTop: '2px' }}
               />
             }
-            type="primary"
-            size="large"
+            type='primary'
+            size='large'
             style={{
-              display: "flex",
-              paddingLeft: "0px",
-              justifyContent: "space-around",
-              width: "150px",
-              margin: "10px 5px",
+              display: 'flex',
+              paddingLeft: '0px',
+              justifyContent: 'space-around',
+              width: '150px',
+              margin: '10px 5px',
             }}
             onClick={() => addClient()}
           >

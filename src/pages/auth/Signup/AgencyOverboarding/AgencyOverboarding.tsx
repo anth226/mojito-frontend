@@ -99,14 +99,6 @@ const AgencyOverboarding = () => {
       dispatch(next());
     }
 
-    // else {
-    //   if (step < 5) {
-    //     dispatch(next());
-    //   } else {
-    //     dispatch(clearSignup());
-    //     navigate(AuthenticationPaths.LOGINPATH);
-    //   }
-    // }
     if (step >= 5) {
       dispatch(clearSignup());
       dispatch(clearOnBoardingStore());

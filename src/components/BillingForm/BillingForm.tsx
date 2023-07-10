@@ -1,23 +1,25 @@
-import { Col, Form, FormInstance, Input, Row, Select } from "antd";
-import CountryList from "country-list-with-dial-code-and-flag";
-import CountryFlagSvg from "country-list-with-dial-code-and-flag/dist/flag-svg";
-import { CountryInterface } from "country-list-with-dial-code-and-flag/dist/types";
+import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
+import CountryList from 'country-list-with-dial-code-and-flag';
+import CountryFlagSvg from 'country-list-with-dial-code-and-flag/dist/flag-svg';
+import { CountryInterface } from 'country-list-with-dial-code-and-flag/dist/types';
 import {
   PropsWithChildren,
   ReactNode,
   createContext,
   useContext,
   useMemo,
-} from "react";
-import classes from "./BillingForm.module.css";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+} from 'react';
+import classes from './BillingForm.module.css';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useAppSelector } from 'app/hooks';
+import { getOnboardingFromStore } from 'reduxSlices/onboarding/onboarding';
 
 dayjs.extend(customParseFormat);
 
-const VisaCardRegex = "^4[0-9]{12}(?:[0-9]{3})?$";
+const VisaCardRegex = '^4[0-9]{12}(?:[0-9]{3})?$';
 const MasterCardRegex =
-  "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$";
+  '^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$';
 
 interface extrasInterface extends CountryInterface {
   svg: string;
@@ -102,6 +104,8 @@ interface BillingFormProps {
 }
 
 const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
+  const billing = useAppSelector(getOnboardingFromStore).billing.billingDetails;
+
   const CountryListOptions = useMemo(() => {
     const temp = CountryList.getAll()
       .filter((country, index, arr) => {
@@ -136,10 +140,11 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
 
   return (
     <Form
-      layout="vertical"
+      layout='vertical'
       form={formInstance}
       onFinish={onFinished}
       className={classes.form}
+      initialValues={billing}
     >
       <Row gutter={[16, 0]}>
         <Col span={24}>
@@ -148,27 +153,27 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="Card number"
-            name={"card_number"}
+            label='Card number'
+            name={'card_number'}
             rules={[
               {
                 required: true,
-                message: "Please enter card number!",
+                message: 'Please enter card number!',
               },
               {
                 pattern: new RegExp(`${VisaCardRegex}|${MasterCardRegex}`),
-                message: "This is not a valid card",
+                message: 'This is not a valid card',
                 transform(value) {
-                  return value.replaceAll(" ", "");
+                  return value.replaceAll(' ', '');
                 },
               },
             ]}
             normalize={(value) => {
-              const sanitize = Array.from(value.replaceAll(" ", ""));
-              let str = "";
+              const sanitize = Array.from(value.replaceAll(' ', ''));
+              let str = '';
               for (let i = 0; i < sanitize.length; i++) {
                 if (i % 4 === 0 && i !== 0) {
-                  str += " " + sanitize[i];
+                  str += ' ' + sanitize[i];
                 } else {
                   str += sanitize[i];
                 }
@@ -182,25 +187,25 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={12}>
           <Form.Item
             className={classes.label}
-            label="Expiration (MM/YY)"
-            name={"card_expiration"}
+            label='Expiration (MM/YY)'
+            name={'card_expiration'}
             rules={[
               {
                 required: true,
-                message: "Please enter card expiration!",
+                message: 'Please enter card expiration!',
               },
               {
                 validator(_rule, value) {
-                  if (value !== "") {
-                    const split = value.split("/");
+                  if (value !== '') {
+                    const split = value.split('/');
                     if (Number(split[0]) > 12) {
-                      return Promise.reject(new Error("Invalid Month"));
+                      return Promise.reject(new Error('Invalid Month'));
                     }
-                    const enteredDate = dayjs(value, "MM/YY");
+                    const enteredDate = dayjs(value, 'MM/YY');
                     if (dayjs().isBefore(enteredDate)) {
                       return Promise.resolve();
                     } else {
-                      return Promise.reject(new Error("Date is not Valid"));
+                      return Promise.reject(new Error('Date is not Valid'));
                     }
                   }
                   return Promise.resolve();
@@ -208,11 +213,11 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
               },
             ]}
             normalize={(value) => {
-              const sanitize = Array.from(value.replaceAll("/", ""));
-              let str = "";
+              const sanitize = Array.from(value.replaceAll('/', ''));
+              let str = '';
               for (let i = 0; i < sanitize.length; i++) {
                 if (i % 2 === 0 && i !== 0) {
-                  str += "/" + sanitize[i];
+                  str += '/' + sanitize[i];
                 } else {
                   str += sanitize[i];
                 }
@@ -226,16 +231,16 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={12}>
           <Form.Item
             className={classes.label}
-            label="CVV"
-            name={"card_cvv"}
+            label='CVV'
+            name={'card_cvv'}
             rules={[
               {
                 required: true,
-                message: "Please enter card cvv!",
+                message: 'Please enter card cvv!',
               },
             ]}
             normalize={(value, prevValue) => {
-              if (value === "") {
+              if (value === '') {
                 return value;
               }
               return Number(value) ? value : prevValue;
@@ -245,26 +250,26 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item className={classes.label} label="Name" name={"name"}>
+          <Form.Item className={classes.label} label='Name' name={'name'}>
             <Input />
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item className={classes.label} label="Email" name={"email"}>
+          <Form.Item className={classes.label} label='Email' name={'email'}>
             <Input />
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item
             className={classes.label}
-            label="Country Code"
-            name={"country_code"}
+            label='Country Code'
+            name={'country_code'}
           >
             <Select options={CountryListOptions} />
           </Form.Item>
         </Col>
         <Col span={18}>
-          <Form.Item className={classes.label} label="Phone" name={"phone"}>
+          <Form.Item className={classes.label} label='Phone' name={'phone'}>
             <Input />
           </Form.Item>
         </Col>
@@ -276,12 +281,12 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="Street"
-            name={"street"}
+            label='Street'
+            name={'street'}
             rules={[
               {
                 required: true,
-                message: "Please enter street!",
+                message: 'Please enter street!',
               },
             ]}
           >
@@ -291,8 +296,8 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="Apt or suite number (optional)"
-            name={"apt_suit_number"}
+            label='Apt or suite number (optional)'
+            name={'apt_suit_number'}
           >
             <Input />
           </Form.Item>
@@ -300,12 +305,12 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="Country/region"
-            name={"region"}
+            label='Country/region'
+            name={'region'}
             rules={[
               {
                 required: true,
-                message: "Please enter Country/region*!",
+                message: 'Please enter Country/region*!',
               },
             ]}
           >
@@ -315,12 +320,12 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="State"
-            name={"state"}
+            label='State'
+            name={'state'}
             rules={[
               {
                 required: true,
-                message: "Please enter state!",
+                message: 'Please enter state!',
               },
             ]}
           >
@@ -330,12 +335,12 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="City"
-            name={"city"}
+            label='City'
+            name={'city'}
             rules={[
               {
                 required: true,
-                message: "Please enter city!",
+                message: 'Please enter city!',
               },
             ]}
           >
@@ -345,12 +350,12 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
         <Col span={24}>
           <Form.Item
             className={classes.label}
-            label="Zip code"
-            name={"zip_code"}
+            label='Zip code'
+            name={'zip_code'}
             rules={[
               {
                 required: true,
-                message: "Please enter zip code!",
+                message: 'Please enter zip code!',
               },
             ]}
           >
