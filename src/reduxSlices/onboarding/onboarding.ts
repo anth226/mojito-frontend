@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { ConnectionStatus, ConnectionType } from '../../enums/connections';
-import { Client } from '../../interfaces/Client';
+import { Client, NewClient } from '../../interfaces/Client';
 import { Connection } from '../../interfaces/Connection';
 import cover1 from '../../assets/covers/card1.png';
 import cover2 from '../../assets/covers/card2.png';
@@ -90,6 +90,7 @@ interface onboardingStateInterface {
   nestedLimit: number;
   nestedPath: `${AgencyOnBoardingPaths}` | `${BusinessOnBoardingPaths}` | '';
   clients: Client[];
+  users: NewClient[];
   allConnectionList: Connection[];
   billing: {
     plan: number;
@@ -105,6 +106,7 @@ const initialState: onboardingStateInterface = {
   nestedLimit: 0,
   nestedPath: '',
   clients: [] as Client[],
+  users: [] as NewClient[],
   allConnectionList,
   billing: {
     plan: defaultValues.BILLING_PLAN,
@@ -157,6 +159,15 @@ export const onboardingSlice = createSlice({
     },
     setClientsInStore: (state, payloadWithType) => {
       state.clients = payloadWithType.payload;
+    },
+    setUsersInStore: (state, payloadWithType) => {
+      state.users = payloadWithType.payload;
+    },
+    updateUsersInStore: (state, payloadWithType) => {
+      const index = state.users.findIndex(
+        (user: NewClient) => user.email === payloadWithType.payload
+      );
+      state.users[index].invited = true;
     },
     updateConnections: (state, payloadWithType) => {
       if (
@@ -228,6 +239,7 @@ export const onboardingSlice = createSlice({
       state.nestedLimit = 0;
       state.nestedPath = '';
       state.clients = [] as Client[];
+      state.users = [] as NewClient[];
       state.allConnectionList = allConnectionList;
       state.billing.plan = defaultValues.BILLING_PLAN;
       state.billing.billingDetails = {};
@@ -243,6 +255,8 @@ export const {
   nested,
   setNestedStepsLimit,
   setClientsInStore,
+  setUsersInStore,
+  updateUsersInStore,
   updateConnections,
   countNestedConnections,
   updateConnectionsOfClient,

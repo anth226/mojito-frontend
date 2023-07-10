@@ -21,13 +21,13 @@ const newClient: Client = {
 };
 const Clients = () => {
   const clientsInStore = useAppSelector(getOnboardingFromStore).clients;
-  const [clients, setCLients] = useState<Client[]>(
+  const [clients, setClients] = useState<Client[]>(
     clientsInStore.length > 0 ? clientsInStore : [newClient]
   );
   const dispatch = useAppDispatch();
 
   const addClient = () => {
-    setCLients((prevState) => [...prevState, newClient]);
+    setClients((prevState) => [...prevState, newClient]);
   };
 
   const onChange = (e: any, index: number) => {
@@ -35,7 +35,7 @@ const Clients = () => {
     const propertyValue = e.target.value;
     const temporaryList = JSON.parse(JSON.stringify(clients));
     temporaryList[index][propertyName] = propertyValue;
-    setCLients(temporaryList);
+    setClients(temporaryList);
     dispatch(setClientsInStore(temporaryList));
   };
 
@@ -58,7 +58,7 @@ const Clients = () => {
         connections: [],
       });
     }
-    setCLients(temporaryList);
+    setClients(temporaryList);
     dispatch(setClientsInStore(temporaryList));
   };
 
