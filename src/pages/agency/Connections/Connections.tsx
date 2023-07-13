@@ -1,27 +1,16 @@
 import { Col, Input, Row } from 'antd';
-import { useCallback, useRef, useState } from 'react';
-import ConnectionCard from '../../../components/ConnectionCard/ConnectionCard';
-import ConnectionsDrawer from './connectionsDrawer/connectionsDrawer';
+import { useRef, useState } from 'react';
 import { ReactComponent as MagnifyingGlass } from '../../../assets/Icons/MagnifyingGlass.svg';
-import classes from './Connections.module.css';
-import useElementSize from '../../../hooks/useElementSize';
+import ConnectionCard from '../../../components/ConnectionCard/ConnectionCard';
 import { Connection } from '../../../interfaces/Connection';
 import { otherConnectionList } from '../../../mockdata/Connections';
+import classes from './Connections.module.css';
+import ConnectionsDrawer from './connectionsDrawer/connectionsDrawer';
 
 const Connections = () => {
   const [showDetails, setShowDetails] = useState<Connection | null>();
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const searchBarContainerSize = useElementSize(
-    containerRef,
-    useCallback((width: number, height: number) => {
-      return {
-        width: Math.floor(width / 403) * 403,
-        height,
-      };
-    }, [])
-  );
 
   const [otherConnections, setOtherConnections] = useState<Connection[] | []>(
     otherConnectionList

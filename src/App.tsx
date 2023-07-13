@@ -1,8 +1,7 @@
-import React from "react";
-import "./App.css";
-import { RouterProvider } from "react-router-dom";
-import { routes } from "./pages/routes";
-import { BillingFormProvider } from "./components/BillingForm/BillingForm";
+import { RouterProvider } from 'react-router-dom';
+import './App.css';
+import { BillingFormProvider } from './components/BillingForm/BillingForm';
+import { routes } from './pages/routes';
 
 function App() {
   return (
