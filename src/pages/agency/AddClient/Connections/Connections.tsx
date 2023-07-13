@@ -1,9 +1,9 @@
 import { Button, Space } from 'antd';
 import PlusIcon from 'assets/Icons/Plus';
+import { useState } from 'react';
+import IntegrationDrawer from '../IntegrationDrawer/IntegrationDrawer';
 import { ConnectionItem } from './ConnectionItem';
 import classes from './Connections.module.css';
-import IntegrationDrawer from '../IntegrationDrawer/IntegrationDrawer';
-import { useState } from 'react';
 
 interface ConnectionsProps {
   step: any;

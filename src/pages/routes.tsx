@@ -3,19 +3,29 @@ import Authorization from '../Authorization';
 import AgencyLayout from '../layouts/AgencyLayout';
 import AuthLayout from '../layouts/AuthLayout';
 import ClientLayout from '../layouts/ClientLayout';
+import { AddClient } from './agency/AddClient/AddClient';
+import AgencyAlerts from './agency/AgencyAlerts/AgencyAlerts';
+import AgencySettings from './agency/AgencySettings/AgencySettings';
 import Connections from './agency/Connections/Connections';
 import HQ from './agency/HQ/HQ';
+import Metrics from './agency/Metrics/Metrics';
 import Login from './auth/Login';
-import ClientConnections from './client/ClientConnections/ClientConnections';
-import Performance from './client/Performance/Performance';
 import AgencyOverboarding from './auth/Signup/AgencyOverboarding/AgencyOverboarding';
 import AgencyOnBoardingAlerts from './auth/Signup/AgencyOverboarding/Alerts/Alerts';
 import AgencyOnBoardingBilling from './auth/Signup/AgencyOverboarding/Billing/Billing';
 import Clients from './auth/Signup/AgencyOverboarding/Clients/Clients';
 import AgencyOnBoardingConnections from './auth/Signup/AgencyOverboarding/Connections/Connections';
 import AgencyOnBoardingUsers from './auth/Signup/AgencyOverboarding/Users/Users';
+import BusinessOnBoardingBilling from './auth/Signup/BusinessOverboarding/Billing/Billing';
 import BusinessOverboarding from './auth/Signup/BusinessOverboarding/BusinessOverboarding';
+import BusinessOnBoardingConnections from './auth/Signup/BusinessOverboarding/Connections/Connections';
+import BusinessOnBoardingUsers from './auth/Signup/BusinessOverboarding/Users/Users';
 import SignUp from './auth/Signup/Signup';
+import ClientAlerts from './client/ClientAlerts/ClientAlerts';
+import ClientConnections from './client/ClientConnections/ClientConnections';
+import ClientDashboard from './client/ClientDashboard/ClientDashboard';
+import ClientSettings from './client/ClientSettings/ClientSettings';
+import Performance from './client/Performance/Performance';
 import ErrorPage from './error';
 import {
   AgencyNavBarPaths,
@@ -24,16 +34,6 @@ import {
   BusinessOnBoardingPaths,
   ClientNavBarPaths,
 } from './paths';
-import BusinessOnBoardingConnections from './auth/Signup/BusinessOverboarding/Connections/Connections';
-import BusinessOnBoardingUsers from './auth/Signup/BusinessOverboarding/Users/Users';
-import BusinessOnBoardingBilling from './auth/Signup/BusinessOverboarding/Billing/Billing';
-import ClientSettings from './client/ClientSettings/ClientSettings';
-import AgencySettings from './agency/AgencySettings/AgencySettings';
-import Metrics from './agency/Metrics/Metrics';
-import ClientDashboard from './client/ClientDashboard/ClientDashboard';
-import ClientAlerts from './client/ClientAlerts/ClientAlerts';
-import AgencyAlerts from './agency/AgencyAlerts/AgencyAlerts';
-import { AddClient } from './agency/AddClient/AddClient';
 
 export const routes = createBrowserRouter([
   {

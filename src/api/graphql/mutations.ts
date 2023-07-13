@@ -96,3 +96,21 @@ export const INVITE_MEMBERS = gql`
     }
   }
 `;
+
+export const SYNC_CONNECTION = gql`
+  mutation SyncConnection($input: SyncConnectionInput!) {
+    syncConnection(input: $input) {
+      connection {
+        source
+        status
+        client {
+          name
+          email
+          _id
+        }
+        _id
+      }
+      clientMutationId
+    }
+  }
+`;

@@ -14,3 +14,11 @@ export interface Connection {
   description?: string;
   key: Key;
 }
+
+export interface ConnectionClient {
+  name: string;
+  email: string;
+  avatar?: string;
+  status: ConnectionStatus;
+  active: boolean;
+}

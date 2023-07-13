@@ -4,13 +4,15 @@ export interface Alert {
   id: number;
   name: string;
   source: string;
-  fired: number;
+  fires: number;
   clients: number;
   status: AlertStatus;
   date: Date;
   value: number;
   parameter: string;
   operation: string;
+  connectionId?: string;
+  severity?: string;
 }
 
 export const getAlertObject = () =>
