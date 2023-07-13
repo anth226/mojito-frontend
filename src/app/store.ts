@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import authReducer from '../reduxSlices/auth/auth';
 import onboardingReducer from '../reduxSlices/onboarding/onboarding';
 
@@ -33,7 +32,6 @@ const persistedOnBoardingReducer = persistReducer(
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     auth: persistedReducer,
     onboarding: persistedOnBoardingReducer,
   },

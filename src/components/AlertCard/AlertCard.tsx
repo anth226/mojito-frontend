@@ -1,9 +1,9 @@
-import { Card, Space, Avatar, Select, Divider, Progress } from 'antd';
+import { Avatar, Card, Divider, Progress, Select, Space } from 'antd';
+import { alertParameter, mathValues } from 'constants/Alert';
 import { Avatars } from '../../assets/base64Icons';
+import { Alert } from '../../interfaces/Alert';
 import './AlertCard.css';
 import classes from './AlertCard.module.css';
-import { Alert } from '../../interfaces/Alert';
-import { mathValues, parameters } from '../../mockdata/Alerts';
 
 interface AlertCardProps {
   alert: Alert;
@@ -15,9 +15,9 @@ const ParameterSelectors = ({ alert }: { alert: Alert }) => {
     <div style={{ display: 'flex', columnGap: '12px' }}>
       <Select
         showArrow={false}
-        options={parameters}
+        options={alertParameter}
         bordered={false}
-        style={{ width: '50px' }}
+        style={{ width: 'auto' }}
         defaultValue={alert.parameter}
         disabled
       />
@@ -102,7 +102,7 @@ export const AlertCardAgency = ({ alert, onClick }: AlertCardProps) => {
             }}
           >
             <span>Fired: </span>
-            <b>60 times</b>
+            <b>{alert.fires} times</b>
           </div>
         </div>
       </div>
