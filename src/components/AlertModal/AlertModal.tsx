@@ -1,5 +1,11 @@
 import { Button, Col, Form, Input, Modal, ModalProps, Row, Select } from 'antd';
-import { actions, parameters, mathValues } from '../../mockdata/Alerts';
+import {
+  actions,
+  alertParameter,
+  alertSeverity,
+  mathValues,
+  parameters,
+} from 'constants/Alert';
 
 interface AlertModalProps extends Omit<ModalProps, 'onCancel'> {
   closeModal: Function;
@@ -53,6 +59,7 @@ const AlertModal = ({
               <Select
                 style={{ width: '100%' }}
                 placeholder={'Input Placeholder'}
+                options={alertSeverity}
               />
             </Form.Item>
           </Col>
@@ -76,7 +83,7 @@ const AlertModal = ({
               <Select
                 style={{ width: '100%' }}
                 placeholder={'Input Placeholder'}
-                options={parameters}
+                options={alertParameter}
               />
             </Form.Item>
           </Col>

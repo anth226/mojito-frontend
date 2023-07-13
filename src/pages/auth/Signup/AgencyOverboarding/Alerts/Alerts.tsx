@@ -59,6 +59,7 @@ const AgencyOnBoardingAlerts = () => {
           operation: alert.mathValue,
           name: alert.alertName,
           connectionId: i.connectionId,
+          severity: alert.severity,
         });
       });
     }

@@ -2,14 +2,14 @@ import { ApolloProvider } from '@apollo/client';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 import { persistorStore, store } from './app/store';
 import { client } from './configs/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
