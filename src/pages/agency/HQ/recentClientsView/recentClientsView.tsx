@@ -1,10 +1,10 @@
-import { Col, Row } from "antd";
-import ClientBadge from "../../../../components/ClientBadge/ClientBadge";
-import { recentClients } from "../../../../mockdata/RecentClients";
+import { Col, Row } from 'antd';
+import ClientBadge from 'components/ClientBadge/ClientBadge';
+import { recentClients } from 'mockdata/RecentClients';
 
 const RecentClientsView = () => {
   return (
-    <Row gutter={[16, 16]} justify={"space-around"} align={"middle"}>
+    <Row gutter={[16, 16]} justify={'space-around'} align={'middle'}>
       {recentClients.map((client, index) => {
         return (
           <Col key={index}>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LoginCredentials, SignupAgency, SignupBusiness } from './auth';
-import { APP_API_URL } from '../../configs/env';
+import { APP_API_URL } from 'configs/env';
 import {
   LOGIN,
   REGISTER_AGENCY,

@@ -1,5 +1,5 @@
-import { USDcurrency } from '../../../../utils/formatters';
-import classes from './connectionMetrics.module.css'
+import { USDcurrency } from 'utils/formatters';
+import classes from './connectionMetrics.module.css';
 
 export interface ConnectionMetricItem {
   name: string;
@@ -12,13 +12,11 @@ interface ConnectionMetricsProps {
 
 const ConnectionMetrics = ({ metrics }: ConnectionMetricsProps) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h2>Available Metrics</h2>
       {metrics.map((metric) => {
         return (
-          <div
-            className={classes.metric}
-          >
+          <div className={classes.metric}>
             <span>{metric.name}</span>
             <b>{USDcurrency.format(metric.value)}</b>
           </div>

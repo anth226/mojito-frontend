@@ -15,7 +15,7 @@ import {
   mathValues,
   parameters,
 } from 'constants/Alert';
-import Close from '../../assets/Icons/Close';
+import Close from 'assets/Icons/Close';
 import classes from './AlertEditPanel.module.css';
 import { Alert } from 'interfaces/Alert';
 

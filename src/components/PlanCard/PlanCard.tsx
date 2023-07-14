@@ -1,17 +1,17 @@
-import { Card, Radio } from "antd";
-import { ElementType, useEffect, useState } from "react";
-import StacksIcon from "../../assets/Icons/Stacks";
-import { USDcurrency } from "../../utils/formatters";
-import classes from './PlanCard.module.css'
+import { Card, Radio } from 'antd';
+import { ElementType, useEffect, useState } from 'react';
+import StacksIcon from 'assets/Icons/Stacks';
+import { USDcurrency } from 'utils/formatters';
+import classes from './PlanCard.module.css';
 
 const activeHeadStyle = {
-  borderColor: "#0062FF",
-  backgroundColor: "#0062FF1A",
+  borderColor: '#0062FF',
+  backgroundColor: '#0062FF1A',
 };
 
 export enum Tenure {
-  MONTHLY = "monthly",
-  YEARLY = "yearly",
+  MONTHLY = 'monthly',
+  YEARLY = 'yearly',
 }
 
 interface PlanCardProps {
@@ -51,13 +51,17 @@ const PlanCard = ({
     <Card
       onClick={onCardClick}
       title={
-        <div style={{ display: "flex", fontWeight: "normal" }}>
-          {Icon ? <Icon className={classes.icon} /> : <StacksIcon className={classes.icon} />}
+        <div style={{ display: 'flex', fontWeight: 'normal' }}>
+          {Icon ? (
+            <Icon className={classes.icon} />
+          ) : (
+            <StacksIcon className={classes.icon} />
+          )}
           <span
             style={{
-              marginTop: "2px",
-              fontWeight: "500",
-              color: current ? "#0062FF" : "#000000",
+              marginTop: '2px',
+              fontWeight: '500',
+              color: current ? '#0062FF' : '#000000',
             }}
           >
             {title}
@@ -67,23 +71,23 @@ const PlanCard = ({
       extra={<Radio checked={current} />}
       hoverable
       style={{
-        textAlign: "left",
-        borderColor: current ? "#0062FF" : "#F2F3F7",
+        textAlign: 'left',
+        borderColor: current ? '#0062FF' : '#F2F3F7',
       }}
       headStyle={current ? activeHeadStyle : {}}
     >
-      <p style={{ fontSize: "32px", fontWeight: "bold", margin: "0px" }}>
+      <p style={{ fontSize: '32px', fontWeight: 'bold', margin: '0px' }}>
         {USDcurrency.format(amount)}
-        <span style={{ fontSize: "14px", fontWeight: "400", color: "#7E7E8F" }}>
+        <span style={{ fontSize: '14px', fontWeight: '400', color: '#7E7E8F' }}>
           per {tenure}
         </span>
       </p>
       <p
         style={{
-          fontSize: "14px",
-          fontWeight: "400",
-          color: "#7E7E8F",
-          margin: "0px",
+          fontSize: '14px',
+          fontWeight: '400',
+          color: '#7E7E8F',
+          margin: '0px',
         }}
       >
         {description}

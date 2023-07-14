@@ -1,5 +1,5 @@
 import { Key } from 'react';
-import { ConnectionStatus, ConnectionType } from '../enums/connections';
+import { ConnectionStatus, ConnectionType } from 'enums/connections';
 
 export interface Connection {
   _id?: string;

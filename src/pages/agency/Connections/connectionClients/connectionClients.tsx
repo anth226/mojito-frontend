@@ -1,7 +1,7 @@
 import { Avatar } from 'antd';
 import { ConnectionClient } from 'interfaces/Connection';
-import ConnectionButton from '../../../../components/ConnectionButton/ConnectionButton';
-import { ConnectionStatus } from '../../../../enums/connections';
+import ConnectionButton from 'components/ConnectionButton/ConnectionButton';
+import { ConnectionStatus } from 'enums/connections';
 import { ConnectionClientItem } from './connectionClientItem';
 import classes from './connectionClients.module.css';
 

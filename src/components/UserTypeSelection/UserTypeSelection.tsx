@@ -1,5 +1,5 @@
-import { Select } from "antd";
-import { ClientRoles } from "../../enums/clients";
+import { Select } from 'antd';
+import { ClientRoles } from 'enums/clients';
 
 const getSelectOptionItem = ({ value, label, dotColor }: any) => {
   return {
@@ -7,19 +7,19 @@ const getSelectOptionItem = ({ value, label, dotColor }: any) => {
     label: (
       <div
         style={{
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-          fontWeight: "bold",
-          color: "black",
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center',
+          fontWeight: 'bold',
+          color: 'black',
         }}
       >
         <div
           style={{
-            width: "8px",
-            height: "8px",
-            backgroundColor: dotColor ?? "#0062FF",
-            borderRadius: "25px",
+            width: '8px',
+            height: '8px',
+            backgroundColor: dotColor ?? '#0062FF',
+            borderRadius: '25px',
           }}
         />
         {label}
@@ -29,14 +29,14 @@ const getSelectOptionItem = ({ value, label, dotColor }: any) => {
 };
 
 const options = [
-  getSelectOptionItem({ value: ClientRoles.ADMIN, label: "Admin" }),
-  getSelectOptionItem({ value: ClientRoles.OWNER, label: "Owner" }),
-  getSelectOptionItem({ value: ClientRoles.CLIENT, label: "Client" }),
-  getSelectOptionItem({ value: ClientRoles.STAFF, label: "Staff" }),
+  getSelectOptionItem({ value: ClientRoles.ADMIN, label: 'Admin' }),
+  getSelectOptionItem({ value: ClientRoles.OWNER, label: 'Owner' }),
+  getSelectOptionItem({ value: ClientRoles.CLIENT, label: 'Client' }),
+  getSelectOptionItem({ value: ClientRoles.STAFF, label: 'Staff' }),
   getSelectOptionItem({
     value: ClientRoles.USER,
-    label: "User",
-    dotColor: "#FE7E07",
+    label: 'User',
+    dotColor: '#FE7E07',
   }),
 ];
 
@@ -56,12 +56,12 @@ const UserTypeSelection = ({
 }: UserTypeSelectionProps) => {
   return (
     <Select
-      size="large"
+      size='large'
       options={options}
       bordered={false}
       style={{
-        width: "100%",
-        background: "#E2E2EA",
+        width: '100%',
+        background: '#E2E2EA',
         // border: "1px solid #384CFF",
       }}
       defaultValue={defaultValue ?? options[0]}
