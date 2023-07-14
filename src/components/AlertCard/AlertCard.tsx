@@ -1,7 +1,7 @@
 import { Avatar, Card, Divider, Progress, Select, Space } from 'antd';
 import { alertParameter, mathValues } from 'constants/Alert';
-import { Avatars } from '../../assets/base64Icons';
-import { Alert } from '../../interfaces/Alert';
+import { Avatars } from 'assets/base64Icons';
+import { Alert } from 'interfaces/Alert';
 import './AlertCard.css';
 import classes from './AlertCard.module.css';
 

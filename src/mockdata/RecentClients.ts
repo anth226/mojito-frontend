@@ -1,11 +1,11 @@
-import { Connections } from '../assets/base64Icons';
-import { ClientBadgeProps } from '../components/ClientBadge/ClientBadge';
-import { ConnectionStatus, ConnectionType } from '../enums/connections';
-import { Connection } from '../interfaces/Connection';
+import { Connections } from 'assets/base64Icons';
+import { ClientBadgeProps } from 'components/ClientBadge/ClientBadge';
+import { ConnectionStatus, ConnectionType } from 'enums/connections';
+import { Connection } from 'interfaces/Connection';
 import { mockClients } from './Client';
-import cover1 from '../assets/covers/card1.png';
-import cover2 from '../assets/covers/card2.png';
-import cover3 from '../assets/covers/card3.png';
+import cover1 from 'assets/covers/card1.png';
+import cover2 from 'assets/covers/card2.png';
+import cover3 from 'assets/covers/card3.png';
 
 const mockConnections: Connection[] = [
   {

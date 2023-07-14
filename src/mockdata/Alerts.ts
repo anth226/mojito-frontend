@@ -1,5 +1,5 @@
-import { AlertStatus } from '../enums/alerts';
-import { Alert } from '../interfaces/Alert';
+import { AlertStatus } from 'enums/alerts';
+import { Alert } from 'interfaces/Alert';
 
 export const mockAlerts: Alert[] = [
   {

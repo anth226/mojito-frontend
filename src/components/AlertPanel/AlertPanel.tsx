@@ -1,22 +1,22 @@
-import { Avatar, Drawer, DrawerProps, Tabs, TabsProps } from "antd";
-import Close from "../../assets/Icons/Close";
-import "./AlertPanel.css";
-import { useMemo } from "react";
-import { Avatars } from "../../assets/base64Icons";
-import { USDcurrency } from "../../utils/formatters";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { AlertStatus } from "../../enums/alerts";
-import { Alert } from "../../interfaces/Alert";
-import classes from "./AlertPanel.module.css";
-import Eye from "../../assets/Icons/Eye";
+import { Avatar, Drawer, DrawerProps, Tabs, TabsProps } from 'antd';
+import Close from 'assets/Icons/Close';
+import './AlertPanel.css';
+import { useMemo } from 'react';
+import { Avatars } from 'assets/base64Icons';
+import { USDcurrency } from 'utils/formatters';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { AlertStatus } from 'enums/alerts';
+import { Alert } from 'interfaces/Alert';
+import classes from './AlertPanel.module.css';
+import Eye from 'assets/Icons/Eye';
 
 dayjs.extend(relativeTime);
 
 enum TabsEnum {
-  ALL = "All",
-  NEW = "New",
-  ARCHIVE = "Archieve",
+  ALL = 'All',
+  NEW = 'New',
+  ARCHIVE = 'Archieve',
 }
 
 interface AlertEntryProps {
@@ -30,11 +30,11 @@ const AlertEntry = ({ alert, onClick }: AlertEntryProps) => {
       className={classes.alert_entry_container}
       style={{
         backgroundColor:
-          alert.status === AlertStatus.NEW ? "#F0F6FF" : "#FFFFFF",
+          alert.status === AlertStatus.NEW ? '#F0F6FF' : '#FFFFFF',
       }}
     >
       <div className={classes.alert_entry_vertical_center}>
-        <Avatar src={Avatars.AVATAR6} size={"large"} />
+        <Avatar src={Avatars.AVATAR6} size={'large'} />
         <div className={classes.alert_entry_left_side}>
           <p className={classes.alert_entry_name}>{alert.name}</p>
           <p className={classes.alert_entry_value}>
@@ -44,7 +44,7 @@ const AlertEntry = ({ alert, onClick }: AlertEntryProps) => {
       </div>
       <div className={classes.alert_entry_right_side}>
         <span>{dayjs().fromNow()}</span>
-        <Eye onClick={() => onClick(alert)} style={{ cursor: "pointer" }} />
+        <Eye onClick={() => onClick(alert)} style={{ cursor: 'pointer' }} />
       </div>
     </div>
   );
@@ -78,7 +78,7 @@ const AlertPanel = ({
     };
   }, [alerts]);
 
-  const items: TabsProps["items"] = [
+  const items: TabsProps['items'] = [
     {
       key: TabsEnum.ALL,
       label: TabsEnum.ALL,
@@ -117,18 +117,16 @@ const AlertPanel = ({
   return (
     <Drawer
       closable
-      placement="right"
+      placement='right'
       width={700}
       {...drawerProps}
-      bodyStyle={{ padding: "0px" }}
+      bodyStyle={{ padding: '0px' }}
     >
-      <div
-        className={classes.alert_panel_header}
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <h1 style={{ margin: "0" }}>Alerts</h1>
+      <div className={classes.alert_panel_header}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h1 style={{ margin: '0' }}>Alerts</h1>
         </div>
-        <Close style={{ cursor: "pointer" }} onClick={drawerProps.onClose} />
+        <Close style={{ cursor: 'pointer' }} onClick={drawerProps.onClose} />
       </div>
       <Tabs centered items={items} />
     </Drawer>

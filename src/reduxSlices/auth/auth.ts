@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { RootState } from 'app/store';
 import { login, signupByAgency, signupByBusiness } from './authAPI';
 
 export enum AccountType {

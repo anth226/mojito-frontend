@@ -1,4 +1,4 @@
-import { ClientRoles, ClientStatus } from '../enums/clients';
+import { ClientRoles, ClientStatus } from 'enums/clients';
 
 interface Connection {
   connectionKey: string;

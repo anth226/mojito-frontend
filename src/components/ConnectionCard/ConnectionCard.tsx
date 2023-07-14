@@ -1,14 +1,14 @@
-import { Avatar, Card, Empty } from "antd";
-import { ReactComponent as Eye } from "../../assets/Icons/Eye.svg";
-import { ReactComponent as SyncFailed } from "../../assets/Icons/SyncFailed.svg";
-import { ReactComponent as Synced } from "../../assets/Icons/Synced.svg";
-import dayjs from "dayjs";
+import { Avatar, Card, Empty } from 'antd';
+import { ReactComponent as Eye } from 'assets/Icons/Eye.svg';
+import { ReactComponent as SyncFailed } from 'assets/Icons/SyncFailed.svg';
+import { ReactComponent as Synced } from 'assets/Icons/Synced.svg';
+import dayjs from 'dayjs';
 import ConnectionButton, {
   ConnectionBadgeButton,
   ConnectionBadgeButtonProps,
-} from "../ConnectionButton/ConnectionButton";
-import { ConnectionStatus } from "../../enums/connections";
-import { Connection } from "../../interfaces/Connection";
+} from '../ConnectionButton/ConnectionButton';
+import { ConnectionStatus } from 'enums/connections';
+import { Connection } from 'interfaces/Connection';
 
 interface ConnectionCardStatusDescriptionProps
   extends ConnectionBadgeButtonProps {}
@@ -18,16 +18,16 @@ const ConnectionCardStatusDescription = ({
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
       }}
     >
       {status === ConnectionStatus.CONNECTED ? <Synced /> : <SyncFailed />}
-      <span style={{ color: "#9A9AAF", margin: "0px 5px" }}>
-        {status === ConnectionStatus.CONNECTED ? "Synced on" : "Sync failed on"}
+      <span style={{ color: '#9A9AAF', margin: '0px 5px' }}>
+        {status === ConnectionStatus.CONNECTED ? 'Synced on' : 'Sync failed on'}
       </span>
-      <span>{dayjs().format("ddd, D YYYY | HH:mm")}</span>
+      <span>{dayjs().format('ddd, D YYYY | HH:mm')}</span>
     </div>
   );
 };
@@ -41,8 +41,8 @@ const ConnectionCardStatusDescription = ({
 // }
 
 export enum ButtonUI {
-  HORIZONTAL = "horizontal",
-  VERTICAL = "vertical",
+  HORIZONTAL = 'horizontal',
+  VERTICAL = 'vertical',
 }
 interface ConnectionCardProps {
   connection: Connection;
@@ -72,11 +72,11 @@ const ConnectionCard = ({
 }: ConnectionCardProps) => {
   return (
     <Card
-      bodyStyle={{ width: "385px", textAlign: "initial" }}
+      bodyStyle={{ width: '385px', textAlign: 'initial' }}
       cover={
         cover ? (
           connection.cover ? (
-            <img src={connection.cover} alt="" />
+            <img src={connection.cover} alt='' />
           ) : (
             <Empty
               description={<p>No Logo/Image Found</p>}
@@ -89,13 +89,13 @@ const ConnectionCard = ({
       {avatar && (
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            margin: "5px 0px 18px 0px",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            margin: '5px 0px 18px 0px',
           }}
         >
-          <Avatar size={"large"} />
+          <Avatar size={'large'} />
           {direction === ButtonUI.HORIZONTAL &&
             (connection.status === ConnectionStatus.NOT_CONNECTED ||
             !connection.status ? (
@@ -110,24 +110,24 @@ const ConnectionCard = ({
       )}
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
         <h4
           style={{
-            fontSize: "16px",
-            fontWeight: "600",
-            marginTop: "0px",
-            marginBottom: "8px",
+            fontSize: '16px',
+            fontWeight: '600',
+            marginTop: '0px',
+            marginBottom: '8px',
           }}
         >
           {connection.name}
         </h4>
         {detailClickIcon && (
           <Eye
-            style={{ width: "20px", height: "24px", cursor: "pointer" }}
+            style={{ width: '20px', height: '24px', cursor: 'pointer' }}
             onClick={() => onDetailClick && onDetailClick(connection)}
           />
         )}
@@ -135,12 +135,12 @@ const ConnectionCard = ({
       {description && (
         <p
           style={{
-            color: "#9A9AAF",
-            margin: "-5px 0px 15px 0px",
-            textAlign: "left",
+            color: '#9A9AAF',
+            margin: '-5px 0px 15px 0px',
+            textAlign: 'left',
           }}
         >
-          {connection.description ?? "Short description"}
+          {connection.description ?? 'Short description'}
         </p>
       )}
       {statusDescription && (

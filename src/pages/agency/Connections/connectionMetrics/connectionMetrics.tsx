@@ -1,4 +1,4 @@
-import { USDcurrency } from '../../../../utils/formatters';
+import { USDcurrency } from 'utils/formatters';
 import classes from './connectionMetrics.module.css';
 
 export interface ConnectionMetricItem {

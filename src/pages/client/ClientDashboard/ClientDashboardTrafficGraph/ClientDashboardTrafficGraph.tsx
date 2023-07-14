@@ -1,17 +1,22 @@
-import { Card } from "antd";
-import { USDcurrency } from "../../../../utils/formatters";
-import CustomBadge from "../../../../components/CustomBadge/CustomBadge";
-import classes from "./ClientDashboardTrafficGraph.module.css";
-import { Area } from "@ant-design/plots";
-import AreaData from "./trafficAreaGraphMockData.json";
-import { percentageIcons, performance, performanceBackgroundColors, performanceColors } from "../../../../constants/Arrows";
+import { Card } from 'antd';
+import { USDcurrency } from 'utils/formatters';
+import CustomBadge from 'components/CustomBadge/CustomBadge';
+import classes from './ClientDashboardTrafficGraph.module.css';
+import { Area } from '@ant-design/plots';
+import AreaData from './trafficAreaGraphMockData.json';
+import {
+  percentageIcons,
+  performance,
+  performanceBackgroundColors,
+  performanceColors,
+} from 'constants/Arrows';
 
 const { IconBadge } = CustomBadge;
 
 const config = {
   data: AreaData,
-  xField: "Date",
-  yField: "scales",
+  xField: 'Date',
+  yField: 'scales',
   autoFit: false,
   height: 200,
   xAxis: {
@@ -20,7 +25,7 @@ const config = {
   },
   areaStyle: () => {
     return {
-      fill: "l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff",
+      fill: 'l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff',
     };
   },
 };
@@ -51,10 +56,10 @@ const ClientDashboardTrafficGraph = ({
           icon={percentageIcons[overviewDirection]}
           color={performanceColors[overviewDirection]}
           backgroundColor={performanceBackgroundColors[overviewDirection]}
-          text={percentage+'%'}
+          text={percentage + '%'}
         />
       </span>
-      <Area style={{ marginTop: "12px" }} {...config} />
+      <Area style={{ marginTop: '12px' }} {...config} />
     </Card>
   );
 };

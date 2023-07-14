@@ -1,4 +1,4 @@
-import { AlertStatus } from '../enums/alerts';
+import { AlertStatus } from 'enums/alerts';
 
 export interface Alert {
   id: number;

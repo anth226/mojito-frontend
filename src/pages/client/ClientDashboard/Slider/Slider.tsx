@@ -1,9 +1,9 @@
-import { Avatar, Button, Card, Carousel, Col, Row } from "antd";
-import ArrowDownMini from "../../../../assets/Icons/ArrowDownMini";
-import classes from "./Slider.module.css";
-import { useRef, useState } from "react";
-import { CarouselRef } from "antd/es/carousel";
-import { USDcurrency } from "../../../../utils/formatters";
+import { Avatar, Button, Card, Carousel, Col, Row } from 'antd';
+import ArrowDownMini from 'assets/Icons/ArrowDownMini';
+import classes from './Slider.module.css';
+import { useRef, useState } from 'react';
+import { CarouselRef } from 'antd/es/carousel';
+import { USDcurrency } from 'utils/formatters';
 
 type Base64<imageType extends string> =
   `data:image/${imageType};base64${string}`;
@@ -11,7 +11,7 @@ type Base64<imageType extends string> =
 export interface slide {
   connectionName: string;
   connectionValue: number;
-  connectionImage: Base64<"png">;
+  connectionImage: Base64<'png'>;
 }
 
 interface SliderProps {
@@ -40,7 +40,7 @@ const Slider = ({ connections, active, getCurrentActive }: SliderProps) => {
   };
 
   return (
-    <Row align={"middle"}>
+    <Row align={'middle'}>
       <Col span={1}>
         {connections.length > 4 && (
           <Button
@@ -67,25 +67,25 @@ const Slider = ({ connections, active, getCurrentActive }: SliderProps) => {
                   hoverable
                   className={[
                     classes.slider_entry_card,
-                    activeSlide === index ? classes.current_slide_card : "",
-                  ].join(" ")}
+                    activeSlide === index ? classes.current_slide_card : '',
+                  ].join(' ')}
                   onClick={() => onSlideClick(index)}
                 >
-                  <Row gutter={[16, 16]} align={"middle"}>
+                  <Row gutter={[16, 16]} align={'middle'}>
                     <Col>
                       <Avatar
                         style={{
-                          backgroundColor: "#FFFFFF",
-                          boxShadow: "1px 2px 0px 0px #f3f1f1",
-                          padding: "2px",
+                          backgroundColor: '#FFFFFF',
+                          boxShadow: '1px 2px 0px 0px #f3f1f1',
+                          padding: '2px',
                         }}
-                        shape="square"
+                        shape='square'
                         size={48}
                         src={
                           <img
                             src={connection.connectionImage}
-                            alt={""}
-                            style={{ objectFit: "contain" }}
+                            alt={''}
+                            style={{ objectFit: 'contain' }}
                           />
                         }
                       />
