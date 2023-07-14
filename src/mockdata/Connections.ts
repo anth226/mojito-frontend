@@ -1,8 +1,8 @@
-import { ConnectionStatus, ConnectionType } from '../enums/connections';
-import { Connection } from '../interfaces/Connection';
-import cover1 from '../assets/covers/card1.png';
-import cover2 from '../assets/covers/card2.png';
-import cover3 from '../assets/covers/card3.png';
+import { ConnectionStatus, ConnectionType } from 'enums/connections';
+import { Connection } from 'interfaces/Connection';
+import cover1 from 'assets/covers/card1.png';
+import cover2 from 'assets/covers/card2.png';
+import cover3 from 'assets/covers/card3.png';
 
 export const otherConnectionList: Connection[] = [
   {

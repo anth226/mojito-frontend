@@ -1,11 +1,11 @@
-import { Row, Col, Button } from "antd";
-import classes from "../ClientBillingSettings.module.css";
+import { Button, Col, Row } from 'antd';
+import Modal from 'antd/es/modal/Modal';
 import {
   BillingFields,
   useBillingFormInstance,
-} from "../../../../../components/BillingForm/BillingForm";
-import Modal from "antd/es/modal/Modal";
-import { Fragment, useState } from "react";
+} from 'components/BillingForm/BillingForm';
+import { Fragment, useState } from 'react';
+import classes from '../ClientBillingSettings.module.css';
 
 interface BillingDetailsObject {
   label: string;
@@ -26,21 +26,21 @@ const ClientBillingDetails = ({
 
   const onEdit = (values: any) => {
     console.log(values);
-    setOpenModal(false)
+    setOpenModal(false);
   };
 
   return (
     <>
       <Row gutter={[0, 16]}>
         <Col span={24}>
-          <Row gutter={[0, 16]} justify={"space-between"}>
+          <Row gutter={[0, 16]} justify={'space-between'}>
             <Col>
               <h3>Billing Details</h3>
             </Col>
             <Col
               style={{
-                color: "#0062FF",
-                cursor: "pointer",
+                color: '#0062FF',
+                cursor: 'pointer',
               }}
             >
               <h4
@@ -72,7 +72,7 @@ const ClientBillingDetails = ({
         onCancel={() => setOpenModal(false)}
         footer={[
           <Button onClick={() => setOpenModal(false)}>Cancel</Button>,
-          <Button type="primary" onClick={() => FormInstance?.submit()}>
+          <Button type='primary' onClick={() => FormInstance?.submit()}>
             Save
           </Button>,
         ]}

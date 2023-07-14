@@ -1,12 +1,12 @@
-import { ColumnsType } from "antd/es/table";
-import { USDcurrency } from "../../../../utils/formatters";
-import { VerticalColumn } from "./enums";
+import { ColumnsType } from 'antd/es/table';
+import { USDcurrency } from 'utils/formatters';
+import { VerticalColumn } from './enums';
 import {
   CompaniesInTypeColumn,
   CompaniesMonthlyData,
   DataType,
   MonthData,
-} from "./interfaces";
+} from './interfaces';
 
 const reportTypeFormatter = (value: number, type: VerticalColumn) => {
   switch (type) {
@@ -33,10 +33,10 @@ function MonthDataRenderer(
 ) {
   if (cellData instanceof Array) {
     return (
-      <div style={{ display: "grid", justifyItems: "end" }}>
+      <div style={{ display: 'grid', justifyItems: 'end' }}>
         {cellData.map((companyData: CompaniesMonthlyData) => {
           return (
-            <span style={{ color: companyData.color, fontWeight: "600" }}>
+            <span style={{ color: companyData.color, fontWeight: '600' }}>
               {USDcurrency.format(companyData.value)}
             </span>
           );
@@ -45,12 +45,12 @@ function MonthDataRenderer(
     );
   }
   return (
-    <div style={{ display: "grid", justifyItems: "end" }}>
-      <span style={{ fontWeight: "600" }}>
+    <div style={{ display: 'grid', justifyItems: 'end' }}>
+      <span style={{ fontWeight: '600' }}>
         {/* {USDcurrency.format(cellData.value)} */}
         {reportTypeFormatter(cellData.value, record.type)}
       </span>
-      <span style={{ fontWeight: "400", color: "#24CA49" }}>
+      <span style={{ fontWeight: '400', color: '#24CA49' }}>
         {cellData.percent.toFixed(2)}%
       </span>
     </div>
@@ -60,107 +60,107 @@ function MonthDataRenderer(
 function VerticalColumnCellRenderer(cellData: any) {
   if (cellData instanceof Array) {
     return (
-      <div style={{ display: "grid", fontWeight: "600" }}>
+      <div style={{ display: 'grid', fontWeight: '600' }}>
         {cellData.map((company: CompaniesInTypeColumn) => {
           return <span style={{ color: company.color }}>{company.name}</span>;
         })}
       </div>
     );
   }
-  return <span style={{ fontWeight: "600" }}>{cellData}</span>;
+  return <span style={{ fontWeight: '600' }}>{cellData}</span>;
 }
 
 export const columns: ColumnsType<DataType> = [
   {
-    title: "",
-    dataIndex: "type",
-    key: "type",
+    title: '',
+    dataIndex: 'type',
+    key: 'type',
     render: VerticalColumnCellRenderer,
     fixed: true,
     width: '150px',
   },
   {
-    title: "Jan",
-    dataIndex: "jan",
-    key: "jan",
-    align: "center",
+    title: 'Jan',
+    dataIndex: 'jan',
+    key: 'jan',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Feb",
-    dataIndex: "feb",
-    key: "feb",
-    align: "center",
+    title: 'Feb',
+    dataIndex: 'feb',
+    key: 'feb',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Mar",
-    dataIndex: "mar",
-    key: "mar",
-    align: "center",
+    title: 'Mar',
+    dataIndex: 'mar',
+    key: 'mar',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Apr",
-    dataIndex: "apr",
-    key: "apr",
-    align: "center",
+    title: 'Apr',
+    dataIndex: 'apr',
+    key: 'apr',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "May",
-    dataIndex: "may",
-    key: "may",
-    align: "center",
+    title: 'May',
+    dataIndex: 'may',
+    key: 'may',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Jun",
-    dataIndex: "jun",
-    key: "jun",
-    align: "center",
+    title: 'Jun',
+    dataIndex: 'jun',
+    key: 'jun',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Jul",
-    dataIndex: "jul",
-    key: "jul",
-    align: "center",
+    title: 'Jul',
+    dataIndex: 'jul',
+    key: 'jul',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Aug",
-    dataIndex: "aug",
-    key: "aug",
-    align: "center",
+    title: 'Aug',
+    dataIndex: 'aug',
+    key: 'aug',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Sep",
-    dataIndex: "sep",
-    key: "sep",
-    align: "center",
+    title: 'Sep',
+    dataIndex: 'sep',
+    key: 'sep',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Oct",
-    dataIndex: "oct",
-    key: "oct",
-    align: "center",
+    title: 'Oct',
+    dataIndex: 'oct',
+    key: 'oct',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Nov",
-    dataIndex: "nov",
-    key: "nov",
-    align: "center",
+    title: 'Nov',
+    dataIndex: 'nov',
+    key: 'nov',
+    align: 'center',
     render: MonthDataRenderer,
   },
   {
-    title: "Dec",
-    dataIndex: "dec",
-    key: "dec",
-    align: "center",
+    title: 'Dec',
+    dataIndex: 'dec',
+    key: 'dec',
+    align: 'center',
     render: MonthDataRenderer,
   },
 ];
@@ -202,133 +202,133 @@ export const data: DataType[] = [
         key: 3,
         type: [
           {
-            name: "Meta",
-            color: "#0062FF",
+            name: 'Meta',
+            color: '#0062FF',
           },
           {
-            name: "Google",
-            color: "#24CA49",
+            name: 'Google',
+            color: '#24CA49',
           },
         ],
 
         jan: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         feb: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         mar: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         apr: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         may: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         jun: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         jul: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         aug: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         sep: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         oct: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         nov: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         dec: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
       },
@@ -354,133 +354,133 @@ export const data: DataType[] = [
         key: 5,
         type: [
           {
-            name: "Meta",
-            color: "#0062FF",
+            name: 'Meta',
+            color: '#0062FF',
           },
           {
-            name: "Google",
-            color: "#24CA49",
+            name: 'Google',
+            color: '#24CA49',
           },
         ],
 
         jan: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         feb: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         mar: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         apr: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         may: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         jun: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         jul: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         aug: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         sep: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         oct: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         nov: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         dec: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
       },
@@ -506,133 +506,133 @@ export const data: DataType[] = [
         key: 7,
         type: [
           {
-            name: "Meta",
-            color: "#0062FF",
+            name: 'Meta',
+            color: '#0062FF',
           },
           {
-            name: "Google",
-            color: "#24CA49",
+            name: 'Google',
+            color: '#24CA49',
           },
         ],
 
         jan: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         feb: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         mar: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         apr: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         may: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         jun: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         jul: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         aug: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         sep: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         oct: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         nov: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
         dec: [
           {
             value: 18.78,
-            color: "#0062FF",
+            color: '#0062FF',
           },
           {
             value: 13.92,
-            color: "#24CA49",
+            color: '#24CA49',
           },
         ],
       },

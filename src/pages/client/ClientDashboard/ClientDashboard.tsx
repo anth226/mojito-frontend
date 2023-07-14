@@ -1,41 +1,41 @@
-import { Row, Col, Space, Button, Select, Divider } from "antd";
-import { ReactComponent as Filter } from "../../../assets/Filter.svg";
+import { Row, Col, Space, Button, Select, Divider } from 'antd';
+import { ReactComponent as Filter } from 'assets/Filter.svg';
 import ClientDashboardHeader, {
   headerCard,
-} from "./ClientDashboardHeader/ClientDashboardHeader";
-import Slider, { slide } from "./Slider/Slider";
-import { Connections } from "../../../assets/base64Icons";
-import { useState } from "react";
-import ClientDashboardYTDChartsVisualization from "./ClientDashboardYTDChartsVisualization/ClientDashboardYTDChartsVisualization";
+} from './ClientDashboardHeader/ClientDashboardHeader';
+import Slider, { slide } from './Slider/Slider';
+import { Connections } from 'assets/base64Icons';
+import { useState } from 'react';
+import ClientDashboardYTDChartsVisualization from './ClientDashboardYTDChartsVisualization/ClientDashboardYTDChartsVisualization';
 import ClientDashboardTrafficGraph, {
   ClientDashboardTrafficGraphProps,
-} from "./ClientDashboardTrafficGraph/ClientDashboardTrafficGraph";
-import { performance } from "../../../constants/Arrows";
+} from './ClientDashboardTrafficGraph/ClientDashboardTrafficGraph';
+import { performance } from 'constants/Arrows';
 
 const headerCardsData: headerCard[] = [
   {
-    title: "Revenue",
+    title: 'Revenue',
     value: 32134,
     percentage: 2.5,
     performance: performance.UP,
     comparisonAmount: 21340,
   },
   {
-    title: "Ad Spend",
+    title: 'Ad Spend',
     value: 4541,
     percentage: 2.5,
     performance: performance.DOWN,
     comparisonAmount: 5540,
   },
   {
-    title: "ROAS",
+    title: 'ROAS',
     value: 1324,
     percentage: 4.5,
     performance: performance.UP,
     comparisonAmount: 890,
   },
   {
-    title: "Revenue",
+    title: 'Revenue',
     value: 87324,
     percentage: 31,
     performance: performance.DOWN,
@@ -45,47 +45,47 @@ const headerCardsData: headerCard[] = [
 
 const connections: slide[] = [
   {
-    connectionName: "Meta",
+    connectionName: 'Meta',
     connectionValue: 14543,
     connectionImage: Connections.META,
   },
   {
-    connectionName: "TikTok",
+    connectionName: 'TikTok',
     connectionValue: 13543,
     connectionImage: Connections.TIKTOK,
   },
   {
-    connectionName: "Google",
+    connectionName: 'Google',
     connectionValue: 11543,
     connectionImage: Connections.GOOGLE,
   },
   {
-    connectionName: "Shopify",
+    connectionName: 'Shopify',
     connectionValue: 11543,
     connectionImage: Connections.GOOGLE_ADS,
   },
   {
-    connectionName: "Shopify",
+    connectionName: 'Shopify',
     connectionValue: 11543,
     connectionImage: Connections.GOOGLE_ADS,
   },
 ];
 
-const trafficCardData: Omit<ClientDashboardTrafficGraphProps, "data">[] = [
+const trafficCardData: Omit<ClientDashboardTrafficGraphProps, 'data'>[] = [
   {
-    title: "CPM",
+    title: 'CPM',
     value: 1218,
     overviewDirection: performance.UP,
     percentage: 7.2,
   },
   {
-    title: "CTR",
+    title: 'CTR',
     value: 1218,
     overviewDirection: performance.DOWN,
     percentage: 7.2,
   },
   {
-    title: "Traffic",
+    title: 'Traffic',
     value: 1218,
     overviewDirection: performance.UP,
     percentage: 7.2,
@@ -97,26 +97,26 @@ const ClientDashboard = () => {
 
   return (
     <>
-      <Row gutter={[16, 16]} style={{ marginBottom: "24px" }}>
+      <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
         <Col span={24}>
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "20px",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
             }}
           >
-            <h1 style={{ margin: "0px" }}>Company Name</h1>
+            <h1 style={{ margin: '0px' }}>Company Name</h1>
             <Space>
               <Select
-                style={{ width: "160px" }}
-                defaultValue="m-t-d"
+                style={{ width: '160px' }}
+                defaultValue='m-t-d'
                 options={[
                   {
-                    value: "m-t-d",
+                    value: 'm-t-d',
                     label: (
-                      <span style={{ color: "#000000", fontWeight: 500 }}>
+                      <span style={{ color: '#000000', fontWeight: 500 }}>
                         Month to Date
                       </span>
                     ),
@@ -141,13 +141,13 @@ const ClientDashboard = () => {
           <ClientDashboardYTDChartsVisualization />
         </Col>
         <Col span={8}>
-          <ClientDashboardTrafficGraph {...trafficCardData[0]}/>
+          <ClientDashboardTrafficGraph {...trafficCardData[0]} />
         </Col>
         <Col span={8}>
-          <ClientDashboardTrafficGraph {...trafficCardData[1]}/>
+          <ClientDashboardTrafficGraph {...trafficCardData[1]} />
         </Col>
         <Col span={8}>
-          <ClientDashboardTrafficGraph {...trafficCardData[2]}/>
+          <ClientDashboardTrafficGraph {...trafficCardData[2]} />
         </Col>
       </Row>
     </>

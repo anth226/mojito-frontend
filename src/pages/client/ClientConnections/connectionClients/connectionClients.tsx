@@ -1,7 +1,9 @@
-import { Avatar } from "antd";
-import ConnectionButton, { ConnectionBadgeButton } from "../../../../components/ConnectionButton/ConnectionButton";
-import { ConnectionStatus } from "../../../../enums/connections";
-import classes from "./connectionClients.module.css";
+import { Avatar } from 'antd';
+import ConnectionButton, {
+  ConnectionBadgeButton,
+} from 'components/ConnectionButton/ConnectionButton';
+import { ConnectionStatus } from 'enums/connections';
+import classes from './connectionClients.module.css';
 
 export interface ConnectionClient {
   name: string;
@@ -12,56 +14,56 @@ export interface ConnectionClient {
 
 const connectedClientlist: ConnectionClient[] = [
   {
-    name: "Marvin McKinney",
-    email: "example@gmail.com",
+    name: 'Marvin McKinney',
+    email: 'example@gmail.com',
     status: ConnectionStatus.SYNC_FAILED,
   },
   {
-    name: "Guy Hawkins",
-    email: "example@gmail.com",
+    name: 'Guy Hawkins',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
   {
-    name: "Courtney Henry",
-    email: "example@gmail.com",
+    name: 'Courtney Henry',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
   {
-    name: "Bessie Cooper",
-    email: "example@gmail.com",
+    name: 'Bessie Cooper',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
   {
-    name: "Theresa Webb",
-    email: "example@gmail.com",
+    name: 'Theresa Webb',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
 ];
 
 const otherClientlist: ConnectionClient[] = [
   {
-    name: "Arlene McCoy",
-    email: "example@gmail.com",
+    name: 'Arlene McCoy',
+    email: 'example@gmail.com',
     status: ConnectionStatus.SYNC_FAILED,
   },
   {
-    name: "Kathryn Murphy",
-    email: "example@gmail.com",
+    name: 'Kathryn Murphy',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
   {
-    name: "Ralph Edwards",
-    email: "example@gmail.com",
+    name: 'Ralph Edwards',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
   {
-    name: "Devon Lane",
-    email: "example@gmail.com",
+    name: 'Devon Lane',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
   {
-    name: "Jacob Jones",
-    email: "example@gmail.com",
+    name: 'Jacob Jones',
+    email: 'example@gmail.com',
     status: ConnectionStatus.CONNECTED,
   },
 ];
@@ -73,16 +75,16 @@ const otherClientlist: ConnectionClient[] = [
 
 const ConnectionClients = () => {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h2>Connected Clients</h2>
       {connectedClientlist.map((client) => {
         return (
           <div className={classes.client}>
-            <div style={{ display: "flex" }}>
-              <Avatar size={"large"} src={client.avatar} />
+            <div style={{ display: 'flex' }}>
+              <Avatar size={'large'} src={client.avatar} />
               <div className={classes.client_details}>
                 <span className={classes.client_name}>
-                  {client.name ?? "NAME"}
+                  {client.name ?? 'NAME'}
                 </span>
                 <span className={classes.client_email}>{client.email}</span>
               </div>
@@ -95,11 +97,11 @@ const ConnectionClients = () => {
       {otherClientlist.map((client) => {
         return (
           <div className={classes.client}>
-            <div style={{ display: "flex" }}>
-              <Avatar size={"large"} src={client.avatar} />
+            <div style={{ display: 'flex' }}>
+              <Avatar size={'large'} src={client.avatar} />
               <div className={classes.client_details}>
                 <span className={classes.client_name}>
-                  {client.name ?? "NAME"}
+                  {client.name ?? 'NAME'}
                 </span>
                 <span className={classes.client_email}>{client.email}</span>
               </div>

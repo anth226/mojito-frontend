@@ -1,11 +1,11 @@
-import { useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   getAuthFromStore,
   loginAsync,
   LoginCredentials,
-} from "../reduxSlices/auth/auth";
+} from 'reduxSlices/auth/auth';
 
 const useAuthentication = () => {
   const authObject = useAppSelector(getAuthFromStore);
@@ -15,7 +15,7 @@ const useAuthentication = () => {
 
   useEffect(() => {
     if (authObject.authenticated === false) {
-      navigate("/auth/login");
+      navigate('/auth/login');
     }
   }, [authObject.authenticated, navigate]);
 

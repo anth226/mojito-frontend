@@ -1,12 +1,12 @@
-import { Row, Col, Button } from "antd";
-import PlusIcon from "../../../assets/Icons/Plus";
-import AlertCard from "../../../components/AlertCard/AlertCard";
-import { mockAlerts } from "../../../mockdata/Alerts";
-import AlertModal from "../../../components/AlertModal/AlertModal";
-import AlertPanel from "../../../components/AlertPanel/AlertPanel";
-import { useState } from "react";
-import { AlertStatus } from "../../../enums/alerts";
-import { Alert } from "../../../interfaces/Alert";
+import { Button, Col, Row } from 'antd';
+import PlusIcon from 'assets/Icons/Plus';
+import AlertCard from 'components/AlertCard/AlertCard';
+import AlertModal from 'components/AlertModal/AlertModal';
+import AlertPanel from 'components/AlertPanel/AlertPanel';
+import { AlertStatus } from 'enums/alerts';
+import { Alert } from 'interfaces/Alert';
+import { mockAlerts } from 'mockdata/Alerts';
+import { useState } from 'react';
 
 const ClientAlerts = () => {
   const [alertsPanel, setAlertsPanel] = useState<true | false>(false);
@@ -31,28 +31,28 @@ const ClientAlerts = () => {
     setAlerts(temp);
   };
   return (
-    <Row gutter={[16, 16]} style={{ marginBottom: "24px" }}>
+    <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
       <Col span={24}>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "20px",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '20px',
           }}
         >
-          <h1 style={{ margin: "0px" }}>Alerts</h1>
+          <h1 style={{ margin: '0px' }}>Alerts</h1>
 
           <Button
-            icon={<PlusIcon fill="#FFFFFF" />}
-            type="primary"
+            icon={<PlusIcon fill='#FFFFFF' />}
+            type='primary'
             style={{
-              width: "150px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-evenly",
+              width: '150px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
             }}
-            size="large"
+            size='large'
             onClick={() => setNewAlertModal(true)}
           >
             <b>New alert</b>

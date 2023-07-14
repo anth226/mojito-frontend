@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import authReducer from '../reduxSlices/auth/auth';
-import onboardingReducer from '../reduxSlices/onboarding/onboarding';
+import authReducer from 'reduxSlices/auth/auth';
+import onboardingReducer from 'reduxSlices/onboarding/onboarding';
 
 import {
   persistStore,
