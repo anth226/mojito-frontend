@@ -1,14 +1,14 @@
-import { Line, LineConfig } from "@ant-design/plots";
-import { Card, Col, Grid, Row, Statistic } from "antd";
-import LineGraphMockData from "./lineGraphMockData.json";
-import useWindowSize from "../../../../hooks/useWindowSIze";
-import CustomBadge from "../../../../components/CustomBadge/CustomBadge";
-import ArrowUp from "../../../../assets/Icons/ArrowUp";
-import dayjs from "dayjs";
-import { USDcurrency } from "../../../../utils/formatters";
-import "./ClientDashboardYTDChartsVisualization.css";
-import classes from "./ClientDashboardYTDChartsVisualization.module.css";
-import { useMemo } from "react";
+import { Line, LineConfig } from '@ant-design/plots';
+import { Card, Col, Grid, Row, Statistic } from 'antd';
+import LineGraphMockData from './lineGraphMockData.json';
+import useWindowSize from 'hooks/useWindowSIze';
+import CustomBadge from 'components/CustomBadge/CustomBadge';
+import ArrowUp from 'assets/Icons/ArrowUp';
+import dayjs from 'dayjs';
+import { USDcurrency } from 'utils/formatters';
+import './ClientDashboardYTDChartsVisualization.css';
+import classes from './ClientDashboardYTDChartsVisualization.module.css';
+import { useMemo } from 'react';
 
 const { IconBadge, DotBadge } = CustomBadge;
 
@@ -26,14 +26,14 @@ const ClientDashboardYTDChartsVisualization = () => {
   const config: LineConfig = useMemo(() => {
     return {
       data: LineGraphMockData,
-      xField: "year",
-      yField: "value",
-      seriesField: "category",
+      xField: 'year',
+      yField: 'value',
+      seriesField: 'category',
       xAxis: {
-        type: "time",
+        type: 'time',
         label: {
           formatter(text, item, index) {
-            return dayjs(text).format("MMM");
+            return dayjs(text).format('MMM');
           },
         },
       },
@@ -50,10 +50,10 @@ const ClientDashboardYTDChartsVisualization = () => {
             <div className={classes.custom_tooltip_container}>
               <div className={classes.custom_tooltip_header}>
                 <span className={classes.custom_tooltip_header_title}>
-                  {dayjs(title).format("MMM")}
+                  {dayjs(title).format('MMM')}
                 </span>
                 <span className={classes.custom_tooltip_header_subtitle}>
-                  {dayjs(title).format("YYYY")}
+                  {dayjs(title).format('YYYY')}
                 </span>
               </div>
               {[1, 2, 3, 4, 5].map((entry) => {
@@ -90,7 +90,7 @@ const ClientDashboardYTDChartsVisualization = () => {
           // xxl={size.width < 1840 ? 16 : 18}
           span={18}
         >
-          <Line className="custom_tooltip_chart" {...config} />
+          <Line className='custom_tooltip_chart' {...config} />
         </Col>
         <Col
           // style={{
@@ -110,41 +110,41 @@ const ClientDashboardYTDChartsVisualization = () => {
         >
           <Row gutter={[0, 80]}>
             <Col span={24}>
-              <Card style={{ width: "100%" }}>
-                <Row align="bottom" justify={"space-between"}>
+              <Card style={{ width: '100%' }}>
+                <Row align='bottom' justify={'space-between'}>
                   <Col>
                     <Statistic
-                      prefix={"$"}
-                      title="Revenue"
+                      prefix={'$'}
+                      title='Revenue'
                       value={1218}
-                      valueStyle={{ fontSize: "30px", fontWeight: "700" }}
+                      valueStyle={{ fontSize: '30px', fontWeight: '700' }}
                     />
                   </Col>
                   <Col>
                     <IconBadge icon={<ArrowUp />} />
                   </Col>
                   <Col>
-                    <DotBadge color="#0062FF" />
+                    <DotBadge color='#0062FF' />
                   </Col>
                 </Row>
               </Card>
             </Col>
             <Col span={24}>
-              <Card style={{ width: "100%" }}>
-                <Row align="bottom" justify={"space-between"}>
+              <Card style={{ width: '100%' }}>
+                <Row align='bottom' justify={'space-between'}>
                   <Col span={12}>
                     <Statistic
-                      prefix={"$"}
-                      title="Ad Spend"
+                      prefix={'$'}
+                      title='Ad Spend'
                       value={1218}
-                      valueStyle={{ fontSize: "30px", fontWeight: "700" }}
+                      valueStyle={{ fontSize: '30px', fontWeight: '700' }}
                     />
                   </Col>
                   <Col>
                     <IconBadge icon={<ArrowUp />} />
                   </Col>
                   <Col>
-                    <DotBadge color="#FF8743" />
+                    <DotBadge color='#FF8743' />
                   </Col>
                 </Row>
               </Card>

@@ -1,9 +1,9 @@
 import { Col, Input, Row } from 'antd';
 import { useRef, useState } from 'react';
-import { ReactComponent as MagnifyingGlass } from '../../../assets/Icons/MagnifyingGlass.svg';
-import ConnectionCard from '../../../components/ConnectionCard/ConnectionCard';
-import { Connection } from '../../../interfaces/Connection';
-import { otherConnectionList } from '../../../mockdata/Connections';
+import { ReactComponent as MagnifyingGlass } from 'assets/Icons/MagnifyingGlass.svg';
+import ConnectionCard from 'components/ConnectionCard/ConnectionCard';
+import { Connection } from 'interfaces/Connection';
+import { otherConnectionList } from 'mockdata/Connections';
 import classes from './Connections.module.css';
 import ConnectionsDrawer from './connectionsDrawer/connectionsDrawer';
 

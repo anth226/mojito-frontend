@@ -1,15 +1,15 @@
-import { Card, Divider } from "antd";
-import React from "react";
-import ClientPerformanceRow from "../clientPerformanceRow/clientPerformanceRow";
-import PerformersMenu from "../performersMenu/performersMenu";
-import { performance } from "../../../../../constants/Arrows";
-import { performanceClientList } from "../../../../../mockdata/Client";
+import { Card, Divider } from 'antd';
+import React from 'react';
+import ClientPerformanceRow from '../clientPerformanceRow/clientPerformanceRow';
+import PerformersMenu from '../performersMenu/performersMenu';
+import { performance } from 'constants/Arrows';
+import { performanceClientList } from 'mockdata/Client';
 
 const performersMenuItems = [
-  { value: "Revenue" },
-  { value: "CPM" },
-  { value: "ROAS" },
-  { value: "CTR" },
+  { value: 'Revenue' },
+  { value: 'CPM' },
+  { value: 'ROAS' },
+  { value: 'CTR' },
 ];
 
 const TopPerformersCard = () => {
@@ -17,21 +17,21 @@ const TopPerformersCard = () => {
     <Card>
       <h3
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          margin: "0px",
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          margin: '0px',
         }}
       >
         Top Perfromers
         <span
           style={{
-            fontSize: "12px",
-            fontWeight: "400",
-            lineHeight: "16px",
-            letterSpacing: "0em",
-            textAlign: "right",
-            color: "#818183",
+            fontSize: '12px',
+            fontWeight: '400',
+            lineHeight: '16px',
+            letterSpacing: '0em',
+            textAlign: 'right',
+            color: '#818183',
           }}
         >
           See more
@@ -40,9 +40,9 @@ const TopPerformersCard = () => {
       <PerformersMenu items={performersMenuItems} />
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          marginTop: "32px",
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '32px',
         }}
       >
         {performanceClientList.map((performer, index) => {
@@ -50,9 +50,9 @@ const TopPerformersCard = () => {
             <React.Fragment key={index}>
               <ClientPerformanceRow client={performer} type={performance.UP} />
               {index !== performanceClientList.length - 1 ? (
-                <Divider style={{ margin: "12px 0px" }} />
+                <Divider style={{ margin: '12px 0px' }} />
               ) : (
-                ""
+                ''
               )}
             </React.Fragment>
           );

@@ -1,14 +1,14 @@
-import { Button, ButtonProps } from "antd";
-import { ReactComponent as ConnectionIcon } from "../../assets/Icons/ConnectionIcon.svg";
-import { ReactComponent as Reconnect } from "../../assets/Icons/Reconnect.svg";
-import { ConnectionStatus } from "../../enums/connections";
-import classes from "./ConnectionButton.module.css";
+import { Button, ButtonProps } from 'antd';
+import { ReactComponent as ConnectionIcon } from 'assets/Icons/ConnectionIcon.svg';
+import { ReactComponent as Reconnect } from 'assets/Icons/Reconnect.svg';
+import { ConnectionStatus } from 'enums/connections';
+import classes from './ConnectionButton.module.css';
 
 const ConnectionButton = (buttonProps: ButtonProps) => {
   return (
     <Button
       icon={<ConnectionIcon />}
-      shape={"round"}
+      shape={'round'}
       className={classes.connection_button}
       {...buttonProps}
     >
@@ -33,13 +33,13 @@ interface ConnectionBadgeColorObject {
 const ConnectionBadgeColors: ConnectionBadgeColorsInterface = {
   CONNECTED: {
     value: ConnectionStatus.CONNECTED,
-    background: "#ECFDF3",
-    color: "#3DD598",
+    background: '#ECFDF3',
+    color: '#3DD598',
   },
   SYNC_FAILED: {
     value: ConnectionStatus.SYNC_FAILED,
-    background: "#FFD9641A",
-    color: "#FE7E07",
+    background: '#FFD9641A',
+    color: '#FE7E07',
   },
 };
 
@@ -60,8 +60,8 @@ export const ConnectionBadgeButton = ({
 }: ConnectionBadgeButtonProps) => {
   return (
     <Button
-      icon={status === ConnectionStatus.CONNECTED ? "" : <Reconnect />}
-      shape={"round"}
+      icon={status === ConnectionStatus.CONNECTED ? '' : <Reconnect />}
+      shape={'round'}
       className={classes.connection_badge_button}
       style={{
         borderColor: borderColor
@@ -84,7 +84,7 @@ export const ConnectionBadgeButton = ({
       }}
       {...buttonProps}
     >
-      {status === ConnectionStatus.CONNECTED ? "Connected" : "Reconnect"}
+      {status === ConnectionStatus.CONNECTED ? 'Connected' : 'Reconnect'}
     </Button>
   );
 };
@@ -93,16 +93,16 @@ export const ConnectionBadge = ({ status }: ConnectionBadgeButtonProps) => {
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        border: "1px solid",
+        display: 'flex',
+        alignItems: 'center',
+        border: '1px solid',
         borderColor:
           status === ConnectionStatus.CONNECTED
             ? ConnectionBadgeColors.CONNECTED.color
             : ConnectionBadgeColors.SYNC_FAILED.color,
 
-        borderRadius: "1000px",
-        padding: "4px 20px",
+        borderRadius: '1000px',
+        padding: '4px 20px',
         background:
           status === ConnectionStatus.CONNECTED
             ? ConnectionBadgeColors.CONNECTED.background
@@ -110,23 +110,23 @@ export const ConnectionBadge = ({ status }: ConnectionBadgeButtonProps) => {
       }}
     >
       {status === ConnectionStatus.CONNECTED ? (
-        ""
+        ''
       ) : (
         <Reconnect
-          style={{ marginRight: "13px", width: "12px", height: "12px" }}
+          style={{ marginRight: '13px', width: '12px', height: '12px' }}
         />
       )}
       <span
         style={{
-          fontSize: "12px",
-          fontWeight: "300",
+          fontSize: '12px',
+          fontWeight: '300',
           color:
             status === ConnectionStatus.CONNECTED
               ? ConnectionBadgeColors.CONNECTED.color
               : ConnectionBadgeColors.SYNC_FAILED.color,
         }}
       >
-        {status === ConnectionStatus.CONNECTED ? "Connected" : "Reconnect"}
+        {status === ConnectionStatus.CONNECTED ? 'Connected' : 'Reconnect'}
       </span>
     </div>
   );

@@ -5,13 +5,13 @@ import { useGraphQlMutation, useGraphQlQuery } from 'hooks/useCustomHookApollo';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import LightBulb from '../../../assets/Icons/LightBulb';
-import PlusIcon from '../../../assets/Icons/Plus';
-import { AlertCardAgency } from '../../../components/AlertCard/AlertCard';
-import AlertEditPanel from '../../../components/AlertEditPanel/AlertEditPanel';
-import AlertModal from '../../../components/AlertModal/AlertModal';
-import { AlertStatus } from '../../../enums/alerts';
-import { Alert } from '../../../interfaces/Alert';
+import LightBulb from 'assets/Icons/LightBulb';
+import { Alert } from 'interfaces/Alert';
+import { AlertStatus } from 'enums/alerts';
+import PlusIcon from 'assets/Icons/Plus';
+import { AlertCardAgency } from 'components/AlertCard/AlertCard';
+import AlertEditPanel from 'components/AlertEditPanel/AlertEditPanel';
+import AlertModal from 'components/AlertModal/AlertModal';
 
 const AgencyAlerts = () => {
   const [alertsPanel, setAlertsPanel] = useState<true | false>(false);

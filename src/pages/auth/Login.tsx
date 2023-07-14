@@ -1,13 +1,13 @@
 import { Button, Card, Form, Input, Space } from 'antd';
 import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
-import useAuthentication from '../../hooks/authentication';
+import { useAppSelector } from 'app/hooks';
+import useAuthentication from 'hooks/authentication';
 import {
   LoginCredentials,
   getAuthFromStore,
   AccountRole,
-} from '../../reduxSlices/auth/auth';
+} from 'reduxSlices/auth/auth';
 import {
   AgencyNavBarPaths,
   AuthenticationPaths,

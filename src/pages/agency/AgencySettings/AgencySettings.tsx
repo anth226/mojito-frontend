@@ -1,13 +1,13 @@
-import { Tabs, TabsProps } from "antd";
-import ClientBillingSettings from "./AgencyBillingSettings/AgencyBillingSettings";
-import "./AgencySettings.css";
-import { useNavigate, useParams } from "react-router-dom";
-import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from "../../paths";
-import DetailsSettings from "./AgencyDetailsSettings/AgencyDetailsSettings";
-import UsersSetting from "./AgencyUsersSetting/AgencyUsersSetting";
-import AgencyPasswordAndSecurity from "./AgencyPasswordAndSecurity/AgencyPasswordAndSecurity";
+import { Tabs, TabsProps } from 'antd';
+import ClientBillingSettings from './AgencyBillingSettings/AgencyBillingSettings';
+import './AgencySettings.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from '../../paths';
+import DetailsSettings from './AgencyDetailsSettings/AgencyDetailsSettings';
+import UsersSetting from './AgencyUsersSetting/AgencyUsersSetting';
+import AgencyPasswordAndSecurity from './AgencyPasswordAndSecurity/AgencyPasswordAndSecurity';
 
-const items: TabsProps["items"] = [
+const items: TabsProps['items'] = [
   {
     key: AgencySettingsTabsKeys.DETAILS,
     label: `My Details`,
@@ -55,7 +55,7 @@ const AgencySettings = () => {
     <>
       <h1>Settings</h1>
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey='1'
         activeKey={tab}
         items={items}
         onTabClick={onTabClick}

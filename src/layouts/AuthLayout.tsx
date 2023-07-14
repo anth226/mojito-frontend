@@ -1,50 +1,46 @@
-import { Col, Layout, Row, Steps } from "antd";
-import { useCallback, useEffect, useMemo } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { ReactComponent as Logo } from "../assets/Mojito Logo.svg";
-import {
-  AgencyOnBoardingPaths,
-  AuthenticationPaths,
-  BusinessOnBoardingPaths,
-} from "../pages/paths";
-import { AccountType, getAuthFromStore } from "../reduxSlices/auth/auth";
-import { getOnboardingFromStore } from "../reduxSlices/onboarding/onboarding";
+import { Col, Layout, Row, Steps } from 'antd';
+import { useCallback, useEffect, useMemo } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from 'app/hooks';
+import { ReactComponent as Logo } from 'assets/Mojito Logo.svg';
+import { AgencyOnBoardingPaths, BusinessOnBoardingPaths } from 'pages/paths';
+import { AccountType, getAuthFromStore } from 'reduxSlices/auth/auth';
+import { getOnboardingFromStore } from 'reduxSlices/onboarding/onboarding';
 const { Header, Content } = Layout;
 
 const agencyOverboardingSteps = [
   {
-    title: "Signup",
+    title: 'Signup',
   },
   {
-    title: "Clients",
+    title: 'Clients',
   },
   {
-    title: "Connections",
+    title: 'Connections',
   },
   {
-    title: "Alerts",
+    title: 'Alerts',
   },
   {
-    title: "Billing",
+    title: 'Billing',
   },
   {
-    title: "Users",
+    title: 'Users',
   },
 ];
 
 const businessOverboardingSteps = [
   {
-    title: "Signup",
+    title: 'Signup',
   },
   {
-    title: "Connections",
+    title: 'Connections',
   },
   {
-    title: "Billing",
+    title: 'Billing',
   },
   {
-    title: "Users",
+    title: 'Users',
   },
 ];
 
@@ -80,7 +76,7 @@ const AuthLayout = () => {
       // navigate(AuthenticationPaths.SIGNUP)
     }
   }, [navigate, signup, step]);
-  
+
   const businessOnBoardingSteps = useCallback(() => {
     if (signup) {
       switch (step) {
@@ -125,10 +121,10 @@ const AuthLayout = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if(signup?.account === AccountType.AGENCY) {
+    if (signup?.account === AccountType.AGENCY) {
       agencyOnBoardingSteps();
     }
-    if(signup?.account === AccountType.BUSINESS) {
+    if (signup?.account === AccountType.BUSINESS) {
       businessOnBoardingSteps();
     }
   }, [agencyOnBoardingSteps, businessOnBoardingSteps, signup?.account]);
@@ -137,18 +133,18 @@ const AuthLayout = () => {
     <Layout>
       <Header
         style={{
-          background: "#FFFFFF",
-          borderBottom: "1px solid #C6CBD9",
+          background: '#FFFFFF',
+          borderBottom: '1px solid #C6CBD9',
         }}
       >
-        <Row align={"middle"} style={{ height: "64px" }}>
-          <Col span={6} style={{ height: "inherit" }}>
+        <Row align={'middle'} style={{ height: '64px' }}>
+          <Col span={6} style={{ height: 'inherit' }}>
             <Logo />
           </Col>
           {(isAgencyOnBoarding || isBusinessOnBoarding) && (
             <Col span={12}>
               <Steps
-                size="small"
+                size='small'
                 current={step}
                 items={
                   isAgencyOnBoarding
@@ -164,10 +160,10 @@ const AuthLayout = () => {
       </Header>
       <Content
         style={{
-          display: "grid",
-          justifyContent: "center",
-          height: "calc(100vh - 64px)",
-          overflow: "auto",
+          display: 'grid',
+          justifyContent: 'center',
+          height: 'calc(100vh - 64px)',
+          overflow: 'auto',
         }}
       >
         <Outlet />

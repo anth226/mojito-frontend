@@ -1,7 +1,7 @@
 import { Col, Drawer, DrawerProps, Input, Row } from 'antd';
-import Close from '../../../../assets/Icons/Close';
+import Close from 'assets/Icons/Close';
 import classes from './IntegrationDrawer.module.css';
-import { ReactComponent as MagnifyingGlass } from '../../../../assets/Icons/MagnifyingGlass.svg';
+import { ReactComponent as MagnifyingGlass } from 'assets/Icons/MagnifyingGlass.svg';
 import { IntegrationCard } from 'components/IntegrationCard/IntegrationCard';
 
 interface IntegrationDrawerProps extends DrawerProps {}
