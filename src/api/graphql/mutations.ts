@@ -85,6 +85,17 @@ export const CREATE_ALERTS = gql`
   }
 `;
 
+export const UPDATE_ALERT = gql`
+  mutation UpdateAlert($input: UpdateAlertInput!) {
+    updateAlert(input: $input) {
+      clientMutationId
+      alert {
+        _id
+      }
+    }
+  }
+`;
+
 export const INVITE_MEMBERS = gql`
   mutation InviteMembers($input: InviteMembersInput!) {
     inviteMembers(input: $input) {

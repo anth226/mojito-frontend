@@ -1,10 +1,10 @@
 import { Alert, Button, Form, Input } from 'antd';
-import { useAppDispatch } from '../../../../app/hooks';
+import { useAppDispatch } from 'app/hooks';
 import {
   AccountType,
   SignupAgency,
   signupAgencyAsync,
-} from '../../../../reduxSlices/auth/auth';
+} from 'reduxSlices/auth/auth';
 import classes from './AgencySignUp.module.css';
 
 const AgencySignUp = () => {

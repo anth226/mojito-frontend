@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from 'reduxSlices/auth/auth';
 import onboardingReducer from 'reduxSlices/onboarding/onboarding';
+import alertReducer from 'reduxSlices/alerts/alerts';
 
 import {
   persistStore,
@@ -34,6 +35,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedReducer,
     onboarding: persistedOnBoardingReducer,
+    alert: alertReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

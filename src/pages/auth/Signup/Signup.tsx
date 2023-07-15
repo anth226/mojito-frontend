@@ -1,14 +1,12 @@
 import { Card, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../../app/hooks';
-import { ReactComponent as AgencyIcon } from '../../../assets/Icons/Agency.svg';
-import { ReactComponent as BusinessIcon } from '../../../assets/Icons/Business.svg';
-import CustomMenu, {
-  MenuItem,
-} from '../../../components/CustomMenu/CustomMenu';
-import { AccountType, getAuthFromStore } from '../../../reduxSlices/auth/auth';
-import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../paths';
+import { useAppSelector } from 'app/hooks';
+import { ReactComponent as AgencyIcon } from 'assets/Icons/Agency.svg';
+import { ReactComponent as BusinessIcon } from 'assets/Icons/Business.svg';
+import CustomMenu, { MenuItem } from 'components/CustomMenu/CustomMenu';
+import { AccountType, getAuthFromStore } from 'reduxSlices/auth/auth';
+import { AgencyOnBoardingPaths, AuthenticationPaths } from 'pages/paths';
 import AgencySignUp from './AgencySignUp/AgencySignUp';
 import BusinessSignUp from './BusinessSignUp/BusinessSignUp';
 

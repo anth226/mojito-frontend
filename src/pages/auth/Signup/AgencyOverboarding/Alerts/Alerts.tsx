@@ -9,9 +9,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getOnboardingFromStore } from 'reduxSlices/onboarding/onboarding';
 import { getAccountInfo } from 'utils/helpers';
-import PlusIcon from '../../../../../assets/Icons/Plus';
-import AlertCard from '../../../../../components/AlertCard/AlertCard';
-import { Alert } from '../../../../../interfaces/Alert';
+import PlusIcon from 'assets/Icons/Plus';
+import AlertCard from 'components/AlertCard/AlertCard';
+import { Alert } from 'interfaces/Alert';
 
 const AgencyOnBoardingAlerts = () => {
   const [alerts, setAlerts] = useState<Alert[]>([]);
@@ -34,6 +34,7 @@ const AgencyOnBoardingAlerts = () => {
     },
     onCompleted: () => {
       refetch();
+      setOpenModal(false);
     },
   });
 
@@ -45,34 +46,22 @@ const AgencyOnBoardingAlerts = () => {
   });
 
   const addAlert = async (alert: any) => {
-    const connections =
-      clients?.find((i: Client) => i._id === alert.clientOption)?.connections ||
-      [];
+    const alerts = {
+      value: alert.value,
+      parameter: alert.parameter,
+      operation: alert.mathValue,
+      name: alert.alertName,
+      clientIds: alert.clientOption,
+      severity: alert.severity,
+    };
 
-    const alerts: any[] = [];
-
-    if (connections?.length > 0) {
-      connections?.forEach((i: any) => {
-        alerts.push({
-          value: alert.value,
-          parameter: alert.parameter,
-          operation: alert.mathValue,
-          name: alert.alertName,
-          connectionId: i.connectionId,
-          severity: alert.severity,
-        });
-      });
-    }
-    if (alerts.length > 0) {
-      const input = {
-        clientMutationId: null,
-        alerts: alerts,
-      };
-      await createAlerts({
-        variables: { input: input },
-      });
-    }
-    setOpenModal(false);
+    const input = {
+      clientMutationId: null,
+      alerts: alerts,
+    };
+    await createAlerts({
+      variables: { input: input },
+    });
   };
 
   useEffect(() => {
@@ -133,6 +122,7 @@ const AgencyOnBoardingAlerts = () => {
         </div>
       </Space>
       <AlertModal
+        multipleClients={true}
         clientsOptions={clientsOptions}
         closeModal={() => setOpenModal(false)}
         open={openModal}

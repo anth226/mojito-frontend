@@ -1,15 +1,15 @@
 import { Button, Col, Input, Row } from 'antd';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { ReactComponent as PlusIcon } from 'assets/Icons/Plus.svg';
+import Uploader from 'components/Uploader/Uploader';
+import { Client } from 'interfaces/Client';
 import React, { useState } from 'react';
-import { read, utils } from 'xlsx';
-import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
-import { ReactComponent as PlusIcon } from '../../../../../assets/Icons/Plus.svg';
-import Uploader from '../../../../../components/Uploader/Uploader';
-import { Client } from '../../../../../interfaces/Client';
 import {
   getOnboardingFromStore,
   setClientsInStore,
-} from '../../../../../reduxSlices/onboarding/onboarding';
-import { emailValidator } from '../../../../../utils/validators';
+} from 'reduxSlices/onboarding/onboarding';
+import { emailValidator } from 'utils/validators';
+import { read, utils } from 'xlsx';
 
 const newClient: Client = {
   name: '',

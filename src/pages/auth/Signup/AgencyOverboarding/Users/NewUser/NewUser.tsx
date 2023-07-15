@@ -1,5 +1,5 @@
-import { Button, Col, Input, Select } from "antd";
-import { emailValidator } from "../../../../../../utils/validators";
+import { Button, Col, Input, Select } from 'antd';
+import { emailValidator } from 'utils/validators';
 
 const getSelectOptionItem = ({ value, label }: any) => {
   return {
@@ -7,19 +7,19 @@ const getSelectOptionItem = ({ value, label }: any) => {
     label: (
       <div
         style={{
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-          fontWeight: "bold",
-          color: "black",
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center',
+          fontWeight: 'bold',
+          color: 'black',
         }}
       >
         <div
           style={{
-            width: "8px",
-            height: "8px",
-            backgroundColor: "#0062FF",
-            borderRadius: "25px",
+            width: '8px',
+            height: '8px',
+            backgroundColor: '#0062FF',
+            borderRadius: '25px',
           }}
         />
         {label}
@@ -29,8 +29,8 @@ const getSelectOptionItem = ({ value, label }: any) => {
 };
 
 const options = [
-  getSelectOptionItem({ value: "Client", label: "Client" }),
-  getSelectOptionItem({ value: "Staff", label: "Staff" }),
+  getSelectOptionItem({ value: 'Client', label: 'Client' }),
+  getSelectOptionItem({ value: 'Staff', label: 'Staff' }),
 ];
 
 interface NewUserProps {
@@ -47,9 +47,9 @@ interface NewUserProps {
 const NewUser = ({ client, onChange, index, sendInvite }: NewUserProps) => {
   const canInvite = () => {
     if (
-      client.name !== "" &&
-      client.surname !== "" &&
-      client.email !== "" &&
+      client.name !== '' &&
+      client.surname !== '' &&
+      client.email !== '' &&
       emailValidator(client.email)
     ) {
       return true;
@@ -61,48 +61,48 @@ const NewUser = ({ client, onChange, index, sendInvite }: NewUserProps) => {
       <Col span={6}>
         <label>Name</label>
         <Input
-          name="name"
-          size="large"
+          name='name'
+          size='large'
           onChange={(e) => onChange(e, index)}
           value={client.name}
-          placeholder={"Enter name"}
+          placeholder={'Enter name'}
         />
       </Col>
       <Col span={6}>
         <label>Surname</label>
         <Input
-          name="surname"
-          size="large"
+          name='surname'
+          size='large'
           onChange={(e) => onChange(e, index)}
           value={client.surname}
-          placeholder={"Enter surname"}
+          placeholder={'Enter surname'}
         />
       </Col>
       <Col span={6}>
         <label>Email</label>
         <Input
-          name="email"
-          size="large"
-          type="email"
+          name='email'
+          size='large'
+          type='email'
           onChange={(e) => onChange(e, index)}
-          status={emailValidator(client.email) ? "" : "error"}
+          status={emailValidator(client.email) ? '' : 'error'}
           value={client.email}
-          placeholder={"Enter email"}
+          placeholder={'Enter email'}
         />
       </Col>
       <Col span={4}>
         <Select
-          size="large"
+          size='large'
           options={options}
           //   bordered={false}
-          style={{ width: "100%", marginTop: "20px" }}
+          style={{ width: '100%', marginTop: '20px' }}
           defaultValue={options[0]}
         />
       </Col>
       <Col span={2}>
         <Button
-          size="large"
-          style={{ width: "100%", marginTop: "20px" }}
+          size='large'
+          style={{ width: '100%', marginTop: '20px' }}
           onClick={() => sendInvite(index)}
           disabled={!canInvite()}
         >

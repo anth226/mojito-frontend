@@ -1,18 +1,18 @@
 import { Col, Input, Row, Space } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
-import ConnectionCard from '../../../../../components/ConnectionCard/ConnectionCard';
-import { ConnectionStatus } from '../../../../../enums/connections';
-import { ReactComponent as MagnifyingGlass } from '../../../../../assets/Icons/MagnifyingGlass.svg';
+import ConnectionCard from 'components/ConnectionCard/ConnectionCard';
+import { ConnectionStatus } from 'enums/connections';
+import { ReactComponent as MagnifyingGlass } from 'assets/Icons/MagnifyingGlass.svg';
 import classes from './Connections.module.css';
-import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   countNestedConnections,
   getOnboardingFromStore,
   nested,
   updateConnections,
-} from '../../../../../reduxSlices/onboarding/onboarding';
+} from 'reduxSlices/onboarding/onboarding';
 import ConnectClients from './ConnectClients/ConnectClients';
-import { AgencyOnBoardingPaths } from '../../../../paths';
+import { AgencyOnBoardingPaths } from 'pages/paths';
 
 const AgencyOnBoardingConnections = () => {
   const { nestedSteps, allConnectionList, nestedPath, prevStep } =

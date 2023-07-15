@@ -1,9 +1,9 @@
 import { Button, Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import PlusIcon from '../../../../../assets/Icons/Plus';
+import PlusIcon from 'assets/Icons/Plus';
 import InvitedUser from './InvitedUser/InvitedUser';
 import NewUser from './NewUser/NewUser';
-import { NewClient } from '../../../../../interfaces/Client';
+import { NewClient } from 'interfaces/Client';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { INVITE_MEMBERS } from 'api/graphql/mutations';
 import { toast } from 'react-toastify';

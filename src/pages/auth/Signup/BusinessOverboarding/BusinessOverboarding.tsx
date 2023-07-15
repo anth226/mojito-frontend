@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Row, Space } from 'antd';
 import {
@@ -6,11 +6,11 @@ import {
   clearOnBoardingStore,
   getOnboardingFromStore,
   next,
-} from '../../../../reduxSlices/onboarding/onboarding';
+} from 'reduxSlices/onboarding/onboarding';
 import { useMemo } from 'react';
-import { AuthenticationPaths, BusinessOnBoardingPaths } from '../../../paths';
-import { useBillingFormInstance } from '../../../../components/BillingForm/BillingForm';
-import { clearSignup } from '../../../../reduxSlices/auth/auth';
+import { AuthenticationPaths, BusinessOnBoardingPaths } from 'pages/paths';
+import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
+import { clearSignup } from 'reduxSlices/auth/auth';
 import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 
 const BusinessOverboarding = () => {

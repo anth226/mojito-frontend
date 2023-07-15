@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import PlanCard from '../../../../../components/PlanCard/PlanCard';
+import PlanCard from 'components/PlanCard/PlanCard';
 import classes from './Billing.module.css';
-import { useBillingFormInstance } from '../../../../../components/BillingForm/BillingForm';
-import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
+import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   getOnboardingFromStore,
   nested,
@@ -10,9 +10,9 @@ import {
   setBilling,
   setBillingDetails,
   setBillingPlan,
-} from '../../../../../reduxSlices/onboarding/onboarding';
-import { AgencyOnBoardingPaths } from '../../../../paths';
-import { plans } from '../../../../../constants/BillingPlans';
+} from 'reduxSlices/onboarding/onboarding';
+import { AgencyOnBoardingPaths } from 'pages/paths';
+import { plans } from 'constants/BillingPlans';
 
 const AgencyOnBoardingBilling = () => {
   const { billing, nestedSteps, nestedPath, prevStep } = useAppSelector(

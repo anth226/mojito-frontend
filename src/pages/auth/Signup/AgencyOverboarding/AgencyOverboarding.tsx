@@ -6,17 +6,17 @@ import { useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { useBillingFormInstance } from '../../../../components/BillingForm/BillingForm';
-import { clearSignup } from '../../../../reduxSlices/auth/auth';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
+import { clearSignup } from 'reduxSlices/auth/auth';
 import {
   back,
   clearOnBoardingStore,
   getOnboardingFromStore,
   next,
   setClientsInStore,
-} from '../../../../reduxSlices/onboarding/onboarding';
-import { AgencyOnBoardingPaths, AuthenticationPaths } from '../../../paths';
+} from 'reduxSlices/onboarding/onboarding';
+import { AgencyOnBoardingPaths, AuthenticationPaths } from 'pages/paths';
 
 const AgencyOverboarding = () => {
   const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(

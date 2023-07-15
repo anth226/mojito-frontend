@@ -1,18 +1,18 @@
-import { Col, Input, Row, Space } from "antd";
-import React, { useState } from "react";
-import ConnectionCard from "../../../../../components/ConnectionCard/ConnectionCard";
-import { ReactComponent as MagnifyingGlass } from "../../../../../assets/Icons/MagnifyingGlass.svg";
-import classes from "./Connections.module.css";
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks";
+import { Col, Input, Row, Space } from 'antd';
+import React, { useState } from 'react';
+import ConnectionCard from 'components/ConnectionCard/ConnectionCard';
+import { ReactComponent as MagnifyingGlass } from 'assets/Icons/MagnifyingGlass.svg';
+import classes from './Connections.module.css';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   getOnboardingFromStore,
   updateConnections,
-} from "../../../../../reduxSlices/onboarding/onboarding";
+} from 'reduxSlices/onboarding/onboarding';
 
 const BusinessOnBoardingConnections = () => {
   const { allConnectionList } = useAppSelector(getOnboardingFromStore);
 
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -30,14 +30,14 @@ const BusinessOnBoardingConnections = () => {
   };
 
   const onConnectButtonClick = (index: number) => {
-    dispatch(updateConnections({index, notNested: true}));
+    dispatch(updateConnections({ index, notNested: true }));
   };
 
   return (
-    <Space direction="vertical">
+    <Space direction='vertical'>
       <>
         <div>
-          <h1 style={{ margin: "0px" }}>Connections</h1>
+          <h1 style={{ margin: '0px' }}>Connections</h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -45,12 +45,12 @@ const BusinessOnBoardingConnections = () => {
         </div>
         <Input
           className={classes.search_box}
-          size="large"
-          placeholder="Search"
+          size='large'
+          placeholder='Search'
           prefix={<MagnifyingGlass />}
           onChange={onSearchChange}
         />
-        <Row gutter={[16, 16]} justify={"center"}>
+        <Row gutter={[16, 16]} justify={'center'}>
           {allConnectionList.map((connection, index) => {
             if (!isInSearch(connection.name)) {
               return <React.Fragment key={connection.key}></React.Fragment>;
@@ -61,7 +61,7 @@ const BusinessOnBoardingConnections = () => {
                   connection={connection}
                   cover
                   description
-                  direction="vertical"
+                  direction='vertical'
                   onConnectButtonClick={() => onConnectButtonClick(index)}
                 />
               </Col>

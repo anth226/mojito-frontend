@@ -1,24 +1,30 @@
 import { Button, Col, Row, Skeleton } from 'antd';
-import { CREATE_ALERTS } from 'api/graphql/mutations';
-import { GET_LIST_ALERTS, GET_LIST_CONNECTIONS } from 'api/graphql/queries';
+import { CREATE_ALERTS, UPDATE_ALERT } from 'api/graphql/mutations';
+import { GET_LIST_ALERTS, GET_LIST_CLIENTS } from 'api/graphql/queries';
 import { useGraphQlMutation, useGraphQlQuery } from 'hooks/useCustomHookApollo';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import LightBulb from 'assets/Icons/LightBulb';
-import { Alert } from 'interfaces/Alert';
-import { AlertStatus } from 'enums/alerts';
 import PlusIcon from 'assets/Icons/Plus';
 import { AlertCardAgency } from 'components/AlertCard/AlertCard';
 import AlertEditPanel from 'components/AlertEditPanel/AlertEditPanel';
 import AlertModal from 'components/AlertModal/AlertModal';
+import { AlertStatus } from 'enums/alerts';
+import { Alert } from 'interfaces/Alert';
+import { useAppDispatch } from 'app/hooks';
+import { setAlertInStore } from 'reduxSlices/alerts/alerts';
+
+interface OptionSelect {
+  value: number | string;
+  label: string;
+}
 
 const AgencyAlerts = () => {
+  const dispatch = useAppDispatch();
   const [alertsPanel, setAlertsPanel] = useState<true | false>(false);
   const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [curAlert, setCurAlert] = useState<Alert>();
-
-  const [newAlertModal, setNewAlertModal] = useState(false);
+  const [newAlertModal, setNewAlertModal] = useState<boolean>(false);
 
   const {
     data: listAlerts,
@@ -32,49 +38,67 @@ const AgencyAlerts = () => {
       throw error;
     },
     onCompleted: () => {
+      setNewAlertModal(false);
       refetch();
     },
   });
 
-  const { data: listConnections, loading: isLoadingFetchListConnections } =
-    useGraphQlQuery(GET_LIST_CONNECTIONS);
-
-  const clientsOptions = listConnections?.connections?.nodes?.reduce(
-    (pre: any, cur: any) => {
-      if (cur?.source) {
-        return [...pre, { label: cur?.client?.name, value: cur?._id }];
-      }
-      return pre;
+  const [updateAlerts] = useGraphQlMutation(UPDATE_ALERT, {
+    onError(error) {
+      toast.error('Update alerts not success!');
+      throw error;
     },
-    []
-  );
+    onCompleted: () => {
+      setAlertsPanel(false);
+      refetch();
+    },
+  });
+
+  const { data: listClients, loading: isLoadingFetchlistClients } =
+    useGraphQlQuery(GET_LIST_CLIENTS);
+
+  const clientsOptions: OptionSelect[] = useMemo(() => {
+    const data = listClients?.clients?.nodes?.reduce(
+      (pre: OptionSelect[], cur: any) => {
+        return [...pre, { label: cur?.name, value: cur?._id }];
+      },
+      []
+    );
+    return data;
+  }, [listClients]);
 
   const addAlert = async (alert: any) => {
-    const alerts: any[] = [];
+    const alerts = {
+      value: alert.value,
+      parameter: alert.parameter,
+      operation: alert.mathValue,
+      name: alert.alertName,
+      clientIds: alert.clientOption,
+      severity: alert.severity,
+    };
 
-    if (alert?.clientOption?.length > 0) {
-      alert?.clientOption?.forEach((i: any) => {
-        alerts.push({
-          value: alert.value,
-          parameter: alert.parameter,
-          operation: alert.mathValue,
-          name: alert.alertName,
-          connectionId: i,
-          severity: alert.severity,
-        });
-      });
-    }
-    if (alerts.length > 0) {
-      const input = {
-        clientMutationId: null,
-        alerts: alerts,
-      };
+    const input = {
+      clientMutationId: null,
+      alerts: alerts,
+    };
 
-      await createAlerts({
-        variables: { input: input },
-      });
-    }
-    setNewAlertModal(false);
+    await createAlerts({
+      variables: { input: input },
+    });
+  };
+
+  const updateAlert = async (data: any) => {
+    const input = {
+      value: data.value,
+      severity: data.severity,
+      parameter: data.parameter,
+      operation: data.mathValue,
+      name: data.alertName,
+      clientMutationId: null,
+      clientIds: data.clientOption,
+      alertId: data.id,
+    };
+    await updateAlerts({ variables: { input: input } });
   };
 
   const onAlertClickPanel = (clickedAlert: Alert) => {
@@ -107,6 +131,8 @@ const AgencyAlerts = () => {
           parameter: node?.parameter,
           operation: node?.operation,
           fires: node?.fires,
+          clients: node?.clients?.nodes,
+          severity: node?.severity,
         };
       });
 
@@ -115,13 +141,11 @@ const AgencyAlerts = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listAlerts]);
 
-  const onOpenEditForm = (id: string) => {
+  const onOpenEditForm = (alert: Alert) => {
+    dispatch(setAlertInStore(alert));
     setAlertsPanel(true);
-    const newCurAlert = alerts?.find(
-      (alert: Alert) => alert.id.toString() === id
-    );
-    newCurAlert && setCurAlert(newCurAlert);
   };
+
   return (
     <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
       <Col span={24}>
@@ -156,7 +180,6 @@ const AgencyAlerts = () => {
           style={{
             display: 'flex',
             columnGap: '12px',
-            // justifyContent: "center",
             alignItems: 'center',
           }}
         >
@@ -164,24 +187,33 @@ const AgencyAlerts = () => {
           <h2 style={{ margin: '0px' }}>Configure Alerts</h2>
         </div>
       </Col>
-      {alerts?.map((alert) => {
-        return (
+      {(isLoadingFetchListAlerts || isLoadingFetchlistClients) && (
+        <Col span={24}>
           <Skeleton
-            loading={isLoadingFetchListAlerts || isLoadingFetchListConnections}
             avatar
             paragraph={{
-              rows: 1,
+              rows: 2,
             }}
             active
-            key={alert.id}
-          >
-            <Col span={24}>
-              <AlertCardAgency
-                alert={alert}
-                onClick={() => onOpenEditForm(alert.id.toString())}
-              />
-            </Col>
-          </Skeleton>
+          ></Skeleton>
+          <Skeleton
+            avatar
+            paragraph={{
+              rows: 2,
+            }}
+            active
+          ></Skeleton>
+        </Col>
+      )}
+      {alerts.map((alert) => {
+        return (
+          <Col span={24} key={alert.id}>
+            <AlertCardAgency
+              alert={alert}
+              progressBarValue={clientsOptions.length}
+              onClick={() => onOpenEditForm(alert)}
+            />
+          </Col>
         );
       })}
       {/* <AlertPanel
@@ -192,10 +224,11 @@ const AgencyAlerts = () => {
         closable={false}
       /> */}
       <AlertEditPanel
-        alert={curAlert}
+        multipleClients={true}
         clientsOptions={clientsOptions}
         open={alertsPanel}
         onClose={() => setAlertsPanel(false)}
+        onUpdateAlert={updateAlert}
         closable={false}
       />
       <AlertModal

@@ -4,8 +4,10 @@ import { Avatars } from 'assets/base64Icons';
 import { Alert } from 'interfaces/Alert';
 import './AlertCard.css';
 import classes from './AlertCard.module.css';
+const PROGRESSWIDTH = 300;
 
 interface AlertCardProps {
+  progressBarValue?: number;
   alert: Alert;
   onClick?: Function;
 }
@@ -18,7 +20,7 @@ const ParameterSelectors = ({ alert }: { alert: Alert }) => {
         options={alertParameter}
         bordered={false}
         style={{ width: 'auto' }}
-        defaultValue={alert.parameter}
+        value={alert.parameter}
         disabled
       />
       <span className={[classes.bold_text, classes.text_content].join(' ')}>
@@ -29,7 +31,7 @@ const ParameterSelectors = ({ alert }: { alert: Alert }) => {
         options={mathValues}
         bordered={false}
         style={{ width: '150px' }}
-        defaultValue={alert.operation}
+        value={alert.operation}
         disabled
       />
       <span className={[classes.bold_text, classes.text_content].join(' ')}>
@@ -65,12 +67,20 @@ const AlertCard = ({ alert, onClick }: AlertCardProps) => {
   );
 };
 
-export const AlertCardAgency = ({ alert, onClick }: AlertCardProps) => {
+export const AlertCardAgency = ({
+  alert,
+  progressBarValue,
+  onClick,
+}: AlertCardProps) => {
   const ifClickable = () => {
     if (onClick instanceof Function) {
       onClick();
     }
   };
+  const pecent = progressBarValue
+    ? (alert.clients?.length / progressBarValue) * 100
+    : 0;
+
   return (
     <Card
       bordered={false}
@@ -90,9 +100,9 @@ export const AlertCardAgency = ({ alert, onClick }: AlertCardProps) => {
         >
           <Progress
             strokeColor={'#027A48'}
-            percent={50}
+            percent={pecent}
             showInfo={false}
-            style={{ width: '300px' }}
+            style={{ width: `${PROGRESSWIDTH}px` }}
           />
           <div
             style={{
@@ -109,7 +119,7 @@ export const AlertCardAgency = ({ alert, onClick }: AlertCardProps) => {
       <Divider />
       <div className={classes.alert_box}>
         <ParameterSelectors alert={alert} />
-        <span>12 Clients</span>
+        <span>{alert.clients?.length} Clients</span>
       </div>
     </Card>
   );

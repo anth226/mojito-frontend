@@ -8,6 +8,8 @@ import {
   Row,
   Select,
 } from 'antd';
+import { useAppSelector } from 'app/hooks';
+import Close from 'assets/Icons/Close';
 import {
   actions,
   alertParameter,
@@ -15,41 +17,56 @@ import {
   mathValues,
   parameters,
 } from 'constants/Alert';
-import Close from 'assets/Icons/Close';
-import classes from './AlertEditPanel.module.css';
 import { Alert } from 'interfaces/Alert';
+import { useEffect } from 'react';
+
+import { useForm } from 'antd/es/form/Form';
+import { getAlertFromStore } from 'reduxSlices/alerts/alerts';
+import classes from './AlertEditPanel.module.css';
 
 interface AlertModalProps extends DrawerProps {
   multipleClients?: Boolean;
   clientsOptions: any;
   alert?: Alert;
+  onUpdateAlert: Function;
 }
 
 const AlertEditPanel = ({
   multipleClients,
   clientsOptions,
-  alert,
+  onUpdateAlert,
   ...drawerProps
 }: AlertModalProps) => {
-  const curAlert = {
-    alertName: alert?.name,
-    clientOption: alert?.connectionId,
-    mathValue: alert?.operation,
-    parameter: alert?.parameter,
-    severity: alert?.severity,
-    value: alert?.value,
+  const { alert } = useAppSelector(getAlertFromStore);
+  const [form] = useForm();
+
+  const formatData = (data: any) => {
+    const clientIds = data?.clients?.map((client: any) => {
+      return client._id;
+    });
+
+    return {
+      alertName: data?.name,
+      clientOption: clientIds,
+      mathValue: data?.operation,
+      parameter: data?.parameter,
+      severity: data?.severity,
+      value: data?.value,
+    };
   };
+
   const onFinish = (values: any) => {
-    console.log('values', values);
+    onUpdateAlert({ ...values, id: alert?.id });
   };
+
+  const curAlert = formatData(alert);
+
+  useEffect(() => {
+    form.setFieldsValue(curAlert);
+  }, [form, curAlert]);
+
   return (
-    <Drawer
-      closable
-      placement='right'
-      width={700}
-      {...drawerProps}
-      //   bodyStyle={{ padding: "0px" }}
-    >
+    <Drawer closable placement='right' width={700} {...drawerProps}>
       <div className={classes.alert_panel_header}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <h1 style={{ margin: '0' }}>Edit Alert</h1>
@@ -66,6 +83,7 @@ const AlertEditPanel = ({
         labelWrap
         wrapperCol={{ flex: 1 }}
         colon={false}
+        form={form}
         initialValues={curAlert}
       >
         <Row gutter={[16, 16]} align={'bottom'}>
