@@ -1,11 +1,11 @@
 import { AlertStatus } from 'enums/alerts';
 
 export interface Alert {
-  id: number;
+  id: string;
   name: string;
   source: string;
   fires: number;
-  clients: number;
+  clients: any;
   status: AlertStatus;
   date: Date;
   value: number;
@@ -28,3 +28,14 @@ export const getAlertObject = () =>
     date: new Date(),
     value: 0,
   });
+
+export interface AlertForm {
+  value: string;
+  severity: string;
+  parameter: string;
+  operation: string;
+  name: string;
+  clientMutationId: string | null;
+  clientIds: string[];
+  alertId?: string;
+}

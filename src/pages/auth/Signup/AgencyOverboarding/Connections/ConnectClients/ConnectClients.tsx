@@ -1,22 +1,19 @@
 import { Avatar, Button, Divider, Space } from 'antd';
+import { CREATE_CONNECTION, DELETE_CONNECTION } from 'api/graphql/mutations';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { ReactComponent as PlusIcon } from 'assets/Icons/Plus.svg';
+import { Avatars } from 'assets/base64Icons';
+import { ConnectionBadgeButton } from 'components/ConnectionButton/ConnectionButton';
+import { ConnectionStatus, ConnectionType } from 'enums/connections';
+import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
+import { Connection } from 'interfaces/Connection';
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../app/hooks';
-import { Avatars } from '../../../../../../assets/base64Icons';
-import { ConnectionBadgeButton } from '../../../../../../components/ConnectionButton/ConnectionButton';
-import {
-  ConnectionStatus,
-  ConnectionType,
-} from '../../../../../../enums/connections';
-import { Connection } from '../../../../../../interfaces/Connection';
+import { toast } from 'react-toastify';
 import {
   getOnboardingFromStore,
   updateConnectionsOfClient,
-} from '../../../../../../reduxSlices/onboarding/onboarding';
+} from 'reduxSlices/onboarding/onboarding';
 import classes from './connectClients.module.css';
-import { ReactComponent as PlusIcon } from '../../../../../../assets/Icons/Plus.svg';
-import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
-import { CREATE_CONNECTION, DELETE_CONNECTION } from 'api/graphql/mutations';
-import { toast } from 'react-toastify';
 
 interface ConnectClientsProps {
   connection: Connection;

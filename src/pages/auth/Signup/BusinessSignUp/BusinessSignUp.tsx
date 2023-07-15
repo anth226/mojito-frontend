@@ -1,9 +1,6 @@
 import { Alert, Button, Form, Input } from 'antd';
-import { useAppDispatch } from '../../../../app/hooks';
-import {
-  AccountType,
-  signupBusinessAsync,
-} from '../../../../reduxSlices/auth/auth';
+import { useAppDispatch } from 'app/hooks';
+import { AccountType, signupBusinessAsync } from 'reduxSlices/auth/auth';
 import classes from './BusinessSignUp.module.css';
 
 const BusinessSignUp = () => {

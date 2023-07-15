@@ -50,15 +50,19 @@ export const GET_LIST_ALERTS = gql`
       nodes {
         _id
         name
-        connection {
-          source
-          _id
-        }
         parameter
         value
         operation
         archived
         fires
+        severity
+        clients {
+          nodes {
+            _id
+            name
+            email
+          }
+        }
       }
       hasMore
     }

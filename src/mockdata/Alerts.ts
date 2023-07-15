@@ -3,7 +3,7 @@ import { Alert } from 'interfaces/Alert';
 
 export const mockAlerts: Alert[] = [
   {
-    id: 1,
+    id: '1',
     name: 'No Ad Spend',
     source: 'Source name',
     parameter: 'If',
@@ -15,7 +15,7 @@ export const mockAlerts: Alert[] = [
     value: 0,
   },
   {
-    id: 2,
+    id: '2',
     name: 'No Ad Spend',
     source: 'Source name',
     parameter: 'If',
@@ -27,7 +27,7 @@ export const mockAlerts: Alert[] = [
     value: 0,
   },
   {
-    id: 3,
+    id: '3',
     name: 'No Ad Spend',
     source: 'Source name',
     parameter: 'If',
