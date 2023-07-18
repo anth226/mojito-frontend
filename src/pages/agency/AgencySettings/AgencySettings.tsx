@@ -2,7 +2,7 @@ import { Tabs, TabsProps } from 'antd';
 import ClientBillingSettings from './AgencyBillingSettings/AgencyBillingSettings';
 import './AgencySettings.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from '../../paths';
+import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from 'pages/paths';
 import DetailsSettings from './AgencyDetailsSettings/AgencyDetailsSettings';
 import UsersSetting from './AgencyUsersSetting/AgencyUsersSetting';
 import AgencyPasswordAndSecurity from './AgencyPasswordAndSecurity/AgencyPasswordAndSecurity';

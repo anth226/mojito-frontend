@@ -143,6 +143,7 @@ export const GET_LIST_MEMBERS = gql`
         _id
         name
         email
+        status
       }
       hasMore
     }

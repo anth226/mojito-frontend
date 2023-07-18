@@ -1,13 +1,16 @@
-import { Button, Card, Col, Input, Modal, Row } from 'antd';
-import { useState } from 'react';
-import { Client } from 'interfaces/Client';
+import { Button, Card, Col, Input, Modal, Row, Skeleton } from 'antd';
+import { INVITE_CLIENTS, INVITE_MEMBERS } from 'api/graphql/mutations';
+import { GET_LIST_MEMBERS } from 'api/graphql/queries';
 import PlusIcon from 'assets/Icons/Plus';
-import UserRow from 'components/UserRow/UserRow';
-import { ClientRoles, ClientStatus, ClientStatusColor } from 'enums/clients';
-import UserTypeSelection from 'components/UserTypeSelection/UserTypeSelection';
 import UserRolesMenu from 'components/RadioMenu/UserRolesMenu/UserRolesMenu';
+import UserRow from 'components/UserRow/UserRow';
+import UserTypeSelection from 'components/UserTypeSelection/UserTypeSelection';
+import { ClientRoles, ClientStatus, ClientStatusColor } from 'enums/clients';
+import { useGraphQlMutation, useGraphQlQuery } from 'hooks/useCustomHookApollo';
+import { Client } from 'interfaces/Client';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { emailValidator } from 'utils/validators';
-import { mockClients } from 'mockdata/Client';
 
 function getClientStatusColor(status: ClientStatus | undefined) {
   switch (status) {
@@ -40,9 +43,56 @@ function checkObjectForEmptyValues(object: Object) {
 }
 
 const AgencyUsersSetting = () => {
-  const [clients, setClients] = useState<Client[]>(mockClients);
+  const [clients, setClients] = useState<Client[]>([]);
   const [modal, setModal] = useState<true | false>(false);
   const [newClient, setNewClient] = useState<Client>(defaultClientValues);
+
+  const {
+    data: listMembers,
+    loading: isLoadingFetchListMember,
+    refetch,
+  } = useGraphQlQuery(GET_LIST_MEMBERS);
+
+  const [inviteMember] = useGraphQlMutation(INVITE_MEMBERS, {
+    onError(error) {
+      toast.error(error.message);
+      throw error;
+    },
+    onCompleted: () => {
+      closeModal();
+      refetch();
+    },
+  });
+
+  const [inviteClients] = useGraphQlMutation(INVITE_CLIENTS, {
+    onError(error) {
+      toast.error(error.message);
+      throw error;
+    },
+    onCompleted: () => {
+      closeModal();
+      refetch();
+    },
+  });
+
+  useEffect(() => {
+    const newClients: Client[] = listMembers?.members?.nodes?.map(
+      (member: Client) => {
+        return {
+          _id: member?._id,
+          name: member?.name,
+          email: member?.email,
+          status:
+            (member?.status as string) === 'INVITED'
+              ? ClientStatus.INVITED
+              : (member?.status as string) === 'ACTIVE'
+              ? ClientStatus.ACTIVE
+              : ClientStatus.UN_INVITED,
+        };
+      }
+    );
+    setClients(newClients);
+  }, [listMembers]);
 
   const onChange = (e: any) => {
     const propertyName = e.target.name;
@@ -53,11 +103,36 @@ const AgencyUsersSetting = () => {
     }));
   };
 
-  const addClient = () => {
-    const temp = [...clients];
-    temp.push(newClient);
-    setClients(temp);
-    closeModal();
+  const addClient = async () => {
+    if (newClient?.role === 'client') {
+      const input = {
+        clients: [
+          {
+            email: newClient.email,
+            name: `${newClient.surname} ${newClient.name}`,
+            clientMutationId: null,
+          },
+        ],
+        clientMutationId: null,
+      };
+      await inviteClients({
+        variables: { input: input },
+      });
+    } else {
+      const input = {
+        members: [
+          {
+            email: newClient.email,
+            name: `${newClient.surname} ${newClient.name}`,
+            clientMutationId: null,
+          },
+        ],
+        clientMutationId: null,
+      };
+      await inviteMember({
+        variables: { input: input },
+      });
+    }
   };
 
   const openModal = () => {
@@ -99,7 +174,25 @@ const AgencyUsersSetting = () => {
           </Button>
         </Col>
       </Row>
-      {clients.map((client, index) => (
+      {isLoadingFetchListMember && (
+        <Col span={24}>
+          <Skeleton
+            avatar
+            paragraph={{
+              rows: 1,
+            }}
+            active
+          ></Skeleton>
+          <Skeleton
+            avatar
+            paragraph={{
+              rows: 1,
+            }}
+            active
+          ></Skeleton>
+        </Col>
+      )}
+      {clients?.map((client, index) => (
         <UserRow
           key={index}
           user={client}
