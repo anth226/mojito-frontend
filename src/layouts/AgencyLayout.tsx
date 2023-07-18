@@ -13,30 +13,30 @@ import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import Search from 'antd/es/transfer/search';
 import { Key, useMemo } from 'react';
-import { ReactComponent as Bell } from '../assets/navbarIcons/Bell.svg';
-import { ReactComponent as Cutlery } from '../assets/navbarIcons/Griptight Tape.svg';
-import { ReactComponent as Home } from '../assets/navbarIcons/Mokan.svg';
-import { ReactComponent as Plus } from '../assets/navbarIcons/Plus.svg';
-import { ReactComponent as FilmTape } from '../assets/navbarIcons/Rock Weights.svg';
-import { ReactComponent as FirstAid } from '../assets/navbarIcons/Salt Athletic.svg';
-import { ReactComponent as Shirt } from '../assets/navbarIcons/Surplus Strength.svg';
+import { ReactComponent as Bell } from 'assets/navbarIcons/Bell.svg';
+import { ReactComponent as Cutlery } from 'assets/navbarIcons/Griptight Tape.svg';
+import { ReactComponent as Home } from 'assets/navbarIcons/Mokan.svg';
+import { ReactComponent as Plus } from 'assets/navbarIcons/Plus.svg';
+import { ReactComponent as FilmTape } from 'assets/navbarIcons/Rock Weights.svg';
+import { ReactComponent as FirstAid } from 'assets/navbarIcons/Salt Athletic.svg';
+import { ReactComponent as Shirt } from 'assets/navbarIcons/Surplus Strength.svg';
 import {
   AgencyNavBarPaths,
   AgencySettingsTabsPaths,
   AuthenticationPaths,
-} from '../pages/paths';
+} from 'pages/paths';
 
 import {
   getAccountInfo,
   removeAccessToken,
   removeAccountInfo,
 } from 'utils/helpers';
-import { useAppDispatch } from '../app/hooks';
-import AlertIcon from '../assets/navbarIcons/AlertIcon';
-import ConnectionsIcon from '../assets/navbarIcons/ConnectionsIcon';
-import HQIcon from '../assets/navbarIcons/HQIcon';
-import MetricsIcon from '../assets/navbarIcons/MetricsIcon';
-import { logout } from '../reduxSlices/auth/auth';
+import { useAppDispatch } from 'app/hooks';
+import AlertIcon from 'assets/navbarIcons/AlertIcon';
+import ConnectionsIcon from 'assets/navbarIcons/ConnectionsIcon';
+import HQIcon from 'assets/navbarIcons/HQIcon';
+import MetricsIcon from 'assets/navbarIcons/MetricsIcon';
+import { logout } from 'reduxSlices/auth/auth';
 import classes from './settingsDropdown.module.css';
 
 const { Header, Sider, Content } = Layout;

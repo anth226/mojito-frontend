@@ -1,13 +1,13 @@
-import { Tabs, TabsProps } from "antd";
-import ClientBillingSettings from "./ClientBillingSettings/ClientBillingSettings";
-import "./ClientSettings.css";
-import { useNavigate, useParams } from "react-router-dom";
-import { ClientSettingsTabsKeys, ClientSettingsTabsPaths } from "../../paths";
-import ClientDetailsSettings from "./ClientDetailsSettings/ClientDetailsSettings";
-import ClientUsersSetting from "./ClientUsersSetting/ClientUsersSetting";
-import ClientPasswordAndSecurity from "./ClientPasswordAndSecurity/ClientPasswordAndSecurity";
+import { Tabs, TabsProps } from 'antd';
+import ClientBillingSettings from './ClientBillingSettings/ClientBillingSettings';
+import './ClientSettings.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ClientSettingsTabsKeys, ClientSettingsTabsPaths } from 'pages/paths';
+import ClientDetailsSettings from './ClientDetailsSettings/ClientDetailsSettings';
+import ClientUsersSetting from './ClientUsersSetting/ClientUsersSetting';
+import ClientPasswordAndSecurity from './ClientPasswordAndSecurity/ClientPasswordAndSecurity';
 
-const items: TabsProps["items"] = [
+const items: TabsProps['items'] = [
   {
     key: ClientSettingsTabsKeys.DETAILS,
     label: `My Details`,
@@ -55,7 +55,7 @@ const ClientSettings = () => {
     <>
       <h1>Settings</h1>
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey='1'
         activeKey={tab}
         items={items}
         onTabClick={onTabClick}

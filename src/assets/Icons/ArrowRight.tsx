@@ -12,7 +12,7 @@ function ArrowRight(
       xmlns='http://www.w3.org/2000/svg'
       {...props}
     >
-      <g clip-path='url(#clip0_319_41684)'>
+      <g clipPath='url(#clip0_319_41684)'>
         <path
           d='M9.88047 8.99995L6.16797 5.28745L7.22847 4.22695L12.0015 8.99995L7.22847 13.7729L6.16797 12.7124L9.88047 8.99995Z'
           fill={props.fill ?? '#262631'}
