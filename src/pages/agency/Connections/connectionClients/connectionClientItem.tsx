@@ -24,8 +24,10 @@ export const ConnectionClientItem = (props: ConnectionClientProps) => {
         toast.error(error.message);
         throw error;
       },
-      onCompleted: () => {
+      onCompleted: (data: any) => {
         refetch();
+        const href = data?.createConnection?.connection?.authUrl;
+        href && window.open(href, '_blank');
       },
     }
   );
