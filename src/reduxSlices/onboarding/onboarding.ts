@@ -1,80 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { ConnectionStatus, ConnectionType } from 'enums/connections';
+import { connections } from 'constants/Connections';
+import { ConnectionStatus } from 'enums/connections';
 import { Client, NewClient } from 'interfaces/Client';
 import { Connection } from 'interfaces/Connection';
 import { AgencyOnBoardingPaths, BusinessOnBoardingPaths } from 'pages/paths';
-
-import cover1 from 'assets/covers/card1.png';
-import cover2 from 'assets/covers/card2.png';
-import cover3 from 'assets/covers/card3.png';
-
-const allConnectionList: Connection[] = [
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.TIKTOK,
-    name: 'Asana',
-    avatar: 'base64 Image',
-    cover: cover1,
-    key: 0,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.GOOGLE,
-    name: 'Grammarly',
-    avatar: 'base64 Image',
-    cover: cover2,
-    key: 1,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.META,
-    name: 'Random',
-    avatar: 'base64 Image',
-    cover: cover3,
-    key: 2,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.TIKTOK,
-    name: 'Grammarly',
-    avatar: 'base64 Image',
-    cover: cover2,
-    key: 3,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.TIKTOK,
-    name: 'Random',
-    avatar: 'base64 Image',
-    cover: cover3,
-    key: 4,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.GOOGLE,
-    name: 'Random',
-    avatar: 'base64 Image',
-    cover: cover3,
-    key: 5,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.META,
-    name: 'Random',
-    avatar: 'base64 Image',
-    cover: cover3,
-    key: 6,
-  },
-  {
-    status: ConnectionStatus.NOT_CONNECTED,
-    type: ConnectionType.TIKTOK,
-    name: 'Random',
-    avatar: 'base64 Image',
-    cover: cover3,
-    key: 7,
-  },
-];
 
 enum defaultValues {
   BILLING_PLAN = -1,
@@ -105,7 +35,7 @@ const initialState: onboardingStateInterface = {
   nestedPath: '',
   clients: [] as Client[],
   users: [] as NewClient[],
-  allConnectionList,
+  allConnectionList: connections,
   billing: {
     plan: defaultValues.BILLING_PLAN,
     billingDetails: {},
@@ -238,7 +168,7 @@ export const onboardingSlice = createSlice({
       state.nestedPath = '';
       state.clients = [] as Client[];
       state.users = [] as NewClient[];
-      state.allConnectionList = allConnectionList;
+      state.allConnectionList = connections;
       state.billing.plan = defaultValues.BILLING_PLAN;
       state.billing.billingDetails = {};
     },

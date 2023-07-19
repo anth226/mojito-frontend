@@ -5,7 +5,7 @@ import InvitedUser from './InvitedUser/InvitedUser';
 import NewUser from './NewUser/NewUser';
 import { NewClient } from 'interfaces/Client';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
-import { INVITE_MEMBERS } from 'api/graphql/mutations';
+import { INVITE_CLIENTS, INVITE_MEMBERS } from 'api/graphql/mutations';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
@@ -13,6 +13,7 @@ import {
   setUsersInStore,
   updateUsersInStore,
 } from 'reduxSlices/onboarding/onboarding';
+import { ClientRoles } from 'enums/clients';
 
 const newClient: NewClient = {
   name: '',
@@ -20,6 +21,7 @@ const newClient: NewClient = {
   email: '',
   avatar: '',
   invited: false,
+  role: ClientRoles.CLIENT,
 };
 
 const AgencyOnBoardingUsers = () => {
@@ -41,11 +43,25 @@ const AgencyOnBoardingUsers = () => {
     },
   });
 
+  const [inviteClients] = useGraphQlMutation(INVITE_CLIENTS, {
+    onError(error) {
+      toast.error(error.message);
+      throw error;
+    },
+    onCompleted: (data: any) => {
+      dispatch(updateUsersInStore(data?.inviteClients?.clients?.[0]?.email));
+    },
+  });
+
   const onChange = (e: any, index: number) => {
-    const propertyName = e.target.name;
-    const propertyValue = e.target.value;
+    const propertyName = e.target?.name;
+    const propertyValue = e.target?.value;
     const temporaryList = JSON.parse(JSON.stringify(clients));
-    temporaryList[index][propertyName] = propertyValue;
+    if (e.target) {
+      temporaryList[index][propertyName] = propertyValue;
+    } else {
+      temporaryList[index]['role'] = e;
+    }
     setClients(temporaryList);
     dispatch(setUsersInStore(temporaryList));
   };
@@ -55,19 +71,35 @@ const AgencyOnBoardingUsers = () => {
   };
 
   const sendInvite = async (client: NewClient) => {
-    const input = {
-      members: [
-        {
-          email: client.email,
-          name: `${client.surname} ${client.name}`,
-          clientMutationId: null,
-        },
-      ],
-      clientMutationId: null,
-    };
-    await inviteMember({
-      variables: { input: input },
-    });
+    if (client?.role === 'client') {
+      const input = {
+        clients: [
+          {
+            email: client.email,
+            name: `${client.surname} ${client.name}`,
+            clientMutationId: null,
+          },
+        ],
+        clientMutationId: null,
+      };
+      await inviteClients({
+        variables: { input: input },
+      });
+    } else {
+      const input = {
+        members: [
+          {
+            email: client.email,
+            name: `${client.surname} ${client.name}`,
+            clientMutationId: null,
+          },
+        ],
+        clientMutationId: null,
+      };
+      await inviteMember({
+        variables: { input: input },
+      });
+    }
   };
 
   useEffect(() => {

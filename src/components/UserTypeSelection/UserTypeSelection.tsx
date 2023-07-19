@@ -29,10 +29,10 @@ const getSelectOptionItem = ({ value, label, dotColor }: any) => {
 };
 
 const options = [
-  getSelectOptionItem({ value: ClientRoles.ADMIN, label: 'Admin' }),
-  getSelectOptionItem({ value: ClientRoles.OWNER, label: 'Owner' }),
+  // getSelectOptionItem({ value: ClientRoles.ADMIN, label: 'Admin' }),
+  // getSelectOptionItem({ value: ClientRoles.OWNER, label: 'Owner' }),
   getSelectOptionItem({ value: ClientRoles.CLIENT, label: 'Client' }),
-  getSelectOptionItem({ value: ClientRoles.STAFF, label: 'Staff' }),
+  // getSelectOptionItem({ value: ClientRoles.STAFF, label: 'Staff' }),
   getSelectOptionItem({
     value: ClientRoles.USER,
     label: 'User',
