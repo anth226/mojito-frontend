@@ -60,6 +60,7 @@ export const CREATE_CONNECTION = gql`
       clientMutationId
       connection {
         _id
+        authUrl
       }
     }
   }

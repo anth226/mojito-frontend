@@ -79,7 +79,10 @@ const ConnectionsDrawer = (props: ConnectionsDrawerProps) => {
         return [...pre];
       }
       const formatCur = {
-        source: connection?.type ? ConnectionType[connection.type] : null,
+        source:
+          connection?.type !== undefined
+            ? ConnectionType[connection.type]
+            : null,
         client: cur,
       };
       return [...pre, formatCur];
