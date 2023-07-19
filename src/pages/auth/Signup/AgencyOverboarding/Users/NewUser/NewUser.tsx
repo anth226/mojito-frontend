@@ -1,4 +1,5 @@
 import { Button, Col, Input, Select } from 'antd';
+import { ClientRoles } from 'enums/clients';
 import { emailValidator } from 'utils/validators';
 
 const getSelectOptionItem = ({ value, label }: any) => {
@@ -29,8 +30,8 @@ const getSelectOptionItem = ({ value, label }: any) => {
 };
 
 const options = [
-  getSelectOptionItem({ value: 'Client', label: 'Client' }),
-  getSelectOptionItem({ value: 'Staff', label: 'Staff' }),
+  getSelectOptionItem({ value: 'client', label: 'Client' }),
+  getSelectOptionItem({ value: 'user', label: 'User' }),
 ];
 
 interface NewUserProps {
@@ -38,6 +39,7 @@ interface NewUserProps {
     name: string;
     surname: string;
     email: string;
+    role?: ClientRoles;
   };
   onChange: Function;
   index: number;
@@ -45,6 +47,9 @@ interface NewUserProps {
 }
 
 const NewUser = ({ client, onChange, index, sendInvite }: NewUserProps) => {
+  const handleChange = (value: any) => {
+    onChange(value, index);
+  };
   const canInvite = () => {
     if (
       client.name !== '' &&
@@ -94,6 +99,7 @@ const NewUser = ({ client, onChange, index, sendInvite }: NewUserProps) => {
         <Select
           size='large'
           options={options}
+          onChange={handleChange}
           //   bordered={false}
           style={{ width: '100%', marginTop: '20px' }}
           defaultValue={options[0]}

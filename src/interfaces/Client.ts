@@ -23,4 +23,5 @@ export interface NewClient {
   email: string;
   avatar: string;
   invited: boolean;
+  role?: ClientRoles;
 }

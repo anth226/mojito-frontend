@@ -1,4 +1,4 @@
-import { Avatar, Divider, Drawer, DrawerProps } from 'antd';
+import { Avatar, Col, Divider, Drawer, DrawerProps, Skeleton } from 'antd';
 import ConnectionsDrawerMenu from '../connectionsDrawerMenu/connectionsDrawerMenu';
 import { ReactComponent as BarChart2 } from 'assets/Icons/BarChart2.svg';
 import { ReactComponent as Star } from 'assets/Icons/Star.svg';
@@ -9,6 +9,7 @@ import ConnectionMetrics, {
 import ConnectionClients from '../connectionClients/connectionClients';
 import { Connection } from 'interfaces/Connection';
 import Close from 'assets/Icons/Close';
+import { ConnectionType } from 'enums/connections';
 
 enum connectionDetailsMenu {
   METRICS = 'Metrics',
@@ -25,7 +26,11 @@ const connectionDetailsMenuItems: ConnectionDetailsMenuItem[] = [
 ];
 
 interface ConnectionsDrawerProps extends DrawerProps {
+  loading: boolean;
+  refetch: Function;
+  clients: any;
   connection: Connection | undefined | null;
+  clientsConnected: any;
 }
 
 const metricsOfSelectedItem: ConnectionMetricItem[] = [
@@ -55,7 +60,58 @@ const ConnectionsDrawer = (props: ConnectionsDrawerProps) => {
   const [selected, setSelected] = useState<connectionDetailsMenu>(
     connectionDetailsMenu.METRICS
   );
-  const { connection, ...drawerProps } = props;
+  const {
+    connection,
+    clients,
+    clientsConnected,
+    loading,
+    refetch,
+    ...drawerProps
+  } = props;
+
+  const filterClient = (connectedList: any, clients: any) => {
+    const connectedClient = connectedList?.map((connected: any) => {
+      return connected.client;
+    });
+
+    const data = clients?.reduce((pre: any, cur: any) => {
+      if (connectedClient?.some((client: any) => client?._id === cur?._id)) {
+        return [...pre];
+      }
+      const formatCur = {
+        source: connection?.type ? ConnectionType[connection.type] : null,
+        client: cur,
+      };
+      return [...pre, formatCur];
+    }, []);
+    return data;
+  };
+
+  const clientsList = (connection: any, clientsConnected: any): any => {
+    switch (connection?.type) {
+      case 0:
+        return {
+          connectedList: clientsConnected.TIKTOK,
+          otherList: filterClient(clientsConnected.TIKTOK, clients),
+        };
+      case 1:
+        return {
+          connectedList: clientsConnected.META,
+          otherList: filterClient(clientsConnected.META, clients),
+        };
+      case 2:
+        return {
+          connectedList: clientsConnected.GOOGLE,
+          otherList: filterClient(clientsConnected.GOOGLE, clients),
+        };
+      default:
+        return {
+          connectedList: [],
+          otherList: [],
+        };
+    }
+  };
+  const data = clientsList(connection, clientsConnected);
 
   const onSelect = (item: ConnectionDetailsMenuItem) => {
     setSelected(item.value);
@@ -83,6 +139,24 @@ const ConnectionsDrawer = (props: ConnectionsDrawerProps) => {
         dolor do amet sint. Velit officia consequat duis enim velit mollit.
       </p>
       <Divider />
+      {loading && (
+        <Col span={24}>
+          <Skeleton
+            avatar
+            paragraph={{
+              rows: 1,
+            }}
+            active
+          ></Skeleton>
+          <Skeleton
+            avatar
+            paragraph={{
+              rows: 1,
+            }}
+            active
+          ></Skeleton>
+        </Col>
+      )}
       <ConnectionsDrawerMenu
         items={connectionDetailsMenuItems}
         onSelect={onSelect}
@@ -90,7 +164,9 @@ const ConnectionsDrawer = (props: ConnectionsDrawerProps) => {
       {selected === connectionDetailsMenu.METRICS && (
         <ConnectionMetrics metrics={metricsOfSelectedItem} />
       )}
-      {selected === connectionDetailsMenu.CLIENTS && <ConnectionClients />}
+      {selected === connectionDetailsMenu.CLIENTS && (
+        <ConnectionClients connectionClients={data} refetch={refetch} />
+      )}
     </Drawer>
   );
 };

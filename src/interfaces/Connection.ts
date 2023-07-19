@@ -16,6 +16,7 @@ export interface Connection {
 }
 
 export interface ConnectionClient {
+  _id?: string;
   name: string;
   email: string;
   avatar?: string;

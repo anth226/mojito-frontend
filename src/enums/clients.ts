@@ -12,8 +12,8 @@ export enum ClientStatusColor {
 
 export enum ClientRoles {
   CLIENT = 'client',
-  STAFF = 'staff',
   USER = 'user',
-  OWNER = 'owner',
-  ADMIN = 'admin',
+  // STAFF = 'staff',
+  // OWNER = 'owner',
+  // ADMIN = 'admin',
 }
