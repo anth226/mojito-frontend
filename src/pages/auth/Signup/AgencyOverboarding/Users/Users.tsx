@@ -39,7 +39,10 @@ const AgencyOnBoardingUsers = () => {
       throw error;
     },
     onCompleted: (data: any) => {
-      dispatch(updateUsersInStore(data?.inviteMembers?.members?.[0]?.email));
+      const member = data?.inviteMembers?.members?.[0];
+      dispatch(
+        updateUsersInStore({ email: member?.email, role: member?.role })
+      );
     },
   });
 
@@ -49,7 +52,10 @@ const AgencyOnBoardingUsers = () => {
       throw error;
     },
     onCompleted: (data: any) => {
-      dispatch(updateUsersInStore(data?.inviteClients?.clients?.[0]?.email));
+      const client = data?.inviteClients?.clients?.[0];
+      dispatch(
+        updateUsersInStore({ email: client?.email, role: client?.role })
+      );
     },
   });
 

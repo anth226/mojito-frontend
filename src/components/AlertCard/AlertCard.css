@@ -1,12 +1,12 @@
 .ant-select {
-    width: 50px;
+    width: auto;
     background: rgb(242, 243, 247);
     border-radius: 6px;
     color: rgb(0, 98, 255);
 }
 
 .ant-select-selection-item {
-    color: #0062FF;
+    color: #0062ff;
     font-size: 16px;
     font-weight: bold;
     display: flex;

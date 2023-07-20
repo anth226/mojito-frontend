@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row } from 'antd';
 import PlusIcon from 'assets/Icons/Plus';
 import { Client } from 'interfaces/Client';
-import React, { useState } from 'react';
+import React from 'react';
 import { emailValidator } from 'utils/validators';
 
 import classes from './GeneralInfo.module.css';
@@ -12,14 +12,14 @@ const newClient: Client = {
 };
 interface GeneralInfoProps {
   step: any;
+  clients: Client[];
+  setCLients: Function;
 }
 export const GeneralInfo = (props: GeneralInfoProps) => {
-  const [clients, setCLients] = useState<Client[]>([newClient]);
-
-  const { step } = props;
+  const { step, clients, setCLients } = props;
 
   const addClient = () => {
-    setCLients((prevState) => [...prevState, newClient]);
+    setCLients((prevState: Client[]) => [...prevState, newClient]);
   };
 
   const onChange = (e: any, index: number) => {

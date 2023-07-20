@@ -93,9 +93,10 @@ export const onboardingSlice = createSlice({
     },
     updateUsersInStore: (state, payloadWithType) => {
       const index = state.users.findIndex(
-        (user: NewClient) => user.email === payloadWithType.payload
+        (user: NewClient) => user.email === payloadWithType.payload.email
       );
       state.users[index].invited = true;
+      state.users[index].role = payloadWithType.payload.role;
     },
     updateConnections: (state, payloadWithType) => {
       if (

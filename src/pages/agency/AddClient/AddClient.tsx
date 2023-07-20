@@ -4,9 +4,16 @@ import { useState } from 'react';
 import classes from './AddClient.module.css';
 import { Connections } from './Connections/Connections';
 import { GeneralInfo } from './GeneralInfo/GeneralInfo';
+import { Client } from 'interfaces/Client';
+
+const newClient: Client = {
+  name: '',
+  email: '',
+};
 
 export const AddClient = () => {
   const [current, setCurrent] = useState(0);
+  const [clients, setCLients] = useState<Client[]>([newClient]);
 
   const steps = [
     {
@@ -20,6 +27,8 @@ export const AddClient = () => {
   ];
 
   const next = () => {
+    console.log('clients', clients);
+
     setCurrent(current + 1);
   };
 
@@ -47,7 +56,11 @@ export const AddClient = () => {
           <div>
             {steps[current].content === 'general-information' && (
               <div className={classes.content_box}>
-                <GeneralInfo step={steps[current]} />
+                <GeneralInfo
+                  step={steps[current]}
+                  clients={clients}
+                  setCLients={setCLients}
+                />
               </div>
             )}
             {steps[current].content === 'connections' && (

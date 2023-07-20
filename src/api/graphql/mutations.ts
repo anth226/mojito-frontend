@@ -49,6 +49,7 @@ export const INVITE_CLIENTS = gql`
         _id
         name
         email
+        role
       }
     }
   }
@@ -103,6 +104,7 @@ export const INVITE_MEMBERS = gql`
       members {
         name
         email
+        role
       }
       clientMutationId
     }
