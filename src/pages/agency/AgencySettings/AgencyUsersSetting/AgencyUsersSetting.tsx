@@ -82,6 +82,7 @@ const AgencyUsersSetting = () => {
           _id: member?._id,
           name: member?.name,
           email: member?.email,
+          role: member?.role,
           status:
             (member?.status as string) === 'INVITED'
               ? ClientStatus.INVITED
@@ -199,7 +200,11 @@ const AgencyUsersSetting = () => {
           extras={
             <Row justify={'end'} gutter={[16, 16]}>
               <Col span={8}>
-                <UserTypeSelection defaultValue={client.role} />
+                <UserTypeSelection
+                  type='userRoles'
+                  disabled={true}
+                  defaultValue={client.role}
+                />
               </Col>
               <Col span={4}>
                 <Button

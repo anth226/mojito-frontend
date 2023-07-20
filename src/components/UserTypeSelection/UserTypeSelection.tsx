@@ -1,5 +1,6 @@
 import { Select } from 'antd';
 import { ClientRoles } from 'enums/clients';
+import { UserRoles } from 'enums/user';
 
 const getSelectOptionItem = ({ value, label, dotColor }: any) => {
   return {
@@ -28,19 +29,9 @@ const getSelectOptionItem = ({ value, label, dotColor }: any) => {
   };
 };
 
-const options = [
-  // getSelectOptionItem({ value: ClientRoles.ADMIN, label: 'Admin' }),
-  // getSelectOptionItem({ value: ClientRoles.OWNER, label: 'Owner' }),
-  getSelectOptionItem({ value: ClientRoles.CLIENT, label: 'Client' }),
-  // getSelectOptionItem({ value: ClientRoles.STAFF, label: 'Staff' }),
-  getSelectOptionItem({
-    value: ClientRoles.USER,
-    label: 'User',
-    dotColor: '#FE7E07',
-  }),
-];
-
 interface UserTypeSelectionProps {
+  type?: 'userRoles' | 'clientRoles';
+  disabled?: boolean;
   defaultValue?: string;
   onChange?: (
     value: string | { value: any; label: JSX.Element },
@@ -52,10 +43,27 @@ interface UserTypeSelectionProps {
 
 const UserTypeSelection = ({
   defaultValue,
+  disabled,
+  type,
   onChange,
 }: UserTypeSelectionProps) => {
+  const options =
+    type === 'clientRoles'
+      ? [
+          getSelectOptionItem({ value: ClientRoles.CLIENT, label: 'Client' }),
+          getSelectOptionItem({
+            value: ClientRoles.USER,
+            label: 'User',
+            dotColor: '#FE7E07',
+          }),
+        ]
+      : [
+          getSelectOptionItem({ value: UserRoles.ADMIN, label: 'Admin' }),
+          getSelectOptionItem({ value: UserRoles.MEMBER, label: 'Member' }),
+        ];
   return (
     <Select
+      disabled={disabled}
       size='large'
       options={options}
       bordered={false}

@@ -144,6 +144,7 @@ export const GET_LIST_MEMBERS = gql`
         name
         email
         status
+        role
       }
       hasMore
     }
