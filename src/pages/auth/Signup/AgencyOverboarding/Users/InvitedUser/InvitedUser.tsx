@@ -7,6 +7,7 @@ interface InvitedUserProps {
     name: string;
     surname: string;
     email: string;
+    role?: string;
   };
 }
 
@@ -18,7 +19,7 @@ const InvitedUser = ({ client }: InvitedUserProps) => {
         extras={
           <Row justify={'end'} gutter={[16, 16]}>
             <Col span={8}>
-              <UserTypeSelection />
+              <UserTypeSelection disabled={true} defaultValue={client.role} />
             </Col>
             <Col span={4}>
               <Button size='large' style={{ width: '100%' }} disabled>

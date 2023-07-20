@@ -9,8 +9,6 @@ import {
 import { toast } from 'react-toastify';
 import { setAccessToken, setAccountInfo } from 'utils/helpers';
 
-// A mock function to mimic making an async request for data
-
 export const login = async (credentials: LoginCredentials): Promise<any> => {
   return await axios
     .post(APP_API_URL, {

@@ -10,7 +10,7 @@ import {
 import { useMemo } from 'react';
 import { AuthenticationPaths, BusinessOnBoardingPaths } from 'pages/paths';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
-import { clearSignup } from 'reduxSlices/auth/auth';
+import { clearSignup, logout } from 'reduxSlices/auth/auth';
 import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 
 const BusinessOverboarding = () => {
@@ -35,6 +35,7 @@ const BusinessOverboarding = () => {
       if (step < 3) {
         dispatch(next());
       } else {
+        dispatch(logout());
         dispatch(clearSignup());
         dispatch(clearOnBoardingStore());
         removeAccessToken();

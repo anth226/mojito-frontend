@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
-import { clearSignup } from 'reduxSlices/auth/auth';
+import { clearSignup, logout } from 'reduxSlices/auth/auth';
 import {
   back,
   clearOnBoardingStore,
@@ -100,6 +100,7 @@ const AgencyOverboarding = () => {
     }
 
     if (step >= 5) {
+      dispatch(logout());
       dispatch(clearSignup());
       dispatch(clearOnBoardingStore());
       removeAccessToken();
