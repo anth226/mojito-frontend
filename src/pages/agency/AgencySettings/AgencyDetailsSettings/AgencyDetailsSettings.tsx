@@ -23,10 +23,10 @@ const AgencyDetailsSettings = () => {
   );
 
   const onFileGet = async (info: any) => {
-    const file = await info.file.arrayBuffer();
-    const workbook = read(file);
-    const data = utils.sheet_to_json(workbook.Sheets['Sheet1'], { raw: true });
-    console.log(data);
+    // const file = await info.file.arrayBuffer();
+    // const workbook = read(file);
+    // const data = utils.sheet_to_json(workbook.Sheets['Sheet1'], { raw: true });
+    console.log(info);
     // addClientsFromFile(data);
   };
 

@@ -3,7 +3,7 @@ import Close from 'assets/Icons/Close';
 import './AlertPanel.css';
 import { useMemo } from 'react';
 import { Avatars } from 'assets/base64Icons';
-import { USDcurrency } from 'utils/formatters';
+import { DateFormat, USDcurrency } from 'utils/formatters';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { AlertStatus } from 'enums/alerts';
@@ -25,6 +25,8 @@ interface AlertEntryProps {
 }
 
 const AlertEntry = ({ alert, onClick }: AlertEntryProps) => {
+  const date = DateFormat(alert.date);
+
   return (
     <div
       className={classes.alert_entry_container}
@@ -36,15 +38,15 @@ const AlertEntry = ({ alert, onClick }: AlertEntryProps) => {
       <div className={classes.alert_entry_vertical_center}>
         <Avatar src={Avatars.AVATAR6} size={'large'} />
         <div className={classes.alert_entry_left_side}>
-          <p className={classes.alert_entry_name}>{alert.name}</p>
+          <p className='sub-title m-0'>{alert.name}</p>
           <p className={classes.alert_entry_value}>
             {USDcurrency.format(alert.value ?? 0)}
           </p>
         </div>
       </div>
       <div className={classes.alert_entry_right_side}>
-        <span>{dayjs().fromNow()}</span>
-        <Eye onClick={() => onClick(alert)} style={{ cursor: 'pointer' }} />
+        <span className='text-small gray-3'>{date}</span>
+        {/* <Eye onClick={() => onClick(alert)} style={{ cursor: 'pointer' }} /> */}
       </div>
     </div>
   );
@@ -85,7 +87,13 @@ const AlertPanel = ({
       children: (
         <>
           {groupedAlerts.all.map((alert) => {
-            return <AlertEntry alert={alert} onClick={onAlertEyeClick} />;
+            return (
+              <AlertEntry
+                key={alert.id}
+                alert={alert}
+                onClick={onAlertEyeClick}
+              />
+            );
           })}
         </>
       ),
@@ -96,7 +104,13 @@ const AlertPanel = ({
       children: (
         <>
           {groupedAlerts.newAlerts.map((alert) => {
-            return <AlertEntry alert={alert} onClick={onAlertEyeClick} />;
+            return (
+              <AlertEntry
+                key={alert.id}
+                alert={alert}
+                onClick={onAlertEyeClick}
+              />
+            );
           })}
         </>
       ),
@@ -107,7 +121,13 @@ const AlertPanel = ({
       children: (
         <>
           {groupedAlerts.archiveAlerts.map((alert) => {
-            return <AlertEntry alert={alert} onClick={onAlertEyeClick} />;
+            return (
+              <AlertEntry
+                key={alert.id}
+                alert={alert}
+                onClick={onAlertEyeClick}
+              />
+            );
           })}
         </>
       ),
