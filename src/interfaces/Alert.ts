@@ -7,7 +7,7 @@ export interface Alert {
   fires: number;
   clients: any;
   status: AlertStatus;
-  date: Date;
+  date: Date | string;
   value: number;
   parameter: string;
   operation: string;

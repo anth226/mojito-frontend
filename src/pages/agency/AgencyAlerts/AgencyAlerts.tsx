@@ -10,7 +10,6 @@ import PlusIcon from 'assets/Icons/Plus';
 import { AlertCardAgency } from 'components/AlertCard/AlertCard';
 import AlertEditPanel from 'components/AlertEditPanel/AlertEditPanel';
 import AlertModal from 'components/AlertModal/AlertModal';
-import { AlertStatus } from 'enums/alerts';
 import { Alert } from 'interfaces/Alert';
 import { useAppDispatch } from 'app/hooks';
 import { setAlertInStore } from 'reduxSlices/alerts/alerts';
@@ -99,24 +98,6 @@ const AgencyAlerts = () => {
       alertId: data.id,
     };
     await updateAlerts({ variables: { input: input } });
-  };
-
-  const onAlertClickPanel = (clickedAlert: Alert) => {
-    const temp: Alert[] = [];
-    for (const alert of alerts) {
-      if (alert.id === clickedAlert.id) {
-        temp.push({
-          ...alert,
-          status:
-            clickedAlert.status === AlertStatus.NEW
-              ? AlertStatus.ARCHIVE
-              : AlertStatus.NEW,
-        });
-      } else {
-        temp.push({ ...alert });
-      }
-    }
-    setAlerts(temp);
   };
 
   useEffect(() => {
@@ -216,13 +197,7 @@ const AgencyAlerts = () => {
           </Col>
         );
       })}
-      {/* <AlertPanel
-        onAlertEyeClick={onAlertClickPanel}
-        alerts={alerts}
-        open={alertsPanel}
-        onClose={() => setAlertsPanel(false)}
-        closable={false}
-      /> */}
+
       <AlertEditPanel
         multipleClients={true}
         clientsOptions={clientsOptions}

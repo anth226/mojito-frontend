@@ -128,3 +128,42 @@ export const SYNC_CONNECTION = gql`
     }
   }
 `;
+
+export const UPDATE_CONNECTION = gql`
+  mutation UpdateConnection($input: UpdateConnectionInput!) {
+    updateConnection(input: $input) {
+      connection {
+        _id
+        authUrl
+      }
+    }
+  }
+`;
+
+export const UPDATE_AGENCY = gql`
+  mutation UpdateAgency($input: UpdateAgencyInput!) {
+    updateAgency(input: $input) {
+      agency {
+        _id
+      }
+    }
+  }
+`;
+
+export const UPDATE_BUSINESS = gql`
+  mutation UpdateBusiness($input: UpdateBusinessInput!) {
+    updateBusiness(input: $input) {
+      business {
+        _id
+      }
+    }
+  }
+`;
+
+export const ARCHIVE_ALERT = gql`
+  mutation ArchiveAlert($input: ArchiveAlertInput!) {
+    archiveAlert(input: $input) {
+      clientMutationId
+    }
+  }
+`;

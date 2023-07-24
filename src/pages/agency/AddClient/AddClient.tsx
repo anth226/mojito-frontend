@@ -5,6 +5,7 @@ import classes from './AddClient.module.css';
 import { Connections } from './Connections/Connections';
 import { GeneralInfo } from './GeneralInfo/GeneralInfo';
 import { Client } from 'interfaces/Client';
+import { useNavigate } from 'react-router-dom';
 
 const newClient: Client = {
   name: '',
@@ -14,6 +15,8 @@ const newClient: Client = {
 export const AddClient = () => {
   const [current, setCurrent] = useState(0);
   const [clients, setCLients] = useState<Client[]>([newClient]);
+
+  const navigate = useNavigate();
 
   const steps = [
     {
@@ -42,7 +45,11 @@ export const AddClient = () => {
     <>
       <div style={{ display: 'flex', height: '100%', width: '100%' }}>
         <div style={{ width: '340px' }}>
-          <Button icon={<ArrowLeft />} className={classes.button_back}>
+          <Button
+            icon={<ArrowLeft />}
+            className={classes.button_back}
+            onClick={() => navigate(-1)}
+          >
             Back
           </Button>
           <Steps
