@@ -29,17 +29,20 @@ export const AddClient = () => {
     },
   ];
 
-  const next = () => {
-    console.log('clients', clients);
+  const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
+  const next = () => {
     setCurrent(current + 1);
   };
 
-  const prev = () => {
-    setCurrent(current - 1);
+  const handleCancel = () => {
+    setCLients([newClient]);
+    setCurrent(0);
   };
 
-  const items = steps.map((item) => ({ key: item.title, title: item.title }));
+  const onConfirm = () => {
+    console.log('clients', clients);
+  };
 
   return (
     <>
@@ -82,6 +85,7 @@ export const AddClient = () => {
                 ' '
               )}
               type='primary'
+              onClick={() => handleCancel()}
             >
               Cancel
             </Button>
@@ -102,7 +106,7 @@ export const AddClient = () => {
                   ' '
                 )}
                 type='primary'
-                onClick={() => message.success('Processing complete!')}
+                onClick={() => onConfirm()}
               >
                 Confirm
               </Button>
