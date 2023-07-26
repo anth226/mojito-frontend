@@ -1,11 +1,11 @@
-import { Button, message, Steps } from 'antd';
+import { Button, Steps } from 'antd';
 import ArrowLeft from 'assets/Icons/ArrowLeft';
+import { Client } from 'interfaces/Client';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classes from './AddClient.module.css';
 import { Connections } from './Connections/Connections';
 import { GeneralInfo } from './GeneralInfo/GeneralInfo';
-import { Client } from 'interfaces/Client';
-import { useNavigate } from 'react-router-dom';
 
 const newClient: Client = {
   name: '',

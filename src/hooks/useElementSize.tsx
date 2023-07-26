@@ -1,5 +1,5 @@
-import { RefObject, useEffect, useState } from "react";
-import useEventListener from "./useEventListener";
+import { RefObject, useEffect, useState } from 'react';
+import useEventListener from './useEventListener';
 
 interface ElementSize {
   width: number;
@@ -10,8 +10,8 @@ interface ElementSize {
 function useElementSize<T extends HTMLElement = HTMLDivElement>(
   ref: RefObject<T>,
   listener?: (
-    width: ElementSize["height"],
-    height: ElementSize["height"]
+    width: ElementSize['height'],
+    height: ElementSize['height']
   ) => ElementSize
 ): ElementSize {
   const [elementSize, setElementSize] = useState<ElementSize>({
@@ -47,10 +47,11 @@ function useElementSize<T extends HTMLElement = HTMLDivElement>(
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 
-  useEventListener("resize", handleResize);
-  useEventListener("load", handleResize);
+  useEventListener('resize', handleResize);
+  useEventListener('load', handleResize);
 
   return elementSize;
 }

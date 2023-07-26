@@ -1,15 +1,15 @@
-import { Row, Col, Space, Button, Select, Avatar, Dropdown } from 'antd';
+import { Avatar, Button, Col, Dropdown, Row, Select, Space } from 'antd';
 import { ReactComponent as Filter } from 'assets/Filter.svg';
-import PerformersMenu from '../HQ/clientPerformanceLists/performersMenu/performersMenu';
-import { Client } from 'interfaces/Client';
-import UserRow from 'components/UserRow/UserRow';
-import { useState } from 'react';
-import TinyAreaGraph from './TinyAreaGraph/TinyAreaGraph';
-import { USDcurrency } from 'utils/formatters';
-import CustomBadge from 'components/CustomBadge/CustomBadge';
-import { Connections } from 'assets/base64Icons';
 import ArrowDownMini from 'assets/Icons/ArrowDownMini';
+import { Connections } from 'assets/base64Icons';
+import CustomBadge from 'components/CustomBadge/CustomBadge';
+import UserRow from 'components/UserRow/UserRow';
+import { Client } from 'interfaces/Client';
 import { mockClients } from 'mockdata/Client';
+import { useState } from 'react';
+import { USDcurrency } from 'utils/formatters';
+import PerformersMenu from '../HQ/clientPerformanceLists/performersMenu/performersMenu';
+import TinyAreaGraph from './TinyAreaGraph/TinyAreaGraph';
 
 const performersMenuItems = [
   { value: 'Revenue' },
@@ -21,6 +21,7 @@ const performersMenuItems = [
 const { IconBadge } = CustomBadge;
 
 const Metrics = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [clients, setClients] = useState<Client[]>(mockClients);
 
   return (

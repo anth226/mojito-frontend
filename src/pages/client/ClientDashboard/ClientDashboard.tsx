@@ -93,6 +93,7 @@ const trafficCardData: Omit<ClientDashboardTrafficGraphProps, 'data'>[] = [
 ];
 
 const ClientDashboard = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentConnection, setCurrentConnection] = useState(0);
 
   return (

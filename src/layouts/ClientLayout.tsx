@@ -1,7 +1,7 @@
 import { Avatar, Badge, Divider, Dropdown, Layout, Menu } from 'antd';
 import { MenuProps as RCMenuProps } from 'rc-menu';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { ReactComponent as Logo } from 'assets/Mojito Logo.svg';
+import { ReactComponent as Logo } from 'assets/MojitoLogo.svg';
 import {
   AuthenticationPaths,
   ClientNavBarPaths,

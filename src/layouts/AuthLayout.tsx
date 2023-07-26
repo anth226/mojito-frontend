@@ -2,7 +2,7 @@ import { Col, Layout, Row, Steps } from 'antd';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'app/hooks';
-import { ReactComponent as Logo } from 'assets/Mojito Logo.svg';
+import { ReactComponent as Logo } from 'assets/MojitoLogo.svg';
 import { AgencyOnBoardingPaths, BusinessOnBoardingPaths } from 'pages/paths';
 import { AccountType, getAuthFromStore } from 'reduxSlices/auth/auth';
 import { getOnboardingFromStore } from 'reduxSlices/onboarding/onboarding';
