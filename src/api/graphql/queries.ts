@@ -29,6 +29,17 @@ export const VIEWER = gql`
       _id
       accountType
       email
+      status
+      agency {
+        _id
+        logo
+        name
+      }
+      business {
+        _id
+        logo
+        name
+      }
     }
   }
 `;
