@@ -15,20 +15,6 @@ export interface Alert {
   severity?: string;
 }
 
-export const getAlertObject = () =>
-  Object.create({
-    id: 12312,
-    name: 'No Ad Spend',
-    source: 'Source name',
-    parameter: 'If',
-    operator: 'Is greater than',
-    fired: 0,
-    clients: 0,
-    status: AlertStatus.NEW,
-    date: new Date(),
-    value: 0,
-  });
-
 export interface AlertForm {
   value: string;
   severity: string;
