@@ -1,27 +1,27 @@
 import { Line, LineConfig } from '@ant-design/plots';
-import { Card, Col, Grid, Row, Statistic } from 'antd';
+import { Card, Col, Row, Statistic } from 'antd';
 import LineGraphMockData from './lineGraphMockData.json';
-import useWindowSize from 'hooks/useWindowSIze';
-import CustomBadge from 'components/CustomBadge/CustomBadge';
+// import useWindowSize from 'hooks/useWindowSIze';
 import ArrowUp from 'assets/Icons/ArrowUp';
+import CustomBadge from 'components/CustomBadge/CustomBadge';
 import dayjs from 'dayjs';
+import { useMemo } from 'react';
 import { USDcurrency } from 'utils/formatters';
 import './ClientDashboardYTDChartsVisualization.css';
 import classes from './ClientDashboardYTDChartsVisualization.module.css';
-import { useMemo } from 'react';
 
 const { IconBadge, DotBadge } = CustomBadge;
 
-const { useBreakpoint } = Grid;
+// const { useBreakpoint } = Grid;
 
-enum HiDPI {
-  XL1 = 1270,
-  XL2 = 1470,
-}
+// enum HiDPI {
+//   XL1 = 1270,
+//   XL2 = 1470,
+// }
 
 const ClientDashboardYTDChartsVisualization = () => {
-  const screens = useBreakpoint();
-  const size = useWindowSize();
+  // const screens = useBreakpoint();
+  // const size = useWindowSize();
 
   const config: LineConfig = useMemo(() => {
     return {

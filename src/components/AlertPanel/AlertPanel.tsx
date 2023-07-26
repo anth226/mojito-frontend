@@ -1,15 +1,14 @@
 import { Avatar, Drawer, DrawerProps, Tabs, TabsProps } from 'antd';
 import Close from 'assets/Icons/Close';
-import './AlertPanel.css';
-import { useMemo } from 'react';
 import { Avatars } from 'assets/base64Icons';
-import { DateFormat, USDcurrency } from 'utils/formatters';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { AlertStatus } from 'enums/alerts';
 import { Alert } from 'interfaces/Alert';
+import { useMemo } from 'react';
+import { DateFormat, USDcurrency } from 'utils/formatters';
+import './AlertPanel.css';
 import classes from './AlertPanel.module.css';
-import Eye from 'assets/Icons/Eye';
 
 dayjs.extend(relativeTime);
 

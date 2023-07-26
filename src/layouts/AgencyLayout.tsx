@@ -1,5 +1,5 @@
 import { Avatar, Badge, Button, Divider, Dropdown, Layout, Space } from 'antd';
-import { ReactComponent as Logo } from 'assets/Mojito Logo.svg';
+import { ReactComponent as Logo } from 'assets/MojitoLogo.svg';
 import {
   Link,
   NavLink,
