@@ -4,6 +4,8 @@ import { useState } from 'react';
 import IntegrationDrawer from '../IntegrationDrawer/IntegrationDrawer';
 import { ConnectionItem } from './ConnectionItem';
 import classes from './Connections.module.css';
+import { connections } from 'constants/Connections';
+import { Connection } from 'interfaces/Connection';
 
 interface ConnectionsProps {
   step: any;
@@ -37,10 +39,9 @@ export const Connections = (props: ConnectionsProps) => {
         </Button>
       </Space>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <ConnectionItem />
-        <ConnectionItem />
-        <ConnectionItem />
-        <ConnectionItem />
+        {connections.map((connection: Connection) => (
+          <ConnectionItem connection={connection} />
+        ))}
       </div>
     </>
   );

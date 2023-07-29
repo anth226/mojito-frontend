@@ -4,13 +4,23 @@ import { SwitchChangeEventHandler } from 'antd/es/switch';
 import './CustomSwitch.css';
 
 type CustomSwitchProps = {
+  loading?: boolean;
   checked: boolean;
   onChange?: SwitchChangeEventHandler;
 };
 
-const CustomSwitch: React.FC<CustomSwitchProps> = ({ checked, onChange }) => {
+const CustomSwitch: React.FC<CustomSwitchProps> = ({
+  checked,
+  onChange,
+  loading,
+}) => {
   return (
-    <Switch className='button-switch' checked={checked} onChange={onChange} />
+    <Switch
+      loading={loading}
+      className='button-switch'
+      checked={checked}
+      onChange={onChange}
+    />
   );
 };
 

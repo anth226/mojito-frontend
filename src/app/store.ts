@@ -2,7 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from 'reduxSlices/auth/auth';
 import onboardingReducer from 'reduxSlices/onboarding/onboarding';
 import alertReducer from 'reduxSlices/alerts/alerts';
-
+import clientReducer from 'reduxSlices/clients/clients';
 import {
   persistStore,
   persistReducer,
@@ -25,10 +25,20 @@ const onBoardingPersistConfig = {
   storage: storage,
 };
 
+const clientToConnectPersistConfig = {
+  key: 'clienToConnect',
+  storage: storage,
+};
+
 const persistedReducer = persistReducer(authPersistConfig, authReducer);
 const persistedOnBoardingReducer = persistReducer(
   onBoardingPersistConfig,
   onboardingReducer
+);
+
+const persistClientToConnectReducer = persistReducer(
+  clientToConnectPersistConfig,
+  clientReducer
 );
 
 export const store = configureStore({
@@ -36,6 +46,7 @@ export const store = configureStore({
     auth: persistedReducer,
     onboarding: persistedOnBoardingReducer,
     alert: alertReducer,
+    client: persistClientToConnectReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

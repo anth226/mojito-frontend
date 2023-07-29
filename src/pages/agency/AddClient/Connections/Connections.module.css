@@ -57,3 +57,7 @@
     border-radius: 8px;
     background: transparent;
 }
+
+.avatar > img {
+    object-fit: contain;
+}

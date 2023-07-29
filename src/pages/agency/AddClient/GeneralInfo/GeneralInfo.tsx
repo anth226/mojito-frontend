@@ -1,25 +1,26 @@
 import { Button, Col, Input, Row } from 'antd';
 import PlusIcon from 'assets/Icons/Plus';
-import { Client } from 'interfaces/Client';
 import React from 'react';
 import { emailValidator } from 'utils/validators';
 
 import classes from './GeneralInfo.module.css';
+import { ClientStore } from 'reduxSlices/clients/clients';
 
-const newClient: Client = {
+const newClient: ClientStore = {
   name: '',
   email: '',
+  source: [],
 };
 interface GeneralInfoProps {
   step: any;
-  clients: Client[];
+  clients: ClientStore[];
   setCLients: Function;
 }
 export const GeneralInfo = (props: GeneralInfoProps) => {
   const { step, clients, setCLients } = props;
 
   const addClient = () => {
-    setCLients((prevState: Client[]) => [...prevState, newClient]);
+    setCLients((prevState: ClientStore[]) => [...prevState, newClient]);
   };
 
   const onChange = (e: any, index: number) => {
@@ -45,6 +46,7 @@ export const GeneralInfo = (props: GeneralInfoProps) => {
                   value={client.name}
                   placeholder='Input placeholder'
                   className={classes.input}
+                  disabled={!!client._id}
                 />
               </Col>
               <Col span={12}>
@@ -57,6 +59,7 @@ export const GeneralInfo = (props: GeneralInfoProps) => {
                   value={client.email}
                   placeholder='Input placeholder'
                   className={classes.input}
+                  disabled={!!client._id}
                 />
               </Col>
             </React.Fragment>
