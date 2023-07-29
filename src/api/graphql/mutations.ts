@@ -62,6 +62,10 @@ export const CREATE_CONNECTION = gql`
       connection {
         _id
         authUrl
+        availableAccounts {
+          name
+          id
+        }
       }
     }
   }

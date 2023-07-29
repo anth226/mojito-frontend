@@ -1,22 +1,21 @@
 import { Avatar, Card, Space } from 'antd';
-import { Avatars } from 'assets/base64Icons';
-import { CustomSelect } from 'components/CustomSelect/CustomSelect';
+import { useAppSelector } from 'app/hooks';
 import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
-import { useState } from 'react';
+import { Connection } from 'interfaces/Connection';
+import { Fragment, useState } from 'react';
+import { ClientStore, getClientFromStore } from 'reduxSlices/clients/clients';
+import { ClientItem } from './ClientItem';
 import './Connections.css';
 import classes from './Connections.module.css';
 
-type ConnectionItemProps = {};
+type ConnectionItemProps = {
+  connection: Connection;
+};
 
-const parameters = [
-  {
-    value: 'managementAccount',
-    label: 'Manager Account',
-  },
-];
-
-const accounts = [{ label: 'account', value: 'account' }];
 export const ConnectionItem = (props: ConnectionItemProps) => {
+  const { connection } = props;
+  const { client: clientsInStore } = useAppSelector(getClientFromStore);
+
   const [checked, setChecked] = useState<boolean>(false);
   const onChange = (checked: boolean) => {
     setChecked(checked);
@@ -29,14 +28,14 @@ export const ConnectionItem = (props: ConnectionItemProps) => {
       >
         <Space className={classes.connection_box_item}>
           <div className={classes.flex_box}>
-            <Avatar size={'large'} src={Avatars.AVATAR1} />
-            <div className={classes.connection_name}>TikTok</div>
-          </div>
-          <div className={classes.flex_box} style={{ gap: 24 }}>
-            <CustomSelect
-              options={parameters}
-              defaultValue={parameters[0].value}
+            <Avatar
+              size={'large'}
+              className={classes.avatar}
+              src={connection.avatar}
             />
+            <div className={classes.connection_name}>{connection.name}</div>
+          </div>
+          <div className={classes.flex_box}>
             <div
               className={
                 checked
@@ -49,13 +48,11 @@ export const ConnectionItem = (props: ConnectionItemProps) => {
           </div>
         </Space>
         {checked && (
-          <Space
-            className={classes.connection_box_item}
-            style={{ padding: '16px' }}
-          >
-            <div className={classes.clent_name}>Client Name</div>
-            <CustomSelect options={accounts} defaultValue={accounts[0].value} />
-          </Space>
+          <Fragment>
+            {clientsInStore.map((client: ClientStore, index: number) => (
+              <ClientItem client={client} connection={connection} key={index} />
+            ))}
+          </Fragment>
         )}
       </Card>
     </>
