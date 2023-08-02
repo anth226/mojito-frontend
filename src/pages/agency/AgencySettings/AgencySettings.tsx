@@ -6,6 +6,7 @@ import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from 'pages/paths';
 import DetailsSettings from './AgencyDetailsSettings/AgencyDetailsSettings';
 import UsersSetting from './AgencyUsersSetting/AgencyUsersSetting';
 import AgencyPasswordAndSecurity from './AgencyPasswordAndSecurity/AgencyPasswordAndSecurity';
+import { AgencyPasswordAndSecurityLayout } from './AgencyPasswordAndSecurity/AgencyPasswordAndSecurityLayout';
 
 const items: TabsProps['items'] = [
   {
@@ -26,7 +27,7 @@ const items: TabsProps['items'] = [
   {
     key: AgencySettingsTabsKeys.PASSWORD_AND_SECURITY,
     label: `Password and security`,
-    children: <AgencyPasswordAndSecurity />,
+    children: <AgencyPasswordAndSecurityLayout />,
   },
 ];
 
