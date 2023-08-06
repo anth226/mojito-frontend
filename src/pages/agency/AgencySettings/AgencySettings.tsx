@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from 'pages/paths';
 import DetailsSettings from './AgencyDetailsSettings/AgencyDetailsSettings';
 import UsersSetting from './AgencyUsersSetting/AgencyUsersSetting';
-import AgencyPasswordAndSecurity from './AgencyPasswordAndSecurity/AgencyPasswordAndSecurity';
 import { AgencyPasswordAndSecurityLayout } from './AgencyPasswordAndSecurity/AgencyPasswordAndSecurityLayout';
 
 const items: TabsProps['items'] = [

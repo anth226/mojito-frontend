@@ -1,14 +1,14 @@
-import { Col, Input, Row } from 'antd';
-import { useRef, useState } from 'react';
-import { ReactComponent as ThunderBolt } from 'assets/Icons/ThunderBolt.svg';
-import { ReactComponent as Briefcase } from 'assets/Icons/Briefcase.svg';
-import ConnectionCard from 'components/ConnectionCard/ConnectionCard';
-import ConnectionsDrawer from './connectionsDrawer/connectionsDrawer';
-import { ReactComponent as MagnifyingGlass } from 'assets/Icons/MagnifyingGlass.svg';
-import classes from './ClientConnections.module.css';
-import useElementSize from 'hooks/useElementSize';
-import { Connection } from 'interfaces/Connection';
-import { connectionList, otherConnectionList } from 'mockdata/Connections';
+import { Col, Input, Row } from "antd";
+import { useRef, useState } from "react";
+import { ReactComponent as ThunderBolt } from "assets/Icons/ThunderBolt.svg";
+import { ReactComponent as Briefcase } from "assets/Icons/Briefcase.svg";
+import ConnectionCard from "components/ConnectionCard/ConnectionCard";
+import ConnectionsDrawer from "./connectionsDrawer/connectionsDrawer";
+import { ReactComponent as MagnifyingGlass } from "assets/Icons/MagnifyingGlass.svg";
+import classes from "./ClientConnections.module.css";
+import useElementSize from "hooks/useElementSize";
+import { Connection } from "interfaces/Connection";
+import { connectionList, otherConnectionList } from "mockdata/Connections";
 
 const ClientConnections = () => {
   const [showDetails, setShowDetails] = useState<Connection | null>();
@@ -31,7 +31,7 @@ const ClientConnections = () => {
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value;
-    if (searchString === '' || searchString === undefined) {
+    if (searchString === "" || searchString === undefined) {
       setOtherConnections(otherConnectionList);
     } else {
       const filteredList = [];
@@ -45,26 +45,26 @@ const ClientConnections = () => {
   };
 
   return (
-    <Row gutter={[16, 16]} justify={'space-evenly'} ref={containerRef}>
+    <Row gutter={[16, 16]} justify={"space-evenly"} ref={containerRef}>
       <Col span={24}>
-        <h1 style={{ margin: '0px' }}>Connections</h1>
+        <h1 style={{ margin: "0px" }}>Connections</h1>
       </Col>
       <Col span={24}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <ThunderBolt width={15} height={19} />
-          <h2 style={{ margin: '0 10px', fontWeight: '600' }}>
+          <h2 style={{ margin: "0 10px", fontWeight: "600" }}>
             Your connections
           </h2>
         </div>
       </Col>
       {connectionList.map((connection, index) => {
         return (
-          <Col key={index}>
+          <Col key={index} span={8}>
             <ConnectionCard
               connection={connection}
               onDetailClick={setShowDetails}
               avatar
-              direction='horizontal'
+              direction="horizontal"
               statusDescription
               detailClickIcon
               onConnectButtonClick={() => {}}
@@ -78,27 +78,27 @@ const ClientConnections = () => {
         onClose={() => setShowDetails(null)}
         closable={false}
       />
-      <Col style={{ width: searchBarContainerSize.width }}>
+      <Col style={{ width: searchBarContainerSize.width }} span={24}>
         <Row
           style={{
-            marginTop: '12px',
+            marginTop: "12px",
           }}
-          align={'middle'}
-          justify={'space-between'}
+          align={"middle"}
+          justify={"space-between"}
         >
           <Col>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <Briefcase width={15} height={19} />
-              <h2 style={{ margin: '0 10px', fontWeight: '600' }}>
+              <h2 style={{ margin: "0 10px", fontWeight: "600" }}>
                 Other connections
               </h2>
             </div>
           </Col>
-          <Col span={8}>
+          <Col span={12}>
             <Input
               className={classes.search_box}
-              size='large'
-              placeholder='Search'
+              size="large"
+              placeholder="Search"
               prefix={<MagnifyingGlass />}
               onChange={onSearchChange}
             />
@@ -107,13 +107,13 @@ const ClientConnections = () => {
       </Col>
       {otherConnections.map((connection, index) => {
         return (
-          <Col key={index}>
+          <Col key={index} span={8}>
             <ConnectionCard
               connection={connection}
               onDetailClick={setShowDetails}
               cover
               description
-              direction='vertical'
+              direction="vertical"
               detailClickIcon
               onConnectButtonClick={() => {}}
             />

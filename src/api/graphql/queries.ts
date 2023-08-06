@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_USER_INFO = gql`
   query User($userId: String!) {
@@ -158,6 +158,38 @@ export const GET_LIST_MEMBERS = gql`
         role
       }
       hasMore
+    }
+  }
+`;
+
+export const GET_METRICS_TO_DATE = gql`
+  query MetricsToDate($period: MetricToDatePeriod!, $clientId: String) {
+    metricsToDate(period: $period, clientId: $clientId) {
+      metrics {
+        year
+        value
+        type
+        month
+        lastPeriodValue
+        createdAt
+        connectionId
+      }
+    }
+  }
+`;
+
+export const GET_METRICS_YEARLY = gql`
+  query MetricsYearly($fromYear: Int!, $clientId: String) {
+    metricsYearly(fromYear: $fromYear, clientId: $clientId) {
+      metricsPerMonth {
+        year
+        value
+        type
+        month
+        lastPeriodValue
+        createdAt
+        connectionId
+      }
     }
   }
 `;

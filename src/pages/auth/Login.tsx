@@ -1,18 +1,18 @@
-import { Button, Card, Form, Input, Space } from 'antd';
-import { useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAppSelector } from 'app/hooks';
-import useAuthentication from 'hooks/authentication';
+import { Button, Card, Form, Input, Space } from "antd";
+import { useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAppSelector } from "app/hooks";
+import useAuthentication from "hooks/authentication";
 import {
   LoginCredentials,
   getAuthFromStore,
   AccountRole,
-} from 'reduxSlices/auth/auth';
+} from "reduxSlices/auth/auth";
 import {
   AgencyNavBarPaths,
   AuthenticationPaths,
   ClientNavBarPaths,
-} from '../paths';
+} from "../paths";
 
 const Login = () => {
   const authObject = useAppSelector(getAuthFromStore);
@@ -31,11 +31,11 @@ const Login = () => {
 
   useEffect(() => {
     if (authObject.authenticated) {
-      if (
-        authObject.role === AccountRole.AGENCY ||
-        authObject.role === AccountRole.BUSINESS
-      ) {
+      if (authObject.role === AccountRole.AGENCY) {
         navigate(AgencyNavBarPaths.HQ);
+      }
+      if (authObject.role === AccountRole.BUSINESS) {
+        navigate(ClientNavBarPaths.OVERVIEW);
       }
       if (authObject.role === AccountRole.CLIENT) {
         navigate(ClientNavBarPaths.OVERVIEW);
@@ -45,9 +45,9 @@ const Login = () => {
 
   return (
     <Card
-      style={{ maxWidth: '590px', height: 'fit-content', marginTop: '80px' }}
+      style={{ maxWidth: "590px", height: "fit-content", marginTop: "80px" }}
     >
-      <Space direction='vertical' size='middle' style={{ textAlign: 'center' }}>
+      <Space direction="vertical" size="middle" style={{ textAlign: "center" }}>
         <h1>Log in</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -56,51 +56,51 @@ const Login = () => {
         <p>
           Password AGENCY to see into AGENCY Password CLIENT to see into CLIENT
         </p>
-        <Form id='login' layout='vertical' onFinish={onFinish}>
+        <Form id="login" layout="vertical" onFinish={onFinish}>
           <Form.Item
-            label='Email'
-            name={'email'}
+            label="Email"
+            name={"email"}
             rules={[
               {
                 required: true,
-                message: 'Please enter email!',
+                message: "Please enter email!",
               },
             ]}
           >
-            <Input type='email' />
+            <Input type="email" />
           </Form.Item>
           <Form.Item
-            label='Password'
-            name={'password'}
+            label="Password"
+            name={"password"}
             rules={[
               {
                 required: true,
-                message: 'Please enter password!',
+                message: "Please enter password!",
               },
             ]}
             style={{
-              marginBottom: '0px',
+              marginBottom: "0px",
             }}
           >
-            <Input type='password' />
+            <Input type="password" />
           </Form.Item>
           <NavLink
-            to='/#'
+            to="/#"
             style={{
-              display: 'flex',
-              marginBottom: '24px',
+              display: "flex",
+              marginBottom: "24px",
             }}
           >
             Forgot password?
           </NavLink>
 
           <Form.Item>
-            <Button type='primary' htmlType='submit' style={{ width: '100%' }}>
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
               Login
             </Button>
           </Form.Item>
           <p>
-            Already have an account?{' '}
+            Already have an account?{" "}
             <NavLink to={AuthenticationPaths.SIGNUP}>Sign up?</NavLink>
           </p>
         </Form>
