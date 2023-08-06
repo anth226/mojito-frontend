@@ -1,6 +1,5 @@
 import { Line, LineConfig } from '@ant-design/plots';
 import { Card, Col, Row, Statistic } from 'antd';
-import LineGraphMockData from './lineGraphMockData.json';
 // import useWindowSize from 'hooks/useWindowSIze';
 import ArrowUp from 'assets/Icons/ArrowUp';
 import CustomBadge from 'components/CustomBadge/CustomBadge';
@@ -9,6 +8,11 @@ import { useMemo } from 'react';
 import { USDcurrency } from 'utils/formatters';
 import './ClientDashboardYTDChartsVisualization.css';
 import classes from './ClientDashboardYTDChartsVisualization.module.css';
+import ArrowDown from 'assets/Icons/ArrowDown';
+import {
+  performanceBackgroundColors,
+  performanceColors,
+} from 'constants/Arrows';
 
 const { IconBadge, DotBadge } = CustomBadge;
 
@@ -19,16 +23,32 @@ const { IconBadge, DotBadge } = CustomBadge;
 //   XL2 = 1470,
 // }
 
-const ClientDashboardYTDChartsVisualization = () => {
+type Props = {
+  graphDataMetrics: any;
+};
+const ClientDashboardYTDChartsVisualization = ({ graphDataMetrics }: Props) => {
   // const screens = useBreakpoint();
   // const size = useWindowSize();
 
+  // const COLOR_PLATE_10 = [
+  //   '#5B8FF9',
+  //   '#5AD8A6',
+  //   '#5D7092',
+  //   '#F6BD16',
+  //   '#E8684A',
+  //   '#6DC8EC',
+  //   '#9270CA',
+  //   '#FF9D4D',
+  //   '#269A99',
+  //   '#FF99C3',
+  // ];
+
   const config: LineConfig = useMemo(() => {
     return {
-      data: LineGraphMockData,
-      xField: 'year',
+      data: graphDataMetrics || [],
+      xField: 'month',
       yField: 'value',
-      seriesField: 'category',
+      seriesField: 'type',
       xAxis: {
         type: 'time',
         label: {
@@ -53,20 +73,35 @@ const ClientDashboardYTDChartsVisualization = () => {
                   {dayjs(title).format('MMM')}
                 </span>
                 <span className={classes.custom_tooltip_header_subtitle}>
-                  {dayjs(title).format('YYYY')}
+                  {graphDataMetrics?.[0].year}
                 </span>
               </div>
-              {[1, 2, 3, 4, 5].map((entry) => {
+              {data.map((entry: any, index: number) => {
                 return (
-                  <div className={classes.custom_tooltip_entry}>
+                  <div className={classes.custom_tooltip_entry} key={index}>
                     <span className={classes.custom_tooltip_entry_name}>
-                      Revenue
+                      {entry.name}
                     </span>
                     <span>
                       <span className={classes.custom_tooltip_entry_value}>
-                        {USDcurrency.format(1280)}
+                        {USDcurrency.format(entry.value)}
                       </span>
-                      <IconBadge icon={<ArrowUp />} />
+                      <IconBadge
+                        text={<span>{entry.data.percentage}%</span>}
+                        icon={
+                          entry.data.performanceUp ? <ArrowUp /> : <ArrowDown />
+                        }
+                        color={
+                          performanceColors[
+                            entry.data.performanceUp ? 'UP' : 'DOWN'
+                          ]
+                        }
+                        backgroundColor={
+                          performanceBackgroundColors[
+                            entry.data.performanceUp ? 'UP' : 'DOWN'
+                          ]
+                        }
+                      />
                     </span>
                   </div>
                 );
@@ -76,7 +111,7 @@ const ClientDashboardYTDChartsVisualization = () => {
         },
       },
     };
-  }, []);
+  }, [graphDataMetrics]);
 
   return (
     <Card bordered={false}>

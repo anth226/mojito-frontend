@@ -22,7 +22,7 @@ interface SliderProps {
 
 const Slider = ({ connections, active, getCurrentActive }: SliderProps) => {
   const carouselRef = useRef<CarouselRef | undefined>();
-  const [activeSlide, setActiveSlide] = useState(active ?? 0);
+  const [activeSlide, setActiveSlide] = useState(active);
 
   const next = () => {
     carouselRef.current?.next();
@@ -33,16 +33,23 @@ const Slider = ({ connections, active, getCurrentActive }: SliderProps) => {
   };
 
   const onSlideClick = (index: number) => {
-    setActiveSlide(index);
-    if (getCurrentActive instanceof Function) {
-      getCurrentActive(activeSlide);
+    if (activeSlide === index) {
+      setActiveSlide(undefined);
+      if (getCurrentActive instanceof Function) {
+        getCurrentActive(undefined);
+      }
+    } else {
+      setActiveSlide(index);
+      if (getCurrentActive instanceof Function) {
+        getCurrentActive(index);
+      }
     }
   };
 
   return (
     <Row align={'middle'}>
       <Col span={1}>
-        {connections.length > 4 && (
+        {connections.length > 5 && (
           <Button
             icon={<ArrowDownMini />}
             className={classes.prev_button}
@@ -52,11 +59,11 @@ const Slider = ({ connections, active, getCurrentActive }: SliderProps) => {
       </Col>
       <Col span={22}>
         <Carousel
-          slidesToShow={4}
+          slidesToShow={5}
           dots={false}
           slickGoTo={activeSlide}
           arrows
-          infinite={connections.length > 4}
+          infinite={connections.length > 5}
           ref={carouselRef as any}
           className={classes.slider}
         >

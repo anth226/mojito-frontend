@@ -1,0 +1,14 @@
+.ant-table-row-level-1 svg {
+    display: none;
+}
+.ant-table-row-level-0 .ant-table-cell-with-append {
+    display: flex;
+    left: 0px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ant-table-row-indent {
+    display: none;
+}

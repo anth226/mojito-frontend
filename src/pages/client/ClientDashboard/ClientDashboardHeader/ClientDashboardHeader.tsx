@@ -19,9 +19,7 @@ export interface headerCard {
 
 const ClientDashboardHeaderCard = ({ data }: { data: headerCard }) => {
   return (
-    <Card
-      style={{ width: '300px', backgroundColor: 'transparent', border: 'none' }}
-    >
+    <Card style={{ backgroundColor: 'transparent', border: 'none' }}>
       <Row align='bottom'>
         <Col>
           <Statistic
@@ -55,11 +53,15 @@ const ClientDashboardHeader = ({
   headerData: headerCard[];
 }) => {
   return (
-    <>
-      {headerData.map((data, index) => {
-        return <ClientDashboardHeaderCard data={data} key={index} />;
+    <Row>
+      {headerData?.map((data, index) => {
+        return (
+          <Col span={6} key={index}>
+            <ClientDashboardHeaderCard data={data} />
+          </Col>
+        );
       })}
-    </>
+    </Row>
   );
 };
 

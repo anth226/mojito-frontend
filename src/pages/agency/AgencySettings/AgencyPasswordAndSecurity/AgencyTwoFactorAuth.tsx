@@ -1,10 +1,10 @@
-import { ReactNode, useMemo, useState } from "react";
-import classes from "./AgencyPasswordAndSecurity.module.css";
-import CustomSwitch from "components/CustomSwitch/CustomSwitch";
-import { Col, Input, Row, Select } from "antd";
-import CountryList from "country-list-with-dial-code-and-flag";
-import { CountryInterface } from "country-list-with-dial-code-and-flag/dist/types";
-import CountryFlagSvg from "country-list-with-dial-code-and-flag/dist/flag-svg";
+import { Col, Input, Row, Select } from 'antd';
+import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
+import CountryList from 'country-list-with-dial-code-and-flag';
+import CountryFlagSvg from 'country-list-with-dial-code-and-flag/dist/flag-svg';
+import { CountryInterface } from 'country-list-with-dial-code-and-flag/dist/types';
+import { ReactNode, useMemo } from 'react';
+import classes from './AgencyPasswordAndSecurity.module.css';
 
 interface extrasInterface extends CountryInterface {
   svg: string;
@@ -36,8 +36,6 @@ const getCountryCodeWithFlag = ({
 };
 
 export const AgencyTwoFactorAuth = () => {
-  const [openForm, setOpenForm] = useState<boolean>(false);
-
   const CountryListOptions = useMemo(() => {
     const temp = CountryList.getAll()
       .filter((country, index, arr) => {
@@ -79,11 +77,11 @@ export const AgencyTwoFactorAuth = () => {
         <p className={classes.text}>
           Enable this will provide an extra layer of security for your account.
           When logging in or changing a password, we will ask for a special
-          authentication code from SMS on your phone.{" "}
+          authentication code from SMS on your phone.{' '}
         </p>
         <Row>
           <Col span={8}>
-            <label htmlFor="country_code">Country Code</label>
+            <label htmlFor='country_code'>Country Code</label>
             <Select options={CountryListOptions} />
           </Col>
           <Col span={16}>
