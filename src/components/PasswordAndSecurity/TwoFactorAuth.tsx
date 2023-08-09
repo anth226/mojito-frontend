@@ -3,8 +3,8 @@ import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
 import CountryList from 'country-list-with-dial-code-and-flag';
 import CountryFlagSvg from 'country-list-with-dial-code-and-flag/dist/flag-svg';
 import { CountryInterface } from 'country-list-with-dial-code-and-flag/dist/types';
-import { ReactNode, useMemo } from 'react';
-import classes from './AgencyPasswordAndSecurity.module.css';
+import { ReactNode, useMemo, useState } from 'react';
+import classes from './PasswordAndSecurity.module.css';
 
 interface extrasInterface extends CountryInterface {
   svg: string;
@@ -35,7 +35,9 @@ const getCountryCodeWithFlag = ({
   };
 };
 
-export const AgencyTwoFactorAuth = () => {
+export const TwoFactorAuth = () => {
+  const [checked, setChecked] = useState(false);
+
   const CountryListOptions = useMemo(() => {
     const temp = CountryList.getAll()
       .filter((country, index, arr) => {
@@ -67,27 +69,39 @@ export const AgencyTwoFactorAuth = () => {
       });
     return temp;
   }, []);
+
+  const onChange = () => {
+    setChecked(!checked);
+  };
+
   return (
     <div className={classes.box_content}>
       <div className={classes.content}>
         <div className={classes.header_content}>
           <h5 className={classes.header_title}>Two-factor authentification</h5>
-          <CustomSwitch checked={false} />
+          <CustomSwitch checked={checked} onChange={onChange} />
         </div>
         <p className={classes.text}>
           Enable this will provide an extra layer of security for your account.
           When logging in or changing a password, we will ask for a special
           authentication code from SMS on your phone.{' '}
         </p>
-        <Row>
-          <Col span={8}>
-            <label htmlFor='country_code'>Country Code</label>
-            <Select options={CountryListOptions} />
-          </Col>
-          <Col span={16}>
-            <Input />
-          </Col>
-        </Row>
+        {checked && (
+          <Row className={classes.box_form}>
+            <Col span={6}>
+              <label htmlFor='country_code' className={classes.select_label}>
+                Country Code
+              </label>
+              <Select options={CountryListOptions} defaultValue={'+44'} />
+            </Col>
+            <Col span={18}>
+              <label htmlFor='country_code' className={classes.select_label}>
+                Country Code
+              </label>
+              <Input placeholder='Enter your phone' />
+            </Col>
+          </Row>
+        )}
       </div>
     </div>
   );

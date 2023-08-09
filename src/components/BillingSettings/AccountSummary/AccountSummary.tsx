@@ -1,6 +1,6 @@
-import { Col, Row } from "antd";
-import classes from "../AgencyBillingSettings.module.css";
-import { Fragment } from "react";
+import { Col, Row } from 'antd';
+import classes from '../BillingSettings.module.css';
+import { Fragment } from 'react';
 
 interface AccountSummaryObject {
   label: string;
@@ -11,7 +11,7 @@ interface AccountSummaryProps {
   accountSummary: AccountSummaryObject[];
 }
 
-const AgencyAccountSummary = ({ accountSummary }: AccountSummaryProps) => {
+const AccountSummary = ({ accountSummary }: AccountSummaryProps) => {
   return (
     <Row gutter={[0, 16]}>
       <Col span={24}>
@@ -33,4 +33,4 @@ const AgencyAccountSummary = ({ accountSummary }: AccountSummaryProps) => {
   );
 };
 
-export default AgencyAccountSummary;
+export default AccountSummary;
