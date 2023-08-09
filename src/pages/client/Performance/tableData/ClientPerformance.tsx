@@ -34,9 +34,12 @@ function MonthDataRenderer(
   if (cellData instanceof Array) {
     return (
       <div style={{ display: 'grid', justifyItems: 'end' }}>
-        {cellData.map((companyData: CompaniesMonthlyData) => {
+        {cellData.map((companyData: CompaniesMonthlyData, index: number) => {
           return (
-            <span style={{ color: companyData.color, fontWeight: '600' }}>
+            <span
+              style={{ color: companyData.color, fontWeight: '600' }}
+              key={index}
+            >
               {USDcurrency.format(companyData.value)}
             </span>
           );
@@ -61,8 +64,12 @@ function VerticalColumnCellRenderer(cellData: any) {
   if (cellData instanceof Array) {
     return (
       <div style={{ display: 'grid', fontWeight: '600' }}>
-        {cellData.map((company: CompaniesInTypeColumn) => {
-          return <span style={{ color: company.color }}>{company.name}</span>;
+        {cellData.map((company: CompaniesInTypeColumn, index: number) => {
+          return (
+            <span style={{ color: company.color }} key={index}>
+              {company.name}
+            </span>
+          );
         })}
       </div>
     );

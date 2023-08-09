@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ClientSettingsTabsKeys, ClientSettingsTabsPaths } from 'pages/paths';
 import ClientDetailsSettings from './ClientDetailsSettings/ClientDetailsSettings';
 import ClientUsersSetting from './ClientUsersSetting/ClientUsersSetting';
-import ClientPasswordAndSecurity from './ClientPasswordAndSecurity/ClientPasswordAndSecurity';
+import { ClientPasswordAndSecurity } from './ClientPasswordAndSecurity/ClientPasswordAndSecurity';
 
 const items: TabsProps['items'] = [
   {

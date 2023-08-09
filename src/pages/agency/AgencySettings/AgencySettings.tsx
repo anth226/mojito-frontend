@@ -1,5 +1,5 @@
 import { Tabs, TabsProps } from 'antd';
-import ClientBillingSettings from './AgencyBillingSettings/AgencyBillingSettings';
+import AgencyBillingSettings from './AgencyBillingSettings/AgencyBillingSettings';
 import './AgencySettings.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AgencySettingsTabsKeys, AgencySettingsTabsPaths } from 'pages/paths';
@@ -21,7 +21,7 @@ const items: TabsProps['items'] = [
   {
     key: AgencySettingsTabsKeys.BILLING,
     label: `Billing`,
-    children: <ClientBillingSettings />,
+    children: <AgencyBillingSettings />,
   },
   {
     key: AgencySettingsTabsKeys.PASSWORD_AND_SECURITY,

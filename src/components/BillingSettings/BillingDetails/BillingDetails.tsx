@@ -1,11 +1,11 @@
-import { Button, Col, Row } from 'antd';
-import Modal from 'antd/es/modal/Modal';
+import { Row, Col, Button } from 'antd';
+import classes from '../BillingSettings.module.css';
 import {
   BillingFields,
   useBillingFormInstance,
 } from 'components/BillingForm/BillingForm';
+import Modal from 'antd/es/modal/Modal';
 import { Fragment, useState } from 'react';
-import classes from '../ClientBillingSettings.module.css';
 
 interface BillingDetailsObject {
   label: string;
@@ -17,7 +17,7 @@ interface BillingDetailsProps {
   billingDetailsForm: BillingFields;
 }
 
-const ClientBillingDetails = ({
+const BillingDetails = ({
   billingDetails,
   billingDetailsForm,
 }: BillingDetailsProps) => {
@@ -83,4 +83,4 @@ const ClientBillingDetails = ({
   );
 };
 
-export default ClientBillingDetails;
+export default BillingDetails;
