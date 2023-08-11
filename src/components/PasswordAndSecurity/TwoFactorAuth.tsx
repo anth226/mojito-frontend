@@ -1,4 +1,4 @@
-import { Col, Input, Row, Select } from 'antd';
+import { Button, Col, Input, Row, Select } from 'antd';
 import CustomSwitch from 'components/CustomSwitch/CustomSwitch';
 import CountryList from 'country-list-with-dial-code-and-flag';
 import CountryFlagSvg from 'country-list-with-dial-code-and-flag/dist/flag-svg';
@@ -87,20 +87,34 @@ export const TwoFactorAuth = () => {
           authentication code from SMS on your phone.{' '}
         </p>
         {checked && (
-          <Row className={classes.box_form}>
-            <Col span={6}>
-              <label htmlFor='country_code' className={classes.select_label}>
-                Country Code
-              </label>
-              <Select options={CountryListOptions} defaultValue={'+44'} />
-            </Col>
-            <Col span={18}>
-              <label htmlFor='country_code' className={classes.select_label}>
-                Country Code
-              </label>
-              <Input placeholder='Enter your phone' />
-            </Col>
-          </Row>
+          <>
+            <Row className={classes.box_form}>
+              <Col span={6}>
+                <label htmlFor='country_code' className={classes.select_label}>
+                  Country Code
+                </label>
+                <Select options={CountryListOptions} defaultValue={'+44'} />
+              </Col>
+              <Col span={18}>
+                <label htmlFor='country_code' className={classes.select_label}>
+                  Country Code
+                </label>
+                <Input placeholder='Enter your phone' />
+              </Col>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 10,
+                  marginTop: '32px',
+                }}
+              >
+                <Button style={{ background: '#E2E2EA' }}>Cancel</Button>
+                <Button type='primary'>Send verification code</Button>
+              </Col>
+            </Row>
+          </>
         )}
       </div>
     </div>
