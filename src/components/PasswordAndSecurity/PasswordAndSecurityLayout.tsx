@@ -2,13 +2,15 @@ import { Space } from 'antd';
 import ArrowRight from 'assets/Icons/ArrowRight';
 import { IconKey } from 'assets/Icons/IconKey';
 import { IconSecurity } from 'assets/Icons/IconSecurity';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PasswordAndSecurity from './PasswordAndSecurity';
 import classes from './PasswordAndSecurity.module.css';
 import { TwoFactorAuth } from './TwoFactorAuth';
+import { useNavigate } from 'react-router-dom';
 
 export const PasswordAndSecurityLayout = () => {
   const [securityMethod, setSecurityMethod] = useState<string>('');
+  const navigate = useNavigate();
 
   const securityMethods = [
     {
@@ -20,6 +22,9 @@ export const PasswordAndSecurityLayout = () => {
       icon: <IconSecurity fill='#F2F3F7' stroke='#656575' />,
     },
   ];
+  useEffect(() => {
+    setSecurityMethod('');
+  }, [navigate]);
 
   return (
     <>
