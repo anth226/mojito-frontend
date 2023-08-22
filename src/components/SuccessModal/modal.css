@@ -1,0 +1,55 @@
+.success-box {
+    padding: 30px 20px 0px 20px;
+}
+
+.ant-space {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ant-progress-inner {
+    width: 100%;
+}
+
+.ant-progress.ant-progress-show-info .ant-progress-outer {
+    padding: 0;
+    margin: 0;
+}
+
+.ant-progress-bg {
+    height: 20px;
+}
+
+.ant-progress .ant-progress-text {
+    display: none;
+}
+
+.message {
+    margin-top: 0;
+    text-align: center;
+    color: #c7ddff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.success-box .title,
+.success-box .description {
+    text-align: center;
+}
+
+.success-box .title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #262631;
+    margin: 0;
+}
+
+.success-box .description {
+    font-size: 14px;
+    color: #7e7e8f;
+    margin: 0;
+}
+
+.modal .ant-space-item {
+    text-align: center;
+}

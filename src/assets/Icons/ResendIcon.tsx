@@ -1,0 +1,26 @@
+import * as React from 'react';
+
+function ResendIcon(
+  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
+  return (
+    <svg
+      width='16'
+      height='16'
+      viewBox='0 0 16 16'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
+      <path
+        d='M15.0434 8.74386C14.8119 10.9188 13.5795 12.9569 11.5404 14.1342C8.15244 16.0902 3.82035 14.9294 1.86434 11.5415L1.65601 11.1807M0.954298 7.25553C1.1858 5.08062 2.41812 3.04251 4.45728 1.86521C7.84519 -0.0907981 12.1773 1.06998 14.1333 4.45789L14.3416 4.81874M0.910156 13.0548L1.5202 10.778L3.79691 11.3881M12.2012 4.61137L14.4779 5.22141L15.0879 2.9447'
+        stroke='#656575'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </svg>
+  );
+}
+
+export default ResendIcon;
