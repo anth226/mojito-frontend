@@ -5,6 +5,8 @@ import CountryFlagSvg from 'country-list-with-dial-code-and-flag/dist/flag-svg';
 import { CountryInterface } from 'country-list-with-dial-code-and-flag/dist/types';
 import { ReactNode, useMemo, useState } from 'react';
 import classes from './PasswordAndSecurity.module.css';
+import VerifyCodeModal from 'components/VerifyCodeModal/VerifyCodeModal';
+import SuccessModal from 'components/SuccessModal/SuccessModal';
 
 interface extrasInterface extends CountryInterface {
   svg: string;
@@ -37,6 +39,9 @@ const getCountryCodeWithFlag = ({
 
 export const TwoFactorAuth = () => {
   const [checked, setChecked] = useState(false);
+  const [openVerifyCodeModal, setOpenVerifyCodeModal] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const CountryListOptions = useMemo(() => {
     const temp = CountryList.getAll()
@@ -74,49 +79,85 @@ export const TwoFactorAuth = () => {
     setChecked(!checked);
   };
 
+  const handleVerifyPhoneNumber = () => {
+    console.log(phoneNumber);
+
+    setOpenVerifyCodeModal(true);
+  };
+
+  const handleSubmitCode = (value: any) => {
+    console.log(value);
+    setOpenSuccessModal(true);
+  };
+
   return (
-    <div className={classes.box_content}>
-      <div className={classes.content}>
-        <div className={classes.header_content}>
-          <h5 className={classes.header_title}>Two-factor authentification</h5>
-          <CustomSwitch checked={checked} onChange={onChange} />
+    <>
+      <div className={classes.box_content}>
+        <div className={classes.content}>
+          <div className={classes.header_content}>
+            <h5 className={classes.header_title}>
+              Two-factor authentification
+            </h5>
+            <CustomSwitch checked={checked} onChange={onChange} />
+          </div>
+          <p className={classes.text}>
+            Enable this will provide an extra layer of security for your
+            account. When logging in or changing a password, we will ask for a
+            special authentication code from SMS on your phone.{' '}
+          </p>
+          {checked && (
+            <>
+              <Row className={classes.box_form}>
+                <Col span={6}>
+                  <label
+                    htmlFor='country_code'
+                    className={classes.select_label}
+                  >
+                    Country Code
+                  </label>
+                  <Select options={CountryListOptions} defaultValue={'+44'} />
+                </Col>
+                <Col span={18}>
+                  <label
+                    htmlFor='country_code'
+                    className={classes.select_label}
+                  >
+                    Country Code
+                  </label>
+                  <Input
+                    placeholder='Enter your phone'
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </Col>
+                <Col
+                  span={24}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: 10,
+                    marginTop: '32px',
+                  }}
+                >
+                  <Button style={{ background: '#E2E2EA' }}>Cancel</Button>
+                  <Button type='primary' onClick={handleVerifyPhoneNumber}>
+                    Send verification code
+                  </Button>
+                </Col>
+              </Row>
+            </>
+          )}
         </div>
-        <p className={classes.text}>
-          Enable this will provide an extra layer of security for your account.
-          When logging in or changing a password, we will ask for a special
-          authentication code from SMS on your phone.{' '}
-        </p>
-        {checked && (
-          <>
-            <Row className={classes.box_form}>
-              <Col span={6}>
-                <label htmlFor='country_code' className={classes.select_label}>
-                  Country Code
-                </label>
-                <Select options={CountryListOptions} defaultValue={'+44'} />
-              </Col>
-              <Col span={18}>
-                <label htmlFor='country_code' className={classes.select_label}>
-                  Country Code
-                </label>
-                <Input placeholder='Enter your phone' />
-              </Col>
-              <Col
-                span={24}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  gap: 10,
-                  marginTop: '32px',
-                }}
-              >
-                <Button style={{ background: '#E2E2EA' }}>Cancel</Button>
-                <Button type='primary'>Send verification code</Button>
-              </Col>
-            </Row>
-          </>
-        )}
       </div>
-    </div>
+      <VerifyCodeModal
+        closeModal={() => setOpenVerifyCodeModal(false)}
+        open={openVerifyCodeModal}
+        handleVerify={handleSubmitCode}
+      />
+      <SuccessModal
+        closeModal={() => setOpenSuccessModal(false)}
+        open={openSuccessModal}
+      />
+    </>
   );
 };

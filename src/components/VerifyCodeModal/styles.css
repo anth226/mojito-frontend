@@ -1,0 +1,28 @@
+.verify-form .input-code {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.verify-form .ant-input {
+    border: none;
+    border-bottom: 1px;
+    border-bottom-width: 1px;
+    border-color: #000000;
+    border-bottom-style: groove;
+    border-radius: 0;
+    font-size: 30px;
+}
+
+.verify-modal .ant-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #262631;
+}
+
+.verify-code {
+    margin-bottom: 0;
+}
+.verify-code .ant-form-item-control-input {
+    margin-bottom: 32px;
+}

@@ -1,0 +1,12 @@
+.resendText {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #656575;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.inputCode {
+    letter-spacing: 40px;
+}
