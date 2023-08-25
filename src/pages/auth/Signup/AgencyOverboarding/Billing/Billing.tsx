@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {useStripe,useElements} from '@stripe/react-stripe-js'
 import PlanCard from 'components/PlanCard/PlanCard';
 import classes from './Billing.module.css';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
@@ -15,6 +16,10 @@ import { AgencyOnBoardingPaths } from 'pages/paths';
 import { plans } from 'constants/BillingPlans';
 
 const AgencyOnBoardingBilling = () => {
+   
+   const stripe =useStripe();
+   const elements =useElements()
+
   const { billing, nestedSteps, nestedPath, prevStep } = useAppSelector(
     getOnboardingFromStore
   );
@@ -22,13 +27,24 @@ const AgencyOnBoardingBilling = () => {
 
   const [menuItem, setMenuItem] = useState(1);
 
-  const { BillingForm } = useBillingFormInstance();
+  const { BillingForm,cardElement} = useBillingFormInstance();
 
   const onClick = (index: number) => {
     dispatch(setBillingPlan(index));
   };
 
-  const onFinished = (values: any) => {
+
+  const onFinished = async (values: any) => {
+    if (!stripe) 
+      {
+        return "";
+      }
+    const card = elements?.getElement(cardElement);
+    if (!card) {
+      return;
+    }
+    const {token}= await stripe?.createToken(card)
+    console.log(token)
     dispatch(setBillingDetails(values));
     dispatch(next());
   };
@@ -100,7 +116,8 @@ const AgencyOnBoardingBilling = () => {
         })}
       </div>
       {nestedPath === AgencyOnBoardingPaths.BILLING && nestedSteps === 1 && (
-        <BillingForm onFinished={onFinished} />
+        <BillingForm onFinished={onFinished}  />
+
       )}
     </>
   );
