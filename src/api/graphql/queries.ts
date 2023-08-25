@@ -193,3 +193,19 @@ export const GET_METRICS_YEARLY = gql`
     }
   }
 `;
+
+export const GET_PLANS_LISTS= gql`
+query fetchPlans {
+  fetchPlans{
+        plans{
+            id
+            amount
+            planName
+            currency
+            interval
+            trialPeriodDays
+            billingScheme
+        }
+    }
+}
+`

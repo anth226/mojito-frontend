@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useGraphQlQuery } from 'hooks/useCustomHookApollo';
+import { GET_PLANS_LISTS } from 'api/graphql/queries';
 import {useStripe,useElements} from '@stripe/react-stripe-js'
+import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
+import { CREATE_SUBSCRIPTION } from 'api/graphql/mutations';
+import Bolt from 'assets/Icons/Bolt';
+// import MultiStack from 'assets/Icons/MultiStack';
+// import StacksIcon from 'assets/Icons/Stacks';
 import PlanCard from 'components/PlanCard/PlanCard';
 import classes from './Billing.module.css';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
@@ -11,16 +18,22 @@ import {
   setBilling,
   setBillingDetails,
   setBillingPlan,
+  setBillingPriceId
 } from 'reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths } from 'pages/paths';
 import { plans } from 'constants/BillingPlans';
+import internal from 'stream';
 
 const AgencyOnBoardingBilling = () => {
    
    const stripe =useStripe();
    const elements =useElements()
+   const [createSubscription, { loading: isLoadingCreateSubscription,error:createSubscritpitonError }] =useGraphQlMutation(CREATE_SUBSCRIPTION,{
+    onError(error) {
+    console.log(error);
+  }})
 
-  const { billing, nestedSteps, nestedPath, prevStep } = useAppSelector(
+  const { billing, nestedSteps, nestedPath, prevStep,billingPriceId } = useAppSelector(
     getOnboardingFromStore
   );
   const dispatch = useAppDispatch();
@@ -29,10 +42,30 @@ const AgencyOnBoardingBilling = () => {
 
   const { BillingForm,cardElement} = useBillingFormInstance();
 
-  const onClick = (index: number) => {
+  const onClick = (index: number,id:string) => {
     dispatch(setBillingPlan(index));
+    dispatch(setBillingPriceId(id))
   };
 
+  enum Tenure {
+    MONTHLY = 'monthly',
+    YEARLY = 'yearly',
+  }
+
+   interface Plan {
+    id: string;
+    amount: number;
+    planName: string;
+    currency: string;
+    internal: string;
+    trialPeriodDays: string;
+    billingScheme: string;
+  }
+
+  const {
+    data: plansList,
+    loading: isFetchPlans,
+  } = useGraphQlQuery(GET_PLANS_LISTS);
 
   const onFinished = async (values: any) => {
     if (!stripe) 
@@ -43,8 +76,35 @@ const AgencyOnBoardingBilling = () => {
     if (!card) {
       return;
     }
-    const {token}= await stripe?.createToken(card)
-    console.log(token)
+    const {token,error}= await stripe?.createToken(card)
+    if(token){
+    const input={
+        billingPlan:"STARTER",
+        cardBrand:token.card?.brand,
+        source:token.id,
+        name:values.name,
+        email:values.email,
+        priceId:billingPriceId,
+        quantity:15,
+        country_code:values.country_code,
+        phone: values.phone,
+        street: values.region,
+        apt_suit_number:"3030",
+        region: values.region,
+        state: values.state,
+        city: values.city,
+        zip_code: values.zip_code,
+        expiry:`${token.card?.exp_month}/${token.card?.exp_year}`,
+        card: token.card?.last4,
+        clientId:"2d933cdf-e78b-4173-bcba-cf5a51c8218e"
+
+    }
+    
+     const res = await createSubscription({variables:{input:input}})
+     console.log(res)
+    }
+    
+   
     dispatch(setBillingDetails(values));
     dispatch(next());
   };
@@ -93,7 +153,8 @@ const AgencyOnBoardingBilling = () => {
         )}
       </div>
       <div style={{ display: 'grid', gap: '10px' }}>
-        {plans.map((plan, index) => {
+
+        {!isFetchPlans&&plansList.fetchPlans.plans.map((plan:Plan, index:number) => {
           if (
             billing.plan !== -1 &&
             billing.plan !== index &&
@@ -104,13 +165,13 @@ const AgencyOnBoardingBilling = () => {
           return (
             <PlanCard
               key={index}
-              title={plan.title}
+              title={plan.planName}
               amount={plan.amount}
-              tenure={plan.tenure}
-              description={plan.description}
+              tenure={plan.internal==="month"? Tenure.MONTHLY:Tenure.YEARLY}
+              description={"Includes up to 10 users, 20GB indiviual data and access to all features."}
               selected={index === billing.plan}
-              onClick={() => onClick(index)}
-              Icon={plan.icon}
+              onClick={() => onClick(index,plan.id)}
+              Icon={Bolt}
             />
           );
         })}

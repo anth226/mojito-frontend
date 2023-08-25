@@ -8,7 +8,7 @@ import {
   Row,
   UploadFile,
 } from 'antd';
-import { UPDATE_AGENCY, UPDATE_BUSINESS } from 'api/graphql/mutations';
+import { UPDATE_AGENCY, UPDATE_BUSINESS, } from 'api/graphql/mutations';
 import { VIEWER } from 'api/graphql/queries';
 import { useAppSelector } from 'app/hooks';
 import { CustomLoading } from 'components/CustomLoading/CustomLoading';
