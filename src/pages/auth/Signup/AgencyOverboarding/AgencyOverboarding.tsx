@@ -1,4 +1,7 @@
 import { Button, Card, Col, Row, Space } from 'antd';
+import { loadStripe } from '@stripe/stripe-js';
+import { STRIPE_PUBLIC_KEY } from 'configs/env';
+import {Elements} from '@stripe/react-stripe-js'
 import { INVITE_CLIENTS } from 'api/graphql/mutations';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { Client } from 'interfaces/Client';
@@ -22,6 +25,7 @@ const AgencyOverboarding = () => {
   const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
     getOnboardingFromStore
   );
+  const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -151,6 +155,7 @@ const AgencyOverboarding = () => {
   }
 
   return (
+     <Elements stripe={stripePromise}>
     <Card
       style={{
         maxWidth: widthOfCard,
@@ -178,6 +183,7 @@ const AgencyOverboarding = () => {
         </Row>
       </Space>
     </Card>
+    </Elements>
   );
 };
 
