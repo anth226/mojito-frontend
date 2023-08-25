@@ -16,6 +16,7 @@ interface onboardingStateInterface {
   nested: boolean;
   nestedSteps: number;
   nestedLimit: number;
+  billingPriceId:string|null;
   nestedPath: `${AgencyOnBoardingPaths}` | `${BusinessOnBoardingPaths}` | '';
   clients: Client[];
   users: NewClient[];
@@ -33,6 +34,7 @@ const initialState: onboardingStateInterface = {
   nestedSteps: 0,
   nestedLimit: 0,
   nestedPath: '',
+  billingPriceId:null,
   clients: [] as Client[],
   users: [] as NewClient[],
   allConnectionList: connections,
@@ -160,6 +162,10 @@ export const onboardingSlice = createSlice({
     setBillingDetails: (state, payloadWithType) => {
       state.billing.billingDetails = payloadWithType.payload;
     },
+    setBillingPriceId:(state, payloadWithType) => {
+     state.billingPriceId = payloadWithType.payload;
+    },
+
     clearOnBoardingStore: (state) => {
       state.step = 1;
       state.prevStep = 0;
@@ -193,6 +199,7 @@ export const {
   setBillingPlan,
   setBillingDetails,
   clearOnBoardingStore,
+  setBillingPriceId
 } = onboardingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from

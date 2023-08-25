@@ -82,20 +82,6 @@ export const BillingFormProvider = ({ children }: PropsWithChildren) => {
 
 export const useBillingFormInstance = () => {
   const billingFormInstance = useContext(BillingFormContext);
-  // const stripe=useStripe()
-  // const elements= useElements()
-  // const createToken=async ()=>{
-  //   if (!stripe) {
-  //     return "";
-  //   }
-  //   const cardElement = elements?.getElement(CardNumberElement);
-  //   if (!cardElement) {
-  //     return;
-  //   }
-  //   const {token,error}= await stripe?.createToken(cardElement)
-  //   console.log(token)
-  // }
-
   return {
     BillingForm: ({
       onFinished,
