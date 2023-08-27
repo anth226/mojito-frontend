@@ -7,6 +7,9 @@ import {
   getOnboardingFromStore,
   next,
 } from 'reduxSlices/onboarding/onboarding';
+import { loadStripe } from '@stripe/stripe-js';
+import { STRIPE_PUBLIC_KEY } from 'configs/env';
+import {Elements} from '@stripe/react-stripe-js'
 import { useMemo } from 'react';
 import { AuthenticationPaths, BusinessOnBoardingPaths } from 'pages/paths';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
@@ -17,6 +20,7 @@ const BusinessOverboarding = () => {
   const { step, nested, nestedPath, nestedSteps } = useAppSelector(
     getOnboardingFromStore
   );
+  const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -84,6 +88,7 @@ const BusinessOverboarding = () => {
   }
 
   return (
+    <Elements stripe={stripePromise}>
     <Card
       style={{
         maxWidth: widthOfCard,
@@ -111,6 +116,7 @@ const BusinessOverboarding = () => {
         </Row>
       </Space>
     </Card>
+    </Elements>
   );
 };
 

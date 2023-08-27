@@ -150,7 +150,6 @@ const BillingForm = ({ formInstance, onFinished}: BillingFormProps) => {
   }
   const onCvvChange = (e:any) => {
     setCvvError(null)
-    console.log(e.error)
     if(e.error){
       setCvvError(e.error.message)
     }

@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useGraphQlQuery } from 'hooks/useCustomHookApollo';
 import { GET_PLANS_LISTS } from 'api/graphql/queries';
-import {useStripe,useElements} from '@stripe/react-stripe-js'
+import {useStripe,useElements} from '@stripe/react-stripe-js';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { CREATE_SUBSCRIPTION } from 'api/graphql/mutations';
 import Bolt from 'assets/Icons/Bolt';
-// import MultiStack from 'assets/Icons/MultiStack';
-// import StacksIcon from 'assets/Icons/Stacks';
 import PlanCard from 'components/PlanCard/PlanCard';
 import classes from './Billing.module.css';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
@@ -18,22 +16,20 @@ import {
   setBilling,
   setBillingDetails,
   setBillingPlan,
-  setBillingPriceId
+  setBillingPlanObject
 } from 'reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths } from 'pages/paths';
-import { plans } from 'constants/BillingPlans';
-import internal from 'stream';
 
 const AgencyOnBoardingBilling = () => {
    
    const stripe =useStripe();
    const elements =useElements()
-   const [createSubscription, { loading: isLoadingCreateSubscription,error:createSubscritpitonError }] =useGraphQlMutation(CREATE_SUBSCRIPTION,{
+   const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION,{
     onError(error) {
     console.log(error);
   }})
 
-  const { billing, nestedSteps, nestedPath, prevStep,billingPriceId } = useAppSelector(
+  const { billing, nestedSteps, nestedPath, prevStep,billingPlan } = useAppSelector(
     getOnboardingFromStore
   );
   const dispatch = useAppDispatch();
@@ -44,7 +40,7 @@ const AgencyOnBoardingBilling = () => {
 
   const onClick = (index: number,id:string) => {
     dispatch(setBillingPlan(index));
-    dispatch(setBillingPriceId(id))
+    dispatch(setBillingPlanObject(id))
   };
 
   enum Tenure {
@@ -76,32 +72,30 @@ const AgencyOnBoardingBilling = () => {
     if (!card) {
       return;
     }
-    const {token,error}= await stripe?.createToken(card)
+    const {token}= await stripe?.createToken(card)
     if(token){
     const input={
-        billingPlan:"STARTER",
+        billingPlan:billingPlan?.id,
         cardBrand:token.card?.brand,
         source:token.id,
         name:values.name,
         email:values.email,
-        priceId:billingPriceId,
+        priceId:billingPlan?.id,
         quantity:15,
         country_code:values.country_code,
         phone: values.phone,
         street: values.region,
-        apt_suit_number:"3030",
+        apt_suit_number:values.apt_suit_number,
         region: values.region,
         state: values.state,
         city: values.city,
         zip_code: values.zip_code,
         expiry:`${token.card?.exp_month}/${token.card?.exp_year}`,
-        card: token.card?.last4,
-        clientId:"2d933cdf-e78b-4173-bcba-cf5a51c8218e"
+        card: token.card?.last4
 
     }
     
-     const res = await createSubscription({variables:{input:input}})
-     console.log(res)
+    await createSubscription({variables:{input:input}})
     }
     
    

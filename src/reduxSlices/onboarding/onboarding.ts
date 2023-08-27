@@ -9,14 +9,22 @@ import { AgencyOnBoardingPaths, BusinessOnBoardingPaths } from 'pages/paths';
 enum defaultValues {
   BILLING_PLAN = -1,
 }
-
+interface Plan {
+  id: string;
+  amount: number;
+  planName: string;
+  currency: string;
+  internal: string;
+  trialPeriodDays: string;
+  billingScheme: string;
+}
 interface onboardingStateInterface {
   step: number;
   prevStep: number;
   nested: boolean;
   nestedSteps: number;
   nestedLimit: number;
-  billingPriceId:string|null;
+  billingPlan:Plan|null;
   nestedPath: `${AgencyOnBoardingPaths}` | `${BusinessOnBoardingPaths}` | '';
   clients: Client[];
   users: NewClient[];
@@ -34,7 +42,7 @@ const initialState: onboardingStateInterface = {
   nestedSteps: 0,
   nestedLimit: 0,
   nestedPath: '',
-  billingPriceId:null,
+  billingPlan:null,
   clients: [] as Client[],
   users: [] as NewClient[],
   allConnectionList: connections,
@@ -162,8 +170,8 @@ export const onboardingSlice = createSlice({
     setBillingDetails: (state, payloadWithType) => {
       state.billing.billingDetails = payloadWithType.payload;
     },
-    setBillingPriceId:(state, payloadWithType) => {
-     state.billingPriceId = payloadWithType.payload;
+    setBillingPlanObject:(state, payloadWithType) => {
+     state.billingPlan = payloadWithType.payload;
     },
 
     clearOnBoardingStore: (state) => {
@@ -199,7 +207,7 @@ export const {
   setBillingPlan,
   setBillingDetails,
   clearOnBoardingStore,
-  setBillingPriceId
+  setBillingPlanObject
 } = onboardingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
