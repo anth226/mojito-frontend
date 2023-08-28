@@ -3,7 +3,7 @@ import { RootState } from 'app/store';
 import { connections } from 'constants/Connections';
 import { ConnectionStatus } from 'enums/connections';
 import { Client, NewClient } from 'interfaces/Client';
-import { Connection } from 'interfaces/Connection';
+import { Connection,BusinessConnections } from 'interfaces/Connection';
 import { AgencyOnBoardingPaths, BusinessOnBoardingPaths } from 'pages/paths';
 
 enum defaultValues {
@@ -30,6 +30,7 @@ interface onboardingStateInterface {
   clients: Client[];
   users: NewClient[];
   allConnectionList: Connection[];
+  bussinessConnections: BusinessConnections[]
   billing: {
     plan: number;
     billingDetails: {};
@@ -47,6 +48,7 @@ const initialState: onboardingStateInterface = {
   disableContine:false,
   clients: [] as Client[],
   users: [] as NewClient[],
+  bussinessConnections:[] as BusinessConnections[],
   allConnectionList: connections,
   billing: {
     plan: defaultValues.BILLING_PLAN,
@@ -175,6 +177,19 @@ export const onboardingSlice = createSlice({
     setBillingPlanObject:(state, payloadWithType) => {
      state.billingPlan = payloadWithType.payload;
     },
+    setBusinessConnections: (state, payloadWithType) => {
+      if(payloadWithType.payload.action==="add"){
+      state.bussinessConnections=[...state.bussinessConnections,{
+        connectionKey: payloadWithType.payload.connectionKey,
+        connectionId: payloadWithType.payload.connectionId,}
+      ]}
+      else{
+        state.bussinessConnections = state.bussinessConnections.filter(
+          (connection) =>
+            connection.connectionKey !== payloadWithType.payload.connectionKey
+        );
+      }
+    },
 
     clearOnBoardingStore: (state) => {
       state.step = 1;
@@ -213,7 +228,8 @@ export const {
   setBillingDetails,
   clearOnBoardingStore,
   setBillingPlanObject,
-  setLoading
+  setLoading,
+  setBusinessConnections
 } = onboardingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
