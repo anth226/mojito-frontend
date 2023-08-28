@@ -177,6 +177,7 @@ mutation CreateSubscription($input:CreateSubscriptionInput!){
   createSubscription(input:$input){
     success
     url
+    reason
   }
 
 }

@@ -201,6 +201,7 @@ query fetchPlans {
             id
             amount
             planName
+            description
             currency
             interval
             trialPeriodDays

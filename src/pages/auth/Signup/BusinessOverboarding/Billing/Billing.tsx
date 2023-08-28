@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import {useStripe,useElements} from '@stripe/react-stripe-js';
 import { GET_PLANS_LISTS } from 'api/graphql/queries';
 import { useGraphQlQuery,useGraphQlMutation } from 'hooks/useCustomHookApollo';
-import {useStripe,useElements} from '@stripe/react-stripe-js';
+import { Tenure,Plan } from 'interfaces/billing';
 import PlanCard from 'components/PlanCard/PlanCard';
 import classes from './Billing.module.css';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
@@ -14,33 +16,21 @@ import {
   setBilling,
   setBillingDetails,
   setBillingPlan,
-  setBillingPlanObject
+  setBillingPlanObject,
+  setLoading
 } from 'reduxSlices/onboarding/onboarding';
 import { BusinessOnBoardingPaths } from 'pages/paths';
-import Bolt from 'assets/Icons/Bolt';
+import MultiStack from 'assets/Icons/MultiStack';
+import StacksIcon from 'assets/Icons/Stacks';
+import Spinner from 'components/loaders/Spinner';
 
 const BusinessOnBoardingBilling = () => {
 
-  enum Tenure {
-    MONTHLY = 'monthly',
-    YEARLY = 'yearly',
-  }
-
-   interface Plan {
-    id: string;
-    amount: number;
-    planName: string;
-    currency: string;
-    internal: string;
-    trialPeriodDays: string;
-    billingScheme: string;
-  }
+  const icons=[MultiStack,StacksIcon]
 
   const stripe =useStripe();
   const elements =useElements()
-  const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION,{
-    onError(error) {
-  }})
+  const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION)
 
   const { billing, nestedSteps, nestedPath, prevStep, billingPlan } = useAppSelector(
     getOnboardingFromStore
@@ -57,6 +47,7 @@ const BusinessOnBoardingBilling = () => {
   };
 
   const onFinished = async (values: any) => {
+    setLoading(true)
     if (!stripe) 
       {
         return "";
@@ -67,6 +58,7 @@ const BusinessOnBoardingBilling = () => {
     }
     const {token}= await stripe?.createToken(card)
     if(token){
+
     const input={
         billingPlan:billingPlan?.planName,
         cardBrand:token.card?.brand,
@@ -87,11 +79,15 @@ const BusinessOnBoardingBilling = () => {
         card: token.card?.last4
 
     }
-    
-     await createSubscription({variables:{input:input}})
-    }
+   const res= await createSubscription({variables:{input:input}})
+  if(!res.data.createSubscription.success){
+    toast.error(res.data.createSubscription.reason)
+  }else{
     dispatch(setBillingDetails(values));
     dispatch(next());
+  }
+  setLoading(false)
+    }
   };
 
 
@@ -144,6 +140,7 @@ const BusinessOnBoardingBilling = () => {
         )}
       </div>
       <div style={{ display: 'grid', gap: '10px' }}>
+        {isFetchPlans&& (<Spinner/>)}
         {!isFetchPlans&&plansList.fetchPlans.plans.map((plan:Plan, index:number) => {
           if (
             billing.plan !== -1 &&
@@ -157,11 +154,11 @@ const BusinessOnBoardingBilling = () => {
             key={index}
             title={plan.planName}
             amount={plan.amount}
-            tenure={plan.internal==="month"? Tenure.MONTHLY:Tenure.YEARLY}
-            description={"Includes up to 10 users, 20GB indiviual data and access to all features."}
+            tenure={plan.interval==="month"? Tenure.MONTHLY:Tenure.YEARLY}
+            description={plan.description}
             selected={index === billing.plan}
             onClick={() => onClick(index,plan)}
-            Icon={Bolt}
+            Icon={icons[index]}
             />
           );
         })}
