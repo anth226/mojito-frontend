@@ -155,6 +155,7 @@ const BillingForm = ({ formInstance, onFinished}: BillingFormProps) => {
     }
   }
   const onExpiryChange = (e:any) => {
+    setExpiryError(null)
     if(e.error){
       setExpiryError(e.error.message)
     }

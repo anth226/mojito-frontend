@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import {useStripe,useElements} from '@stripe/react-stripe-js';
 import { useGraphQlQuery } from 'hooks/useCustomHookApollo';
 import { GET_PLANS_LISTS } from 'api/graphql/queries';
-import {useStripe,useElements} from '@stripe/react-stripe-js';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { CREATE_SUBSCRIPTION } from 'api/graphql/mutations';
 import Bolt from 'assets/Icons/Bolt';
@@ -9,6 +9,7 @@ import PlanCard from 'components/PlanCard/PlanCard';
 import classes from './Billing.module.css';
 import { useBillingFormInstance } from 'components/BillingForm/BillingForm';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { Tenure,Plan } from 'interfaces/billing';
 import {
   getOnboardingFromStore,
   nested,
@@ -16,18 +17,18 @@ import {
   setBilling,
   setBillingDetails,
   setBillingPlan,
-  setBillingPlanObject
+  setBillingPlanObject,
+  setLoading
 } from 'reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths } from 'pages/paths';
+import { toast } from 'react-toastify';
+import Spinner from 'components/loaders/Spinner';
 
 const AgencyOnBoardingBilling = () => {
    
    const stripe =useStripe();
    const elements =useElements()
-   const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION,{
-    onError(error) {
-    console.log(error);
-  }})
+   const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION)
 
   const { billing, nestedSteps, nestedPath, prevStep,billingPlan } = useAppSelector(
     getOnboardingFromStore
@@ -38,25 +39,12 @@ const AgencyOnBoardingBilling = () => {
 
   const { BillingForm,cardElement} = useBillingFormInstance();
 
-  const onClick = (index: number,id:string) => {
+  const onClick = (index: number,plan:Plan) => {
     dispatch(setBillingPlan(index));
-    dispatch(setBillingPlanObject(id))
+    dispatch(setBillingPlanObject(plan))
   };
 
-  enum Tenure {
-    MONTHLY = 'monthly',
-    YEARLY = 'yearly',
-  }
-
-   interface Plan {
-    id: string;
-    amount: number;
-    planName: string;
-    currency: string;
-    internal: string;
-    trialPeriodDays: string;
-    billingScheme: string;
-  }
+ 
 
   const {
     data: plansList,
@@ -64,6 +52,7 @@ const AgencyOnBoardingBilling = () => {
   } = useGraphQlQuery(GET_PLANS_LISTS);
 
   const onFinished = async (values: any) => {
+    setLoading(true)
     if (!stripe) 
       {
         return "";
@@ -74,8 +63,9 @@ const AgencyOnBoardingBilling = () => {
     }
     const {token}= await stripe?.createToken(card)
     if(token){
+
     const input={
-        billingPlan:billingPlan?.id,
+        billingPlan:billingPlan?.planName,
         cardBrand:token.card?.brand,
         source:token.id,
         name:values.name,
@@ -94,13 +84,16 @@ const AgencyOnBoardingBilling = () => {
         card: token.card?.last4
 
     }
-    
-    await createSubscription({variables:{input:input}})
-    }
-    
-   
+   const res= await createSubscription({variables:{input:input}})
+  if(!res.data.createSubscription.success){
+    toast.error(res.data.createSubscription.reason)
+  }else{
     dispatch(setBillingDetails(values));
     dispatch(next());
+  }
+  setLoading(false)
+    }
+  
   };
 
   useEffect(() => {
@@ -147,7 +140,7 @@ const AgencyOnBoardingBilling = () => {
         )}
       </div>
       <div style={{ display: 'grid', gap: '10px' }}>
-
+        {isFetchPlans&& (<Spinner/>)}
         {!isFetchPlans&&plansList.fetchPlans.plans.map((plan:Plan, index:number) => {
           if (
             billing.plan !== -1 &&
@@ -161,10 +154,10 @@ const AgencyOnBoardingBilling = () => {
               key={index}
               title={plan.planName}
               amount={plan.amount}
-              tenure={plan.internal==="month"? Tenure.MONTHLY:Tenure.YEARLY}
-              description={"Includes up to 10 users, 20GB indiviual data and access to all features."}
+              tenure={plan.interval==="month"? Tenure.MONTHLY:Tenure.YEARLY}
+              description={plan.description}
               selected={index === billing.plan}
-              onClick={() => onClick(index,plan.id)}
+              onClick={() => onClick(index,plan)}
               Icon={Bolt}
             />
           );

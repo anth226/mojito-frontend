@@ -22,7 +22,7 @@ import {
 import { AgencyOnBoardingPaths, AuthenticationPaths } from 'pages/paths';
 
 const AgencyOverboarding = () => {
-  const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
+  const { step, nested, nestedSteps, nestedPath, clients,disableContine } = useAppSelector(
     getOnboardingFromStore
   );
   const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
@@ -153,7 +153,7 @@ const AgencyOverboarding = () => {
   if (errorPage()) {
     return <Outlet />;
   }
-
+console.log(disableContine)
   return (
      <Elements stripe={stripePromise}>
     <Card
@@ -167,12 +167,13 @@ const AgencyOverboarding = () => {
         <Outlet />
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <Button style={{ width: '100%' }} onClick={onBack}>
+            <Button disabled={false} style={{ width: '100%' }} onClick={onBack}>
               <b>Back</b>
             </Button>
           </Col>
           <Col span={12}>
             <Button
+              disabled={false}
               type='primary'
               style={{ width: '100%' }}
               onClick={onContinue}
