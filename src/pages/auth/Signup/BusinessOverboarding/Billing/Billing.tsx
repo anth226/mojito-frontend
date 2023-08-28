@@ -66,7 +66,6 @@ const BusinessOnBoardingBilling = () => {
         name:values.name,
         email:values.email,
         priceId:billingPlan?.id,
-        quantity:15,
         country_code:values.country_code,
         phone: values.phone,
         street: values.region,

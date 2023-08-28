@@ -23,3 +23,7 @@ export interface ConnectionClient {
   status: ConnectionStatus;
   active: boolean;
 }
+export interface BusinessConnections{
+  connectionKey: string;
+  connectionId: string;
+}

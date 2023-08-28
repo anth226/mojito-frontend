@@ -17,7 +17,7 @@ import { clearSignup, logout } from 'reduxSlices/auth/auth';
 import { removeAccessToken, removeAccountInfo } from 'utils/helpers';
 
 const BusinessOverboarding = () => {
-  const { step, nested, nestedPath, nestedSteps,disableContine } = useAppSelector(
+  const { step, nested, nestedPath, nestedSteps} = useAppSelector(
     getOnboardingFromStore
   );
   const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
@@ -87,7 +87,7 @@ const BusinessOverboarding = () => {
     return <Outlet />;
   }
 
-   console.log(disableContine)
+  //  console.log(disableContine)
 
   return (
     <Elements stripe={stripePromise}>
