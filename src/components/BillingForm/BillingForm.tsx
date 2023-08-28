@@ -1,4 +1,6 @@
-import { Col, Form, FormInstance, Input, Row, Select } from 'antd';
+import { useState } from 'react';
+import { Col, Form, FormInstance, Input, Row, Select} from 'antd';
+import {CardNumberElement,CardExpiryElement,CardCvcElement} from "@stripe/react-stripe-js"
 import CountryList from 'country-list-with-dial-code-and-flag';
 import CountryFlagSvg from 'country-list-with-dial-code-and-flag/dist/flag-svg';
 import { CountryInterface } from 'country-list-with-dial-code-and-flag/dist/types';
@@ -15,11 +17,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useAppSelector } from 'app/hooks';
 import { getOnboardingFromStore } from 'reduxSlices/onboarding/onboarding';
 
-dayjs.extend(customParseFormat);
 
-const VisaCardRegex = '^4[0-9]{12}(?:[0-9]{3})?$';
-const MasterCardRegex =
-  '^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$';
+dayjs.extend(customParseFormat);
 
 interface extrasInterface extends CountryInterface {
   svg: string;
@@ -80,9 +79,9 @@ export const BillingFormProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
+
 export const useBillingFormInstance = () => {
   const billingFormInstance = useContext(BillingFormContext);
-
   return {
     BillingForm: ({
       onFinished,
@@ -92,9 +91,11 @@ export const useBillingFormInstance = () => {
       <BillingForm
         formInstance={billingFormInstance as FormInstance}
         onFinished={onFinished}
+
       />
     ),
     FormInstance: billingFormInstance,
+    cardElement:CardNumberElement
   };
 };
 
@@ -103,8 +104,11 @@ interface BillingFormProps {
   onFinished?: ((values: any) => void) | undefined;
 }
 
-const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
+const BillingForm = ({ formInstance, onFinished}: BillingFormProps) => {
   const billing = useAppSelector(getOnboardingFromStore).billing.billingDetails;
+  const [cardError, setCardError] = useState(null);
+  const [cvvError, setCvvError] = useState(null);
+  const [expiryError, setExpiryError] = useState(null);
 
   const CountryListOptions = useMemo(() => {
     const temp = CountryList.getAll()
@@ -138,6 +142,40 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
     return temp;
   }, []);
 
+  const onCardChange = (e:any) => {
+    setCardError(null)
+    if(e.error){
+      setCardError(e.error.message)
+    }
+  }
+  const onCvvChange = (e:any) => {
+    setCvvError(null)
+    if(e.error){
+      setCvvError(e.error.message)
+    }
+  }
+  const onExpiryChange = (e:any) => {
+    setExpiryError(null)
+    if(e.error){
+      setExpiryError(e.error.message)
+    }
+  }
+
+  const ElementOptions = {
+    style: {
+      base: {
+        fontSize: '14px',
+        color: 'rgba(0, 0, 0, 0.88)',
+        '::placeholder': {
+          color: '#fff',
+        },
+      },
+      invalid: {
+        color: 'rgba(0, 0, 0, 0.88)',
+      },
+    },
+  };
+
   return (
     <Form
       layout='vertical'
@@ -155,33 +193,19 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
             className={classes.label}
             label='Card number'
             name={'card_number'}
+            validateStatus={cardError ? cardError : ''}
             rules={[
               {
                 required: true,
-                message: 'Please enter card number!',
-              },
-              {
-                pattern: new RegExp(`${VisaCardRegex}|${MasterCardRegex}`),
-                message: 'This is not a valid card',
-                transform(value) {
-                  return value.replaceAll(' ', '');
-                },
+                message: 'Please enter card Number!',
               },
             ]}
-            normalize={(value) => {
-              const sanitize = Array.from(value.replaceAll(' ', ''));
-              let str = '';
-              for (let i = 0; i < sanitize.length; i++) {
-                if (i % 4 === 0 && i !== 0) {
-                  str += ' ' + sanitize[i];
-                } else {
-                  str += sanitize[i];
-                }
-              }
-              return str;
-            }}
+            help={cardError && <div className='ant-form-item-explain-error' >{cardError}</div>}
+            
           >
-            <Input maxLength={19} />
+            <CardNumberElement 
+            className={`${classes.element_number_input} ${cardError?classes.error_border:classes.normal_border}`} 
+            onChange={onCardChange} options={ElementOptions}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -189,43 +213,18 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
             className={classes.label}
             label='Expiration (MM/YY)'
             name={'card_expiration'}
+            validateStatus={expiryError ? expiryError : ''}
+            help={expiryError && <div className='ant-form-item-explain-error' >{expiryError}</div>}
             rules={[
               {
                 required: true,
                 message: 'Please enter card expiration!',
               },
-              {
-                validator(_rule, value) {
-                  if (value !== '') {
-                    const split = value.split('/');
-                    if (Number(split[0]) > 12) {
-                      return Promise.reject(new Error('Invalid Month'));
-                    }
-                    const enteredDate = dayjs(value, 'MM/YY');
-                    if (dayjs().isBefore(enteredDate)) {
-                      return Promise.resolve();
-                    } else {
-                      return Promise.reject(new Error('Date is not Valid'));
-                    }
-                  }
-                  return Promise.resolve();
-                },
-              },
+              
             ]}
-            normalize={(value) => {
-              const sanitize = Array.from(value.replaceAll('/', ''));
-              let str = '';
-              for (let i = 0; i < sanitize.length; i++) {
-                if (i % 2 === 0 && i !== 0) {
-                  str += '/' + sanitize[i];
-                } else {
-                  str += sanitize[i];
-                }
-              }
-              return str;
-            }}
+           
           >
-            <Input maxLength={5} />
+            <CardExpiryElement onChange={onExpiryChange} className={`${classes.element_number_input} ${expiryError?classes.error_border:classes.normal_border}`}  options={ElementOptions} />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -233,20 +232,16 @@ const BillingForm = ({ formInstance, onFinished }: BillingFormProps) => {
             className={classes.label}
             label='CVV'
             name={'card_cvv'}
+            validateStatus={cvvError ? cvvError : ''}
+            help={cvvError && <div className='ant-form-item-explain-error' >{cvvError}</div>}
             rules={[
               {
                 required: true,
                 message: 'Please enter card cvv!',
               },
             ]}
-            normalize={(value, prevValue) => {
-              if (value === '') {
-                return value;
-              }
-              return Number(value) ? value : prevValue;
-            }}
           >
-            <Input maxLength={3} />
+            <CardCvcElement onChange={onCvvChange} options={ElementOptions}  className={`${classes.element_number_input} ${cvvError?classes.error_border:classes.normal_border}`}  />
           </Form.Item>
         </Col>
         <Col span={24}>

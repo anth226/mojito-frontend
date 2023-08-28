@@ -171,3 +171,14 @@ export const ARCHIVE_ALERT = gql`
     }
   }
 `;
+
+export const CREATE_SUBSCRIPTION=gql`
+mutation CreateSubscription($input:CreateSubscriptionInput!){
+  createSubscription(input:$input){
+    success
+    url
+    reason
+  }
+
+}
+`

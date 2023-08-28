@@ -34,3 +34,23 @@
 .billing_address {
     font-size: 12px;
 }
+.element_number_input {
+    border: 1px solid #d9d9d9;
+    padding:7px 11px;
+    min-height: 32px;
+    border-radius: 6px;
+  }
+
+.error_border{
+    border:1px solid #ffa39e;
+}
+.normal_border{
+    border:1px solid #d9d9d9;
+}
+
+.normal_border:hover{
+    border:1px solid #4096ff;
+}
+.normal_border:hover{
+    border:1px solid #4096ff;
+}
