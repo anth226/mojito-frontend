@@ -1,4 +1,7 @@
 import { Button, Card, Col, Row, Space } from 'antd';
+import { loadStripe } from '@stripe/stripe-js';
+import { STRIPE_PUBLIC_KEY } from 'configs/env';
+import {Elements} from '@stripe/react-stripe-js'
 import { INVITE_CLIENTS } from 'api/graphql/mutations';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { Client } from 'interfaces/Client';
@@ -19,9 +22,10 @@ import {
 import { AgencyOnBoardingPaths, AuthenticationPaths } from 'pages/paths';
 
 const AgencyOverboarding = () => {
-  const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
+  const { step, nested, nestedSteps, nestedPath, clients,disableContine } = useAppSelector(
     getOnboardingFromStore
   );
+  const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -149,8 +153,9 @@ const AgencyOverboarding = () => {
   if (errorPage()) {
     return <Outlet />;
   }
-
+console.log(disableContine)
   return (
+     <Elements stripe={stripePromise}>
     <Card
       style={{
         maxWidth: widthOfCard,
@@ -162,12 +167,13 @@ const AgencyOverboarding = () => {
         <Outlet />
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <Button style={{ width: '100%' }} onClick={onBack}>
+            <Button disabled={false} style={{ width: '100%' }} onClick={onBack}>
               <b>Back</b>
             </Button>
           </Col>
           <Col span={12}>
             <Button
+              disabled={false}
               type='primary'
               style={{ width: '100%' }}
               onClick={onContinue}
@@ -178,6 +184,7 @@ const AgencyOverboarding = () => {
         </Row>
       </Space>
     </Card>
+    </Elements>
   );
 };
 
