@@ -1,4 +1,4 @@
-import UsersSetting from 'components/UserSetting/UserSetting';
+import UsersSetting from 'components/AgencyUserSetting/UsersSetting';
 
 const AgencyUsersSetting = () => {
   return <UsersSetting />;
