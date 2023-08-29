@@ -7,31 +7,6 @@
     box-sizing: border-box;
 }
 
-.ant-progress-inner {
-    width: 100%;
-}
-
-.ant-progress.ant-progress-show-info .ant-progress-outer {
-    padding: 0;
-    margin: 0;
-}
-
-.ant-progress-bg {
-    height: 20px;
-}
-
-.ant-progress .ant-progress-text {
-    display: none;
-}
-
-.message {
-    margin-top: 0;
-    text-align: center;
-    color: #c7ddff;
-    font-size: 24px;
-    font-weight: 700;
-}
-
 .success-box .title,
 .success-box .description {
     text-align: center;
