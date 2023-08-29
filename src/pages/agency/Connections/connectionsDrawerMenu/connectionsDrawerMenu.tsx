@@ -1,6 +1,6 @@
-import { Button } from "antd";
-import { ReactNode, useState } from "react";
-import classes from "./connectionsDrawerMenu.module.css";
+import { Button } from 'antd';
+import { ReactNode, useState } from 'react';
+import classes from './connectionsDrawerMenu.module.css';
 
 interface ConnectionsDrawerMenuItem {
   value: string;
@@ -25,21 +25,22 @@ const ConnectionsDrawerMenu = ({
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+    <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
       {items.map((item, index) => {
         return (
           <Button
-            icon={item.icon ?? ""}
+            icon={item.icon ?? ''}
             className={
               index === selected ? classes.activeItem : classes.inactiveItem
             }
             style={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              width: "100px",
-              paddingLeft: "5px",
-              paddingRight: "5px",
-              marginRight: "8px",
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              width: 'auto',
+              padding: '10px 16px',
+              marginRight: '8px',
+              alignItems: 'center',
+              gap: '10px',
             }}
             onClick={() => onItemClick(item, index)}
             key={index}
