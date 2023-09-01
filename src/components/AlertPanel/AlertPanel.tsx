@@ -1,5 +1,4 @@
 import { Avatar, Drawer, DrawerProps, Tabs, TabsProps } from 'antd';
-import Eye from 'assets/Icons/Eye';
 import ArrowRight from 'assets/Icons/ArrowRight';
 import Close from 'assets/Icons/Close';
 import { Avatars } from 'assets/base64Icons';
