@@ -83,6 +83,7 @@ const AgencyOnBoardingBilling = () => {
         card: token.card?.last4
 
     }
+    
    const res= await createSubscription({variables:{input:input}})
   if(!res.data.createSubscription.success){
     toast.error(res.data.createSubscription.reason)

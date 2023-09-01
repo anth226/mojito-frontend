@@ -74,6 +74,7 @@ export const GET_LIST_ALERTS = gql`
             email
           }
         }
+        createdAt
       }
       hasMore
     }

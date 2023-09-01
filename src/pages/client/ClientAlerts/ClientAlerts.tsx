@@ -1,11 +1,13 @@
 import { Button, Col, Empty, Row, Skeleton } from 'antd';
+import { toast } from 'react-toastify';
 import { GET_LIST_ALERTS } from 'api/graphql/queries';
+import { CREATE_ALERTS } from 'api/graphql/mutations';
 import PlusIcon from 'assets/Icons/Plus';
 import AlertCard from 'components/AlertCard/AlertCard';
 import AlertModal from 'components/AlertModal/AlertModal';
 import AlertPanel from 'components/AlertPanel/AlertPanel';
 import { AlertStatus } from 'enums/alerts';
-import { useGraphQlQuery } from 'hooks/useCustomHookApollo';
+import { useGraphQlQuery,useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { Alert } from 'interfaces/Alert';
 import { useEffect, useState } from 'react';
 
@@ -22,19 +24,20 @@ const ClientAlerts = () => {
   const {
     data: listAlerts,
     loading: isLoadingFetchListAlerts,
-    // refetch,
+    refetch,
   } = useGraphQlQuery(GET_LIST_ALERTS);
 
-  // const [createAlerts] = useGraphQlMutation(CREATE_ALERTS, {
-  //   onError(error) {
-  //     toast.error('Create alerts not success!');
-  //     throw error;
-  //   },
-  //   onCompleted: () => {
-  //     setNewAlertModal(false);
-  //     refetch();
-  //   },
-  // });
+  const [createAlerts] = useGraphQlMutation(CREATE_ALERTS, {
+    onError(error) {
+      toast.error('Create alerts not success!');
+      throw error;
+    },
+    onCompleted: () => {
+      setNewAlertModal(false);
+      refetch();
+    },
+  });
+  const account_info=JSON.parse(`${localStorage.getItem("mojito_account_info")}`)
 
   // const { data: listClients } = useGraphQlQuery(GET_LIST_CLIENTS);
   // const { data: listClients, loading: isLoadingFetchlistClients } =
@@ -68,7 +71,13 @@ const ClientAlerts = () => {
     }
     setAlerts(temp);
   };
+ const AlertFor=[{
+  value:account_info._id,
+  label:account_info.name
 
+ }
+
+ ]
   useEffect(() => {
     if (!isLoadingFetchListAlerts) {
       const alerts = listAlerts?.alerts?.nodes?.map((node: any) => {
@@ -83,6 +92,7 @@ const ClientAlerts = () => {
           fires: node?.fires,
           clients: node?.clients?.nodes,
           severity: node?.severity,
+          date: node?.createdAt
         };
       });
 
@@ -90,6 +100,27 @@ const ClientAlerts = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listAlerts]);
+
+  const addAlert = async (alert: any) => {
+    const alerts = {
+      value: alert.value,
+      parameter: alert.parameter,
+      operation: alert.mathValue,
+      name: alert.alertName,
+      clientIds: alert.clientOption,
+      severity: alert.severity,
+    };
+
+    const input = {
+      clientMutationId: null,
+      alerts: alerts,
+    };
+
+    await createAlerts({
+      variables: { input: input },
+    });
+  };
+  
   return (
     <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
       <Col span={24}>
@@ -162,7 +193,10 @@ const ClientAlerts = () => {
       />
       <AlertModal
         closeModal={() => setNewAlertModal(false)}
+        clientsOptions={AlertFor}
+        multipleClients={false}
         open={newAlertModal}
+        addAlert={addAlert}
       />
     </Row>
   );

@@ -1,4 +1,6 @@
 import { Avatar, Drawer, DrawerProps, Tabs, TabsProps } from 'antd';
+import Eye from 'assets/Icons/Eye';
+import ArrowRight from 'assets/Icons/ArrowRight';
 import Close from 'assets/Icons/Close';
 import { Avatars } from 'assets/base64Icons';
 import dayjs from 'dayjs';
@@ -31,7 +33,7 @@ const AlertEntry = ({ alert, onClick }: AlertEntryProps) => {
       className={classes.alert_entry_container}
       style={{
         backgroundColor:
-          alert.status === AlertStatus.NEW ? '#F0F6FF' : '#FFFFFF',
+          alert.status === AlertStatus.NEW ? '#F0F6FF' : '#FFFFFF',cursor: 'pointer'
       }}
     >
       <div className={classes.alert_entry_vertical_center}>
@@ -45,7 +47,11 @@ const AlertEntry = ({ alert, onClick }: AlertEntryProps) => {
       </div>
       <div className={classes.alert_entry_right_side}>
         <span className='text-small gray-3'>{date}</span>
-        {/* <Eye onClick={() => onClick(alert)} style={{ cursor: 'pointer' }} /> */}
+        <div className={classes.aler_panel_actions}>
+          <div className={classes.line_stroke}/>
+        <Close width={13} height={13} fill="blue" style={{ cursor: 'pointer' }}/>
+        <ArrowRight width={13} height={13}  fill="blue" style={{ cursor: 'pointer' }}/>
+        </div>
       </div>
     </div>
   );
