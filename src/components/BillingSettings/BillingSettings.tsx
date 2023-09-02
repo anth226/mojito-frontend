@@ -1,6 +1,7 @@
 import { Col, Modal, Row, Table } from 'antd';
+import { useGraphQlQuery } from 'hooks/useCustomHookApollo';
 import PlanCard from 'components/PlanCard/PlanCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as UploadIcon } from 'assets/Icons/Upload.svg';
 import dayjs from 'dayjs';
 import { USDcurrency } from 'utils/formatters';
@@ -10,7 +11,10 @@ import ArrowDown from 'assets/Icons/ArrowDown';
 import classes from './BillingSettings.module.css';
 import AgencyAccountSummary from './AccountSummary/AccountSummary';
 import AgencyBillingDetails from './BillingDetails/BillingDetails';
-import { plans } from 'constants/BillingPlans';
+import { GET_PLANS_LISTS,GET_BILLING_DETAILS,GET_BILLING_History} from 'api/graphql/queries';
+import { Tenure,Plan } from 'interfaces/billing';
+import Spinner from 'components/loaders/Spinner';
+import Bolt from 'assets/Icons/Bolt';
 import { BillingTypes } from 'enums/billing';
 
 const { IconBadge } = CustomBadge;
@@ -91,48 +95,12 @@ for (let i = 0; i < 10; i++) {
     status: 'Paid',
   });
 }
+ type detail={
+  label: string
+  value: string
+ }
 
-const accountSummary = [
-  {
-    label: 'Company name',
-    value: 'OPTYO',
-  },
-  {
-    label: 'Current plan',
-    value: 'Professional',
-  },
-  {
-    label: 'Subscription renewal',
-    value: 'OPTYO',
-  },
-];
 
-const billingDetails = [
-  {
-    label: 'Name',
-    value: 'Casey Melika',
-  },
-  {
-    label: 'Email',
-    value: 'casey@optyo.ney',
-  },
-  {
-    label: 'Phone',
-    value: '3109936929',
-  },
-  {
-    label: 'Address',
-    value: '3030 CHICAGO ST,San Diego, California US 92117',
-  },
-  {
-    label: 'Card',
-    value: '4148 **** **** 4123',
-  },
-  {
-    label: 'Expiry',
-    value: '8 / 2026',
-  },
-];
 
 const billingDetailsForm = {
   card_number: '4242 4242 4242 4242',
@@ -155,8 +123,29 @@ const { confirm } = Modal;
 const BillingSettings = () => {
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [accountSummary,setAccountSummary] = useState<detail[]>([])
+  const [billingDetails, setBillingDetails] = useState<detail[]>([])
 
   const [menuItem, setMenuItem] = useState(1);
+
+  
+
+  const {
+    data: plansList,
+    loading: isFetchPlans,
+  } = useGraphQlQuery(GET_PLANS_LISTS);
+  
+  const {
+    data: myBillingData,
+    loading: isFetchBillingData,
+  } = useGraphQlQuery(GET_BILLING_DETAILS);
+  console.log(myBillingData.userBillingDetails)
+
+  // const {
+  //   data: myBillingHistory,
+  //   loading: isFetchBillingHistory,
+  // } = useGraphQlQuery(GET_BILLING_History);
+  // console.log(myBillingHistory.)
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -168,6 +157,57 @@ const BillingSettings = () => {
     onChange: onSelectChange,
   };
 
+  useEffect(()=>{
+    if(!isFetchBillingData){
+      const tempSummary = [
+  {
+    label: 'Company name',
+    value: myBillingData.userBillingDetails.name,
+  },
+  {
+    label: 'Current plan',
+    value: myBillingData.userBillingDetails.plan,
+  },
+  {
+    label: 'Subscription renewal',
+    value: myBillingData.userBillingDetails.nextBilling,
+  },
+  
+];
+
+const tempBillingDetails = [
+  {
+    label: 'Name',
+    value: myBillingData.userBillingDetails.name,
+  },
+  {
+    label: 'Email',
+    value: myBillingData.userBillingDetails.email,
+  },
+  {
+    label: 'Phone',
+    value: myBillingData.userBillingDetails.phone,
+  },
+  {
+    label: 'Address',
+    value: `${myBillingData.userBillingDetails.apt_suit_number} ${myBillingData.userBillingDetails.street},${myBillingData.userBillingDetails.city}, ${myBillingData.userBillingDetails.state} ${myBillingData.userBillingDetails.region} 92117`,
+  },
+  {
+    label: 'Card',
+    value: `Visa **** **** ${myBillingData.userBillingDetails.card_number}`,
+  },
+  {
+    label: 'Expiry',
+    value: `${myBillingData.userBillingDetails.card_expiration}`,
+  },
+];
+
+setBillingDetails(tempBillingDetails)
+setAccountSummary(tempSummary)
+
+    }
+
+  },[myBillingData])
   const onBillingChange = (data: number, type: BillingTypes) => {
     if (type === BillingTypes.PACKAGE) {
       confirm({
@@ -205,18 +245,19 @@ const BillingSettings = () => {
     <Row gutter={[48, 16]}>
       <Col span={18}>
         <div style={{ display: 'grid', gap: '10px' }}>
+        {isFetchPlans&& (<Spinner/>)}  
           <div style={{ display: 'grid', gap: '10px' }}>
-            {plans.map((plan, index) => {
+            {!isFetchPlans&&plansList.fetchPlans.plans.map((plan:Plan, index:number) => {
               return (
                 <PlanCard
                   key={index}
-                  title={plan.title}
+                  title={plan.planName}
                   amount={plan.amount}
-                  tenure={plan.tenure}
+                  tenure={plan.interval==="month"? Tenure.MONTHLY:Tenure.YEARLY}
                   description={plan.description}
                   selected={index === selectedPlan}
                   onClick={() => onBillingChange(index, BillingTypes.PACKAGE)}
-                  Icon={plan.icon}
+                  Icon={Bolt}
                 />
               );
             })}
