@@ -63,7 +63,6 @@ const AgencyOnBoardingBilling = () => {
     }
     const {token}= await stripe?.createToken(card)
     if(token){
-
     const input={
         billingPlan:billingPlan?.planName,
         cardBrand:token.card?.brand,
@@ -84,6 +83,7 @@ const AgencyOnBoardingBilling = () => {
 
     }
    const res= await createSubscription({variables:{input:input}})
+   console.log(res)
   if(!res.data.createSubscription.success){
     toast.error(res.data.createSubscription.reason)
   }else{
