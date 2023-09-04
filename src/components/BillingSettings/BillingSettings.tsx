@@ -71,9 +71,6 @@ const columns = [
             width: '24px',
             height: '24px',
             cursor: 'pointer',
-            // background: "#F2F3F7",
-            // padding: "11px",
-            // borderRadius: "25px",
           }}
         />
       );
