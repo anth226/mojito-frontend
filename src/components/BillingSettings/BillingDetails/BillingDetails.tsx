@@ -1,5 +1,6 @@
 import { Row, Col, Button } from 'antd';
 import classes from '../BillingSettings.module.css';
+import { toast } from 'react-toastify';
 import {useStripe,useElements} from '@stripe/react-stripe-js';
 import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
 import { UPDATE_BILLING_DETAILS } from 'api/graphql/mutations';
@@ -18,17 +19,29 @@ interface BillingDetailsObject {
 interface BillingDetailsProps {
   billingDetails: BillingDetailsObject[];
   billingDetailsForm: BillingFields;
+  refetch:any
 }
 
 const BillingDetails = ({
   billingDetails,
   billingDetailsForm,
+  refetch
 }: BillingDetailsProps) => {
   const [openModal, setOpenModal] = useState<false | true>(false);
   const { BillingForm, FormInstance,cardElement  } = useBillingFormInstance();
   const stripe =useStripe();
   const elements =useElements()
-  const [updateBillingDetails] =useGraphQlMutation(UPDATE_BILLING_DETAILS)
+  const [updateBillingDetails] =useGraphQlMutation(UPDATE_BILLING_DETAILS,
+    {
+      onError(error) {
+        toast.error("Failed to update billing details");
+        throw error;
+      },
+      onCompleted: () => {
+        refetch();
+      },
+    }
+    )
   const onEdit = async (values: any) => {
     if (!stripe) 
       {
@@ -38,7 +51,8 @@ const BillingDetails = ({
       if (!card) {
         return;
       }
-      const {token}= await stripe?.createToken(card)
+       const {token}= await stripe?.createToken(card)
+      if(token){
       const input={
         name:values.name,
         email:values.email,
@@ -50,11 +64,14 @@ const BillingDetails = ({
         state: values.state,
         city: values.city,
         zip_code: values.zip_code,
+        cardBrand:token.card?.brand,
+        source:token.id,
+        expiry:`${token.card?.exp_month}/${token.card?.exp_year}`,
+        card: token.card?.last4
 
     }
-    const res =await updateBillingDetails({variables:{input:input}})
-      
-    console.log(values);
+    await updateBillingDetails({variables:{input:input}})
+  }
     setOpenModal(false);
   };
 
