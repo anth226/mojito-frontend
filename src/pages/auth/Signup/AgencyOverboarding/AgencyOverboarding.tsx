@@ -19,10 +19,9 @@ import {
 import { AgencyOnBoardingPaths, AuthenticationPaths } from 'pages/paths';
 
 const AgencyOverboarding = () => {
-  const { step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
+  const {step, nested, nestedSteps, nestedPath, clients } = useAppSelector(
     getOnboardingFromStore
   );
-
   const { pathname } = useLocation();
   const navigate = useNavigate();
 

@@ -17,7 +17,6 @@ import {
   setBillingDetails,
   setBillingPlan,
   setBillingPlanObject,
-  setLoading
 } from 'reduxSlices/onboarding/onboarding';
 import { BusinessOnBoardingPaths } from 'pages/paths';
 import MultiStack from 'assets/Icons/MultiStack';
@@ -47,7 +46,6 @@ const BusinessOnBoardingBilling = () => {
   };
 
   const onFinished = async (values: any) => {
-    setLoading(true)
     if (!stripe) 
       {
         return "";
@@ -85,7 +83,6 @@ const BusinessOnBoardingBilling = () => {
     dispatch(setBillingDetails(values));
     dispatch(next());
   }
-  setLoading(false)
     }
   };
 

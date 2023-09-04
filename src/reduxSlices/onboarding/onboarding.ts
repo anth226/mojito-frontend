@@ -22,7 +22,7 @@ interface onboardingStateInterface {
   step: number;
   prevStep: number;
   nested: boolean;
-  disableContine: boolean;
+  btnStatus: boolean;
   nestedSteps: number;
   nestedLimit: number;
   billingPlan:Plan|null;
@@ -45,7 +45,7 @@ const initialState: onboardingStateInterface = {
   nestedLimit: 0,
   nestedPath: '',
   billingPlan:null,
-  disableContine:false,
+  btnStatus:false,
   clients: [] as Client[],
   users: [] as NewClient[],
   bussinessConnections:[] as BusinessConnections[],
@@ -204,8 +204,8 @@ export const onboardingSlice = createSlice({
       state.billing.plan = defaultValues.BILLING_PLAN;
       state.billing.billingDetails = {};
     },
-    setLoading:(state,payloadWithType)=>{
-      state.disableContine = payloadWithType.payload
+    setBtnStatus:(state,payloadWithType)=>{
+      state.btnStatus = payloadWithType.payload
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -228,7 +228,7 @@ export const {
   setBillingDetails,
   clearOnBoardingStore,
   setBillingPlanObject,
-  setLoading,
+  setBtnStatus,
   setBusinessConnections
 } = onboardingSlice.actions;
 

@@ -18,7 +18,6 @@ import {
   setBillingDetails,
   setBillingPlan,
   setBillingPlanObject,
-  setLoading
 } from 'reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths } from 'pages/paths';
 import { toast } from 'react-toastify';
@@ -52,7 +51,6 @@ const AgencyOnBoardingBilling = () => {
   } = useGraphQlQuery(GET_PLANS_LISTS);
 
   const onFinished = async (values: any) => {
-    setLoading(true)
     if (!stripe) 
       {
         return "";
@@ -83,14 +81,12 @@ const AgencyOnBoardingBilling = () => {
 
     }
    const res= await createSubscription({variables:{input:input}})
-   console.log(res)
   if(!res.data.createSubscription.success){
     toast.error(res.data.createSubscription.reason)
   }else{
     dispatch(setBillingDetails(values));
     dispatch(next());
   }
-  setLoading(false)
     }
   
   };
