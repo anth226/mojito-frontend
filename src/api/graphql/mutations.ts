@@ -182,3 +182,11 @@ mutation CreateSubscription($input:CreateSubscriptionInput!){
 
 }
 `
+export const UPDATE_BILLING_DETAILS=gql`
+mutation updateBillingDetails($input:updateBillingDetailsInput!){
+  updateBillingDetails(input:$input){
+    success
+    reason
+  }
+}
+`
