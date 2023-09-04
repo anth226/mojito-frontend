@@ -1,5 +1,8 @@
 import { Row, Col, Button } from 'antd';
 import classes from '../BillingSettings.module.css';
+import {useStripe,useElements} from '@stripe/react-stripe-js';
+import { useGraphQlMutation } from 'hooks/useCustomHookApollo';
+import { UPDATE_BILLING_DETAILS } from 'api/graphql/mutations';
 import {
   BillingFields,
   useBillingFormInstance,
@@ -22,9 +25,35 @@ const BillingDetails = ({
   billingDetailsForm,
 }: BillingDetailsProps) => {
   const [openModal, setOpenModal] = useState<false | true>(false);
-  const { BillingForm, FormInstance } = useBillingFormInstance();
+  const { BillingForm, FormInstance,cardElement  } = useBillingFormInstance();
+  const stripe =useStripe();
+  const elements =useElements()
+  const [updateBillingDetails] =useGraphQlMutation(UPDATE_BILLING_DETAILS)
+  const onEdit = async (values: any) => {
+    if (!stripe) 
+      {
+        return "";
+      }
+      const card = elements?.getElement(cardElement);
+      if (!card) {
+        return;
+      }
+      const {token}= await stripe?.createToken(card)
+      const input={
+        name:values.name,
+        email:values.email,
+        country_code:values.country_code,
+        phone: values.phone,
+        street: values.region,
+        apt_suit_number:values.apt_suit_number,
+        region: values.region,
+        state: values.state,
+        city: values.city,
+        zip_code: values.zip_code,
 
-  const onEdit = (values: any) => {
+    }
+    const res =await updateBillingDetails({variables:{input:input}})
+      
     console.log(values);
     setOpenModal(false);
   };

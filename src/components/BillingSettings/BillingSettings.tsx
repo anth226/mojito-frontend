@@ -70,6 +70,7 @@ const columns = [
     width: '70px',
     render(value: any, record: any, index: any) {
       return (
+        <a href={value.invoice} target="_blank"  rel="noreferrer">
         <UploadIcon
           style={{
             width: '24px',
@@ -80,19 +81,18 @@ const columns = [
             // borderRadius: "25px",
           }}
         />
+        </a>
       );
     },
   },
 ];
-
-const data: any = [];
-
  type detail={
   label: string
   value: string
  }
  type history={
   key:number,
+  invoice:string
   title:string,
   amount: number,
   date: Date,
@@ -169,7 +169,7 @@ const BillingSettings = () => {
   },
   {
     label: 'Subscription renewal',
-    value: myBillingData.userBillingDetails.nextBilling,
+    value:dayjs(myBillingData.userBillingDetails.nextBilling).format('MMM D') ,
   },
   
 ];
@@ -211,13 +211,14 @@ setAccountSummary(tempSummary)
   useEffect(()=>{
     if(!isFetchBillingHistory){
       const tempData:history[]=[]
-      myBillingHistory.userBillingHistory.billingHistory.map((history:history,index:number)=>{
+      myBillingHistory.userBillingHistory.billingHistory.map((history:any,index:number)=>{
         tempData.push({
           key: index,
-          title: 'Starter plan',
+          title: history.plan,
           amount: history.amount,
           date: new Date(history.date),
           status: 'Paid',
+          invoice: history.invoice
         });
         
       })

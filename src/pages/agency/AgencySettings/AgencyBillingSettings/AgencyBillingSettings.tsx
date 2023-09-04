@@ -1,4 +1,4 @@
-import BillingSettings from 'components/BillingSettings/BillingSettings';
+import BillingSettings from 'components/BillingSettings/BillingSettings'
 
 const AgencyBillingSettings = () => {
   return <BillingSettings />;
