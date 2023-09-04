@@ -86,18 +86,17 @@ const columns = [
 ];
 
 const data: any = [];
-for (let i = 0; i < 10; i++) {
-  data.push({
-    key: i,
-    title: 'Starter plan',
-    amount: 828,
-    date: new Date(),
-    status: 'Paid',
-  });
-}
+
  type detail={
   label: string
   value: string
+ }
+ type history={
+  key:number,
+  title:string,
+  amount: number,
+  date: Date,
+  status: string,
  }
 
 
@@ -125,6 +124,7 @@ const BillingSettings = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [accountSummary,setAccountSummary] = useState<detail[]>([])
   const [billingDetails, setBillingDetails] = useState<detail[]>([])
+  const [data, setData] = useState<history[]>([])
 
   const [menuItem, setMenuItem] = useState(1);
 
@@ -139,13 +139,12 @@ const BillingSettings = () => {
     data: myBillingData,
     loading: isFetchBillingData,
   } = useGraphQlQuery(GET_BILLING_DETAILS);
-  console.log(myBillingData.userBillingDetails)
 
-  // const {
-  //   data: myBillingHistory,
-  //   loading: isFetchBillingHistory,
-  // } = useGraphQlQuery(GET_BILLING_History);
-  // console.log(myBillingHistory.)
+  const {
+    data: myBillingHistory,
+    loading: isFetchBillingHistory,
+  } = useGraphQlQuery(GET_BILLING_History);
+  console.log(myBillingHistory)
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -207,7 +206,27 @@ setAccountSummary(tempSummary)
 
     }
 
-  },[myBillingData])
+  },[isFetchBillingData, myBillingData])
+
+  useEffect(()=>{
+    if(!isFetchBillingHistory){
+      const tempData:history[]=[]
+      myBillingHistory.userBillingHistory.billingHistory.map((history:history,index:number)=>{
+        tempData.push({
+          key: index,
+          title: 'Starter plan',
+          amount: history.amount,
+          date: new Date(history.date),
+          status: 'Paid',
+        });
+        
+      })
+      setData(tempData)
+
+
+    }
+
+  },[isFetchBillingHistory,myBillingHistory])
   const onBillingChange = (data: number, type: BillingTypes) => {
     if (type === BillingTypes.PACKAGE) {
       confirm({
@@ -244,7 +263,7 @@ setAccountSummary(tempSummary)
   return (
     <Row gutter={[48, 16]}>
       <Col span={18}>
-        <div style={{ display: 'grid', gap: '10px' }}>
+        <div>
         {isFetchPlans&& (<Spinner/>)}  
           <div style={{ display: 'grid', gap: '10px' }}>
             {!isFetchPlans&&plansList.fetchPlans.plans.map((plan:Plan, index:number) => {
