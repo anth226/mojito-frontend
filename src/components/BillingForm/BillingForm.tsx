@@ -95,7 +95,7 @@ export const useBillingFormInstance = () => {
       />
     ),
     FormInstance: billingFormInstance,
-    cardElement:CardNumberElement
+    cardElement:CardNumberElement,
   };
 };
 

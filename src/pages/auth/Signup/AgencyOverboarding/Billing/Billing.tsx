@@ -29,7 +29,7 @@ const AgencyOnBoardingBilling = () => {
    const elements =useElements()
    const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION)
 
-  const { billing, nestedSteps, nestedPath, prevStep,billingPlan } = useAppSelector(
+  const { billing, nestedSteps, nestedPath, prevStep,billingPlan} = useAppSelector(
     getOnboardingFromStore
   );
   const dispatch = useAppDispatch();
