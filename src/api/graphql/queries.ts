@@ -210,3 +210,39 @@ query fetchPlans {
     }
 }
 `
+export const GET_BILLING_DETAILS= gql`
+query userBillingDetails {
+  userBillingDetails{
+    id
+    card_number
+    priceId
+    nextBilling
+    plan
+    card_expiration
+    card_cvv
+    name
+    cardBrand
+    email
+    country_code
+    phone
+    street
+    apt_suit_number
+    region
+    state
+    city
+    zip_code
+    }
+}
+`
+export const GET_BILLING_History= gql`
+query userBillingHistory {
+  userBillingHistory{
+    billingHistory{
+        invoice
+        amount
+        date
+        plan
+        }
+    }
+}
+`

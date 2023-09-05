@@ -18,7 +18,6 @@ import {
   setBillingDetails,
   setBillingPlan,
   setBillingPlanObject,
-  setLoading
 } from 'reduxSlices/onboarding/onboarding';
 import { AgencyOnBoardingPaths } from 'pages/paths';
 import { toast } from 'react-toastify';
@@ -30,7 +29,7 @@ const AgencyOnBoardingBilling = () => {
    const elements =useElements()
    const [createSubscription] =useGraphQlMutation(CREATE_SUBSCRIPTION)
 
-  const { billing, nestedSteps, nestedPath, prevStep,billingPlan } = useAppSelector(
+  const { billing, nestedSteps, nestedPath, prevStep,billingPlan} = useAppSelector(
     getOnboardingFromStore
   );
   const dispatch = useAppDispatch();
@@ -52,7 +51,6 @@ const AgencyOnBoardingBilling = () => {
   } = useGraphQlQuery(GET_PLANS_LISTS);
 
   const onFinished = async (values: any) => {
-    setLoading(true)
     if (!stripe) 
       {
         return "";
@@ -63,7 +61,6 @@ const AgencyOnBoardingBilling = () => {
     }
     const {token}= await stripe?.createToken(card)
     if(token){
-
     const input={
         billingPlan:billingPlan?.planName,
         cardBrand:token.card?.brand,
@@ -90,7 +87,6 @@ const AgencyOnBoardingBilling = () => {
     dispatch(setBillingDetails(values));
     dispatch(next());
   }
-  setLoading(false)
     }
   
   };
